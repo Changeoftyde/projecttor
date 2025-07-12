@@ -190,6 +190,7 @@ if (localStorage.getItem("darkmode")) {} else {
   localStorage.setItem("darkmode", "0");
 }
 if ((parseInt(localStorage.getItem("numofsets")) > 0) == false) {
+  document.getElementById("desc").classList.add("hidden");
   document.getElementById("enot").classList.remove("hidden");
 }
 arrayOfPictureNames = ["home", "study", "play", "sets", "create", "import", "settings"];
