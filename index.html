@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<head>
+  <meta name="author" content="Jett and Tora">
+  <meta name="description" content="Study Personalized. Learn through Engagement.">
+  <meta name="keywords" content="Jett, Tora, Projecttor, Study, Play, Learn, Teach">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<html>
+<body>
+<title>Projecttor</title>
+<div id="menu">
+<a href="sets.html"><img src="Projections.png" class="link2" style="top: 2.5vw"></a>
+<img onclick="sfs()" src="Create.png" class="link2">
+<img src="Import.png" class="link2">
+<img src="Study.png" class="link2">
+<img src="Play.png" class="link2">
+<a href="index.html"><img src="Home.png" class="link2"></a>
+</div>
+<img onclick="togglemenu()" id="menucontroller" src="Frame 1.png">
+<img src="IMG_8465.png" class="waves">
+<img class="logo" src="IMG_8460.png">
+<div id="info">
+<img src="IMG_8459.png" onclick="sfs()" style="left: 50%" class="link">
+<a href="importset.html"><img src="Layer 1.png" style="left: 23.15%" class="link"></a>
+<a href="importfrom.html"><img src="Layer 2.png" style="left: 76.85%" class="link"></a>
+<a href="setpage.html"><div id="set"></div></a>
+</div>
+<div class="backdrop"></div>
+<style>
+  .link2 {
+    transform: translate(0%, 0%);
+    position: absolute;
+    z-index: 2000;
+    height: auto;
+    right: 2.5vw;
+  }
+  #menucontroller {
+    transition: 1.5s;
+    z-index: 4000;
+    height: auto;
+    position: fixed;
+    top: 0;
+    right: 0;
+    transform: translate(0%, 0%);
+  }
+  #menu {
+    transition: 1.5s;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    z-index: 4000;
+    left: 100%;
+    top: 0;
+    background-image: url("IMG_8761.png");
+    background-size: cover;
+    background-position: 50% 100%;
+  }
+  #set {
+    background-position: 50%;
+    transform: translate(-50%, -50%);
+    left: 50%;
+    position: absolute;
+    top: 79.4%;
+    width: 40%;
+    height: 17vw;
+    background-size: cover;
+    border-radius: 0.8vw;
+    border: 0.5vw solid black;
+  }
+  .link {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    width: 18%;
+    height: auto;
+    top: 63.9%;
+  }
+  .waves {
+    position: absolute;
+    width: 100vw;
+    left: 0;
+    top: 75%;
+    height: 25vh;
+    z-index: -1999;
+  }
+  #info {
+    transition: 0.1s;
+    background-image: url("IMG_8466.png");
+    background-size: cover;
+    width: 100%;
+    height: 156.8vw;
+    position: absolute;
+    left: 0;
+    top: 100%;
+    z-index: -1999;
+  }
+  .backdrop {
+    background-size: cover;
+    background-image: url("Add a heading.png");
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: -2000;
+    top: 0;
+    left: 0;
+  }
+  .logo {
+    z-index: 100;
+    transform: translate(-50%, -50%);
+    position: absolute;
+    width: 60%;
+    height: auto;
+    top: 50%;
+    left: 50%;
+  }
+</style>
+<script>
+over = false;
+rendermenu();
+function rendermenu() {
+  document.getElementById("menucontroller").style.width = (0.1 * window.innerWidth + 0.05 * window.innerHeight) + "px";
+  height = (403 * (0.1 * window.innerWidth + 0.05 * window.innerHeight)) / 412;
+  HW = window.innerHeight / window.innerWidth;
+  for (i = 0; i < 6; i++) {
+    wl = ((((HW / 2.61) * 28) + 32.9) / 100 * window.innerWidth) - (0.05 * window.innerWidth);
+    if ((((wl * 0.195) * 6) + window.innerWidth * 0.175) > window.innerHeight) {
+      wl = (window.innerHeight - (window.innerWidth * 0.175)) * 0.1666 * 5.128;
+    } else {
+      wl = ((((HW / 2.61) * 28) + 32.9) / 100 * window.innerWidth) - (0.05 * window.innerWidth);
+    }
+    document.getElementsByClassName("link2")[i].style.width = wl + "px";
+    document.getElementsByClassName("link2")[i].style.height = wl * 0.195 + "px";
+    document.getElementsByClassName("link2")[i].style.top = 0.025 * window.innerWidth + (((446 * wl / 2278) + (0.025 * window.innerWidth)) * i) + "px";
+  }
+  if (over == true) {
+    document.getElementById("menucontroller").style.right = ((((HW / 2.61) * 28) + 41.4) / 100 * window.innerWidth) - (height / 9.35) + "px";
+  } else {
+    document.getElementById("menucontroller").style.right = (height / -9.35) + "px";
+  }
+}
+function togglemenu() {
+  if (over == true) {
+    over = false;
+    document.getElementById("menu").style.left = 100 + "%";
+    animate("close");
+    rendermenu();
+  } else {
+    over = true;
+    document.getElementById("menu").style.left = 0 + "%";
+    animate("open");
+    rendermenu();
+  }
+}
+function animate(oc) {
+  if (oc == "open") {
+    for (let i = 2; i < 7; i++) {
+      setTimeout(function() {
+        document.getElementById("menucontroller").src = "Frame ".concat(i.toString(), ".png");
+      }, (i - 1) * 50);
+    }
+  } else {
+    for (let i = 5; i > 0; i--) {
+      setTimeout(function() {
+        document.getElementById("menucontroller").src = "Frame ".concat(i.toString(), ".png");
+      }, (6 - i) * 50);
+    }
+  }
+}
+function sfs() {
+  sessionStorage.setItem("c", "3");
+  window.location.href = "edit.html";
+}
+if (localStorage.getItem("pic")) {
+} else { document.getElementById("set").style.backgroundImage = "url('IMG_8486.png')"; }
+window.addEventListener("resize", rendermenu);
+</script>
+</body>
+</html>

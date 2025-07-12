@@ -1,0 +1,1796 @@
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+</head>
+<!DOCTYPE html>
+<html>
+<body>
+  <div class="screen" id="pregame">
+    <button onclick="togglesettings()" id="settings"><span style="position: absolute; right: 4dvh; bottom: 0dvh">Settings</span></button><div id="settingsarea">
+      <img onclick="togglesettings()" src="closesettings.png" id="closesettings">
+      <span style="position: absolute; right: 2dvh; top: 3dvh; font-size: 5dvh; width: calc(100% - 10.5dvh); text-decoration: underline">Game Settings</span>
+      <span style="position: absolute; right: 2dvh; top: 12dvh; font-size: 4.5dvh; width: 100%; text-decoration: underline">Game Length</span>
+      <span style="position: absolute; right: 14dvh; top: 17.5dvh; font-size: 3.5dvh; width: 100%">Endless Mode</span><div style="top: 18dvh" onclick="toggler(0)" class="setval slidergroup"><div class="slider"></div></div>
+      <span style="position: absolute; right: 2dvh; top: 21.5dvh; font-size: 2dvh; width: 100%">The Game doesn't end until you click "Finish."</span>
+      <span class="n" style="position: absolute; right: 14dvh; top: 24dvh; font-size: 3.5dvh; width: 100%">Number of Cycles</span><input placeholder="1-100" style="top: 24.5dvh; transition: 1s opacity" class="setval svi">
+      <span class="n" style="position: absolute; right: 2dvh; top: 28dvh; font-size: 2dvh; width: 100%">The number of question cycles until the game ends.<br>Range is anywhere between 1-100.<br><br><span>Predicted Game Length: <span style="color: #ff8d34" id="prediction">...</span></span></span>
+      <span style="position: absolute; right: 2dvh; top: 40dvh; font-size: 4.5dvh; width: 100%; text-decoration: underline">Gameplay</span>
+      <span style="position: absolute; right: 14dvh; top: 45.5dvh; font-size: 3.5dvh; width: 100%">Power Plays Enabled</span><div style="top: 46dvh" onclick="toggler(1)" class="setval slidergroup"><div class="slider"></div></div>
+      <span style="position: absolute; right: 2dvh; top: 49.5dvh; font-size: 2dvh; width: 100%">Also known as powerups.</span>
+      <span style="position: absolute; right: 14dvh; top: 52dvh; font-size: 3.5dvh; width: 100%">Animations Enabled</span><div style="top: 52.5dvh" onclick="toggler(2)" class="setval slidergroup"><div class="slider"></div></div>
+      <span style="position: absolute; right: 14dvh; top: 56dvh; font-size: 3.5dvh; width: 100%">Loading Bar Duration (s)</span><input placeholder="1-15" style="top: 56.5dvh" class="setval svi">
+      <span style="position: absolute; right: 2dvh; top: 60dvh; font-size: 2dvh; width: 100%">How long it takes for upcoming players and scores to be announced.<br>Counted in seconds.</span>
+      <span style="position: absolute; right: 2dvh; top: 67.5dvh; font-size: 4.5dvh; width: 100%; text-decoration: underline">Audio</span>
+      <span style="position: absolute; right: 14dvh; top: 73dvh; font-size: 3.5dvh; width: 100%">Background Music</span><div style="top: 73.5dvh" onclick="toggler(3)" class="setval slidergroup"><div class="slider"></div></div>
+      <span style="position: absolute; right: 14dvh; top: 77dvh; font-size: 3.5dvh; width: 100%">Sound Effects</span><div style="top: 77.5dvh" onclick="toggler(4)" class="setval slidergroup"><div class="slider"></div></div>
+      <img src="jettcog.gif" id="jettcog">
+    </div>
+    <button onclick="home()" id="homepregame"><span style="position: absolute; right: 4dvh; bottom: 0dvh">Home</span></button>
+    <div id="titleslide"><div id="logocomponents"><img id="logotop" src="suddendeathlogo.png"><p style="margin-top: 9dvh" id="nameofset"></p></div><div id="halfwhite"></div></div>
+    <div id="toggler"><div onclick="toggletype()" class="groupbased selected">Group-Based</div><div onclick="toggletype()" class="individualbased">Individual-Based</div></div>
+    <div id="groups">
+      <img src="add.png" onclick="addgroup()" id="add">
+      <div id="actualgroups">
+        <div class="group"><input placeholder="Team Name..." class="teamname"><textarea placeholder="Enter this team's members' names like this...
+ex: John
+Sue
+Stacy" class="names"></textarea><img class="remove" onclick="remove()" src="delete.png"></div>
+      </div>
+    </div>
+    <div class="hidden" id="individuals">
+      <textarea placeholder="Enter all players' names here, following this example...
+ex: John
+Ethan
+Tanner
+Theo
+Taylor
+Olivia
+Rachel
+Adelaide..." id="individnames"></textarea>
+    </div>
+  <button onclick="start()" id="startbutton">Start</button>
+  <div class="bg" style="background-image: url('suddendeathbackground.gif')"></div>
+  </div>
+  <div class="hidden screen" id="loadingscreen">
+    <p id="loadingdot">Loading... (0%)</p>
+    <div id="loadbaroutline2"><div id="loadbar2"></div></div>
+    <div style="background-color: black; background-image: url('suddendeathblackbackground.gif')" class="bg"></div>
+  </div>
+  <div class="hidden screen" id="prelude">
+    <div id="jett">
+      <img src="jettheadnormal.png" id="jetthead">
+      <img src="jettbody.png" id="jettbody">
+      <img id="speechtriangle" src="speechtrianglejett.png">
+      <div id="speech"><span id="text4speech"></div></span>
+    </div>
+    <img id="pointvalue">
+    <p id="ptdescription"></p>
+    <div id="loadbaroutline"><div id="loadbar"></div></div>
+    <div style="background-color: black; background-image: url('suddendeathblackbackground.gif')" class="bg"></div>
+    <div id="toolbar">
+      <div class="questionval"></div>
+      <div onclick="skip()" style="left: 1dvh" class="toolbarbutton">Skip</div>
+      <div onclick="home()" style="left: 14dvh" class="toolbarbutton">Home</div>
+      <div onclick="finish()" style="left: 27dvh" class="toolbarbutton">Finish</div>
+
+    </div>
+  </div>
+  <div class="hidden screen" id="questionsslide">
+    <div id="cgroups">
+    </div>
+    <div id="qag">
+    <div id="combo"><span id="question"></span><br>
+    <span onclick="reveal()" id="answer">Click here to reveal the answer...</span>
+    </div></div>
+    <div id="desccgroups">Click the teams below to toggle between correct, incorrect, or did not answer. Points are awarded for correct answers, but may be deducted for incorrect answers.</div>
+    <div id="toolbar">
+      <div class="questionval"></div>
+      <div style="left: 1dvh" onclick="scoreboardSlide()" class="toolbarbutton">Next</div>
+      <div style="left: 14dvh" onclick="home()" class="toolbarbutton">Home</div>
+      <div style="left: 27dvh" onclick="finish()" class="toolbarbutton">Finish</div>
+    </div>
+    <div style="background-color: red; background-image: url('suddendeathbackground.gif')" class="bg"></div>
+  </div>
+  <div class="hidden screen" id="scoreboard">
+    <div id="animationsdiv" class="hidden"></div>
+    <div id="returntohome2" class="hidden" onclick="home()">Return Home</div>
+    <div id="backtoendslide" class="hidden" onclick="hideallbutone('endofgame')">Show Results</div>
+    <div class="t2">
+    <div id="titlescore">SCOREBOARD</div>
+    <div id="toolbar">
+      <div class="questionval2"></div>
+      <div id="tools">
+        <div style="top: 0; left: 1dvh" onclick="preludeSlide()" class="toolbarbutton">Next</div>
+        <div style="top: 0; left: 14dvh" onclick="home()" class="toolbarbutton">Home</div>
+        <div style="top: 0; left: 27dvh" onclick="finish()" class="toolbarbutton">Finish</div>
+      </div>
+    </div>
+    </div>
+    <div id="sbteams">
+    </div>
+    <div style="background-color: red; background-image: url('suddendeathbackground.gif')" class="bg"></div>
+  </div>
+  <div class="hidden screen" id="endofgame">
+    <div onclick="home()" id="returntohome">Return Home</div>
+    <div onclick="hideallbutone('scoreboard')" id="showscoreboard">Show Scoreboard</div>
+    <img src="jettendslide.gif" id="jettendslide">
+    <div class="medal" id="gold">
+      <div class="medaltext"><span style="font-size: 4dvh" class="mts">
+      </span></div>
+    </div>
+    <div class="medal" id="silver">
+      <div class="medaltext"><span style="font-size: 3.5dvh" class="mts">
+      </span></div>
+    </div>
+    <div class="medal" id="bronze">
+      <div class="medaltext"><span style="font-size: 3dvh" class="mts">
+      </span></div>
+    </div>
+    <div style="background-color: black; background-image: url('suddendeathblackbackground.gif')" class="bg"></div>
+  </div>
+</body>
+<style>
+#loadingdot {
+  top: 33dvh;
+  width: 100%;
+  font-size: 4dvh;
+  text-align: center;
+  color: white;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 0%);
+}
+button {
+  font-family: fredokaone;
+}
+#animationsdiv {
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-size: cover;
+  background-position: 50% 50%;
+  position: fixed;
+  z-index: 10000;
+  transition: none;
+}
+.loadimages {
+  width: 0;
+  height: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.svi {
+  position: absolute;
+  height: 3.5dvh;
+  border-radius: 1dvh;
+  font-size: 2.25dvh;
+  background-color: black;
+  color: white;
+  width: 7dvh;
+  right: 1.5dvh;
+  border: none;
+}
+.slider {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 2.5dvh;
+  height: 2.5dvh;
+  background-color: #ff8d34;
+  border-radius: 4dvh;
+}
+.slidergroup {
+  outline: 0.5dvh solid white;
+  border-radius: 4dvh;
+  position: absolute;
+  right: 2dvh;
+  height: 2.5dvh;
+  top: 2dvh;
+  width: 6dvh;
+  background-color: black;
+}
+#halfwhite {
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  position: absolute;
+  background-color: rgba(255, 255, 255, 0.8);
+  z-index: -3;
+}
+#jettcog {
+  height: 16dvh;
+  left: 50%;
+  transform: translate(-50%, 0%);
+  bottom: 3dvh;
+  position: absolute;
+  width: auto;
+}
+#closesettings {
+  width: 6.5dvh;
+  height: 6.5dvh;
+  position: absolute;
+  left: 2dvh;
+  top: 3dvh;
+}
+#settingsarea {
+  overflow: hidden;
+  width: 100%;
+  top: -1dvh;
+  height: calc(100% + 2dvh);
+  outline: 1dvh solid white;
+  background-color: rgba(0, 0, 0, 0.8);
+  z-index: 2001;
+  color: white;
+  text-align: right;
+  position: fixed;
+  font-size: 3dvh;
+  left: calc(100% + 1dvh);
+  transition: 1s left;
+}
+#settings {
+  transition: 1s right;
+  right: -2dvh;
+  top: -1dvh;
+  position: fixed;
+  height: 8dvh;
+  color: white;
+  width: 26dvh;
+  font-size: 5dvh;
+  text-align: left;
+  outline: 1dvh solid white;
+  background-color: black;
+  border-radius: 1dvh;
+  z-index: 2000;
+}
+textarea {
+  -webkit-user-select: auto;
+  -webkit-touch-callout: none;
+  touch-action: manipulation;
+}
+#homepregame {
+  transition: 1s right;
+  right: -2dvh;
+  top: 6dvh;
+  position: fixed;
+  height: 8dvh;
+  color: white;
+  width: 26dvh;
+  font-size: 5dvh;
+  text-align: left;
+  outline: 1dvh solid white;
+  background-color: black;
+  border-radius: 1dvh;
+  z-index: 1999;
+}
+#jettendslide {
+  left: 2dvh;
+  bottom: 1dvh;
+  position: absolute;
+  width: auto;
+  height: 26dvh;
+  z-index: -2;
+}
+#backtoendslide {
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  font-size: 4dvh;
+  position: fixed;
+  left: 50%;
+  top: 3dvh;
+  width: 30dvh;
+  height: 5dvh;
+  outline: 1dvh solid white;
+  transform: translate(-50%, 0%);
+  text-align: center;
+  border-radius: 1dvh;
+}
+#showscoreboard {
+  opacity: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  font-size: 4dvh;
+  position: absolute;
+  left: 50%;
+  top: 3dvh;
+  width: 35dvh;
+  height: 5dvh;
+  outline: 1dvh solid white;
+  transform: translate(-50%, 0%);
+  transition: 3s opacity;
+  text-align: center;
+  border-radius: 1dvh;
+}
+#returntohome {
+  opacity: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  font-size: 4dvh;
+  position: absolute;
+  left: 50%;
+  bottom: 3dvh;
+  width: 30dvh;
+  height: 5dvh;
+  outline: 1dvh solid white;
+  transform: translate(-50%, 0%);
+  transition: 3s opacity;
+  text-align: center;
+  border-radius: 1dvh;
+}
+#returntohome2 {
+  z-index: 2;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  font-size: 4dvh;
+  position: fixed;
+  left: 50%;
+  bottom: 3dvh;
+  width: 30dvh;
+  height: 5dvh;
+  outline: 1dvh solid white;
+  transform: translate(-50%, 0%);
+  text-align: center;
+  border-radius: 1dvh;
+}
+.mts {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.medaltext {
+  backface-visibility: hidden;
+  width: 70%;
+  height: 70%;
+  word-wrap: break-word;
+  text-align: center;
+  left: 50%;
+  top: 50%;
+  position: absolute;
+  transform: translate(-50%, -50%) rotateY(0deg);
+}
+.medal {
+  background-size: cover;
+  background-position: 50% 50%;
+  transform: translate(-50%, -50%);
+  position: absolute;
+  overflow: hidden;
+  border-radius: 30dvh;
+  transition: 6s;
+  transition-property: opacity;
+  opacity: 0;
+}
+#gold {
+  background-image: url("goldstill.png");
+  left: 50%;
+  top: 50%;
+  height: 30dvh;
+  width: 30dvh;
+}
+#silver {
+  background-image: url("silverstill.png");
+  height: 25dvh;
+  width: 25dvh;
+}
+#bronze {
+  background-image: url("bronzestill.png");
+  height: 20dvh;
+  width: 20dvh;
+}
+#sbteams {
+  width: calc(100% - 4dvh);
+  height: 76dvh;
+  bottom: 2dvh;
+  overflow-y: scroll;
+  position: absolute;
+  left: 2dvh;
+}
+.sbteam {
+  padding: 1dvh;
+  background-color: rgba(0, 0, 0, 0.5);
+  font-size: 4dvh;
+  width: calc(100% - 2dvh);
+  overflow: hidden;
+  height: 4dvh;
+  color: white;
+  border-radius: 1dvh;
+  position: absolute;
+  left: 0;
+}
+#tools {
+  top: 8dvh;
+  width: 38dvh;
+  left: calc(50vw - 2dvh);
+  height: 4dvh;
+  transform: translate(-50%, 0%);
+  position: absolute;
+}
+#titlescore {
+  text-decoration: underline;
+  color: white;
+  font-size: 5dvh;
+  position: absolute;
+  text-align: center;
+  top: 2dvh;
+  left: 50%;
+  transform: translate(-50%, 0%);
+}
+.cn {
+  font-size: 4dvh;
+}
+#combo {
+  left: 50%;
+  top: 50%;
+  position: absolute;
+  height: auto;
+  transform: translate(-50%, -50%);
+  width: calc(100vw - 4dvh);
+}
+#desccgroups {
+  width: calc(100% - 4dvh);
+  word-wrap: break-word;
+  bottom: 26dvh;
+  text-align: center;
+  left: 50%;
+  transform: translate(-50%, 0%);
+  position: absolute;
+  color: white;
+  font-size: 2dvh;
+}
+#cgroups {
+  width: 100%;
+  position: absolute;
+  height: 24dvh;
+  bottom: 0;
+  left: 0;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+.cgroup {
+  overflow: hidden;
+  text-align: center;
+  color: white;
+  border-radius: 1dvh;
+  height: 10dvh;
+  background-image: url("halfblack.png");
+  background-position: 50% 50%;
+  background-size: cover;
+  position: absolute;
+}
+#answer {
+  font-size: 2dvh;
+}
+#question {
+  font-size: 5dvh;
+}
+#qag {
+  word-wrap: break-word;
+  width: 100%;
+  height: 45dvh;
+  top: 17dvh;
+  color: white;
+  text-align: center;
+  left: 0;
+  position: absolute;
+}
+.questionval {
+  color: white;
+  font-size: 6dvh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  white-space: nowrap;
+}
+.questionval2 {
+  color: white;
+  white-space: nowrap;
+  font-size: 3dvh;
+  position: absolute;
+  text-align: center;
+  width: 100vw;
+  height: 3.5dvh;
+  top: 14dvh;
+  left: calc(50vw - 2dvh);
+  transform: translate(-50%, 0%);
+}
+.toolbarbutton {
+  color: white;
+  text-align: center;
+  border-radius: 1dvh;
+  width: 10dvh;
+  top: 8dvh;
+  height: 4dvh;
+  font-size: 3.5dvh;
+  outline: 1dvh solid white;
+  position: absolute;
+}
+#toolbar {
+  position: absolute;
+  top: 2dvh;
+  left: 2dvh;
+}
+#speechtriangle {
+  width: 7dvh;
+  height: 5dvh;
+  position: absolute;
+  left: 18.5dvh;
+  bottom: 19dvh;
+}
+#ptdescription {
+  word-wrap: break-word;
+  width: calc(100% - 8dvh);
+  left: 50%;
+  text-align: center;
+  color: white;
+  top: 49dvh;
+  position: absolute;
+  transform: translate(-50%, 0%);
+  font-size: 2.5dvh;
+}
+#pointvalue {
+  height: 10dvh;
+  width: auto;
+  left: 50%;
+  transform: translate(-50%, 0%);
+  position: absolute;
+  top: 30.5dvh;
+
+}
+#loadbaroutline2 {
+  width: calc(100% - 7dvh);
+  height: 5dvh;
+  outline: 1.5dvh solid white;
+  border-radius: 3dvh;
+  transform: translate(-50%, -100%);
+  position: absolute;
+  left: 50%;
+  top: 50%;
+}
+#loadbar2 {
+  width: 0%;
+  border-radius: 10dvh;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: #fe7c00;
+  transition: 1s width;
+}
+#loadbar {
+  width: 0%;
+  border-radius: 10dvh;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+#text4speech {
+  width: 100%;
+  height: auto;
+  color: #ff8d34;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  left: 50%;
+  top: 50%;
+}
+#loadbaroutline {
+  width: calc(100% - 7dvh);
+  height: 5dvh;
+  outline: 1.5dvh solid white;
+  border-radius: 3dvh;
+  transform: translate(-50%, -100%);
+  position: absolute;
+  left: 50%;
+  top: 50%;
+}
+#speech {
+  overflow: hidden;
+  padding: 1dvh;
+  font-weight: bold;
+  width: calc(100vw - 31.5dvh);
+  height: 19dvh;
+  outline: 1.5dvh solid #ff8d34;
+  font-size: 3dvh;
+  color: #ff8d34;
+  left: 24dvh;
+  bottom: 1.5dvh;
+  border-radius: 1dvh;
+  text-align: center;
+  word-wrap: break-word;
+  position: absolute;
+}
+#jetthead {
+  transform: translate(-50%, -50%);
+  left: 42.59%;
+  bottom: 2.1459dvh;
+  height: 14.35dvh;
+  width: 16.91dvh;
+  z-index: 1;
+  position: absolute;
+}
+#jettbody {
+  width: 20dvh;
+  height: 15.34dvh;
+  position: absolute;
+  left: 0;
+  z-index: 0;
+  bottom: 0;
+}
+#jett {
+  position: absolute;
+  bottom: 2dvh;
+  width: 20dvh;
+  height: auto;
+  left: 2dvh;
+}
+.bg {
+  z-index: -1000;
+  pointer-events: none;
+  width: 100vw;
+  height: 100dvh;
+  left: 0;
+  top: 0;
+  position: fixed;
+  background-size: cover;
+  background-position: 50% 50%;
+}
+textarea {
+  font-family: fredokaone;
+}
+input {
+  font-family: fredokaone;
+}
+body {
+  font-family: fredokaone;
+}
+@font-face {
+  font-family: fredokaone;
+  src: url("FredokaOne-Regular.otf");
+}
+#startbutton {
+  background-color: black;
+  left: 50%;
+  transform: translate(-50%, 0%);
+  bottom: 1.5dvh;
+  width: 13dvh;
+  height: 8dvh;
+  border: none;
+  text-align: center;
+  font-size: 3.5dvh;
+  border-radius: 2.5dvh;
+  text-align: center;
+  color: white;
+  position: absolute;
+}
+#individuals {
+  width: calc(100% - 6dvh);
+  left: 3dvh;
+  bottom: 3dvh;
+  position: absolute;
+  height: 56dvh;
+}
+#individnames {
+  border-radius: 1dvh;
+  outline: 1dvh solid black;
+  border: none;
+  resize: none;
+  background-color: rgba(255, 255, 255, 0.8);
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  position: absolute;
+  text-align: center;
+  font-size: 3dvh;
+}
+.remove {
+  width: 4dvh;
+  height: 4dvh;
+  position: absolute;
+  top: 5.5dvh;
+  right: 2dvh;
+}
+.names {
+  background-color: rgba(0, 0, 0, 0);
+  height: 11dvh;
+  width: calc(100% - 8dvh);
+  resize: none;
+  border: none;
+  bottom: 0;
+  text-align: center;
+  font-size: 2dvh;
+  left: 0;
+  position: absolute;
+}
+.teamname {
+  background-color: rgba(0, 0, 0, 0);
+  position: absolute;
+  top: 0;
+  left: 0;
+  border: none;
+  font-size: 3.5dvh;
+  height: 4dvh;
+  width: calc(100% - 8dvh);
+  text-align: center;
+}
+.group {
+  background-color: rgba(255, 255, 255, 0.8);
+  overflow: hidden;
+  left: 1dvh;
+  top: 1dvh;
+  position: absolute;
+  width: calc(100% - 2dvh);
+  height: 15dvh;
+  border-radius: 1dvh;
+  outline: 1dvh solid black;
+}
+#actualgroups {
+  border-radius: 1dvh;
+  width: 100%;
+  height: 52dvh;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  overflow-y: scroll;
+}
+#groups {
+  width: calc(100% - 4dvh);
+  height: 58dvh;
+  top: 39.5dvh;
+  left: 2dvh;
+  position: absolute;
+}
+#add {
+  width: 4dvh;
+  height: 4dvh;
+  left: 50%;
+  transform: translate(-50%, 0%);
+  top: 0;
+  position: absolute;
+}
+.hidden {
+  pointer-events: none;
+  opacity: 0;
+}
+#logotop {
+  height: 15dvh;
+  width: auto;
+  position: absolute;
+  transform: translate(-50%, -50%);
+}
+#logocomponents {
+  word-wrap: break-word;
+  text-align: center;
+  height: auto;
+  color: black;
+  width: auto;
+  transform: translate(-50%, -50%);
+  left: 50%;
+  top: 70%;
+  position: absolute;
+}
+.groupbased {
+  position: absolute;
+  height: 100%;
+  right: 0;
+  top: 0;
+  width: 50%;
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.8);
+  font-size: 2dvh;
+}
+.selected {
+  background-color: black;
+  color: white;
+}
+.individualbased {
+  position: absolute;
+  height: 100%;
+  left: 0;
+  top: 0;
+  width: 50%;
+  text-align: center;
+  font-size: 2dvh;
+  background-color: rgba(255, 255, 255, 0.8);
+}
+.n {
+  transition: 1s opacity;
+}
+  #toggler {
+    overflow: hidden;
+    width: calc(100% - 7dvh);
+    height: 2.5dvh;
+    outline: 1.5dvh solid black;
+    border-radius: 1dvh;
+    position: absolute;
+    left: 3.5dvh;
+    top: 33.5dvh;
+  }
+  #titleslide {
+    background-size: cover;
+    background-position: 50% 50%;
+    backdrop-filter: brightness(150%);
+    overflow: hidden;
+    width: calc(100% - 7dvh);
+    height: 25dvh;
+    color: white;
+    outline: 1.5dvh solid black;
+    position: absolute;
+    left: 3.5dvh;
+    top: 3.5dvh;
+    border-radius: 1dvh;
+  }
+  #pregame {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+  }
+</style>
+<script>
+  { //ios textarea blur fix
+  function iosTextareaFix() {
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+  if (!isIOS) return;
+
+  document.addEventListener('touchend', (e) => {
+      const active = document.activeElement;
+      if (active && active.tagName === 'TEXTAREA' && !e.target.closest('textarea')) {
+        // Force blur textarea
+        active.blur();
+
+        // Force a layout recalculation (this is key)
+        window.scrollTo(window.scrollX, window.scrollY);
+      }
+    },
+    { passive: true }
+  );
+}
+
+iosTextareaFix();
+  }
+  if (sessionStorage.getItem("setToUse")) {
+    current = sessionStorage.getItem("setToUse");
+    sessionStorage.removeItem("setToUse");
+  } else {
+    window.location.href = "urlerror.html";
+  }
+  { //load images
+  //imgToLoad = ["goldstill", "silverstill", "bronzestill", "goldmoving.gif", "silvermoving.gif", "bronzemoving.gif"];
+	imgToLoad = [];
+  ptvalues = [2, 3, 5, 8, 13, 21, 34, 55, 89, 144];
+  game = "sd";
+  powerplayanimlength = ["doubleanim", "spliceanim", "stealanim", "eliminateanim"];
+  doubleanim = 64;
+  spliceanim = 65;
+  stealanim = 117;
+  eliminateanim = 79;
+  for (i = 0; i < ptvalues.length; i++) {
+    imgToLoad.push(game.concat(ptvalues[i].toString()));
+  }
+  for (i = 0; i < powerplayanimlength.length; i++) {
+    for (a = 0; a < window[powerplayanimlength[i]]; a++) {
+      imgToLoad.push(powerplayanimlength[i].concat("f", (a + 1).toString()))
+    }
+  }
+  eal = eliminateanim;
+  stal = stealanim;
+  sal = spliceanim;
+  dal = doubleanim;
+  otheral = 10;
+  totalal = otheral + dal + stal + sal + eal;  
+  cnl = 0;
+  pct = 0;
+  ls = false;
+  window.addEventListener("DOMContentLoaded", function() {
+  for (i = 0; i < imgToLoad.length; i++) {
+    img = document.createElement("img");
+    document.body.appendChild(img);
+    img.addEventListener("load", function(event) {
+    cnl++;
+    ff = event.target.id.substring(0, 4);
+    if (ff == "doub") {
+      dal--;
+      if (dal < 1) {
+        pct += 22.5;
+      }
+    } else if (ff == "stea") {
+      stal--;
+      if (stal < 1) {
+        pct += 22.5;
+      }
+    } else if (ff == "spli") {
+      sal--;
+      if (sal < 1) {
+        pct += 22.5;
+      }
+    } else if (ff == "elim") {
+      eal--;
+      if (eal < 1) {
+        pct += 22.5;
+      }
+    } else {
+      otheral--;
+      if (otheral < 1) {
+        pct += 10;
+      }
+    }
+    document.getElementById("loadbar2").style.width = pct.toString() + "%";
+    document.getElementById("loadingdot").innerHTML = "Loading... (".concat(Math.floor(cnl / totalal * 100).toString(), "%)");
+    if (ls && pct == 100) {
+      preludeSlide();
+    }
+  })
+    img.width = 300;
+    img.height = 300;
+    img.classList.add("hidden");
+    img.id = imgToLoad[i];
+    img.style.display = "none";
+    if (imgToLoad[i] == "goldmoving.gif" || imgToLoad[i] == "silvermoving.gif" || imgToLoad[i] == "bronzemoving.gif") {
+    img.src = imgToLoad[i];
+    } else {
+    img.src = imgToLoad[i].concat(".png");
+    }
+  }
+  });
+  }
+  { //resize function
+  window.addEventListener("resize", resizee);
+  function resizee() {
+    for (i = 0; i < document.getElementsByClassName("group").length; i++) {
+      document.getElementsByClassName("group")[i].style.top = (i * window.innerHeight * 0.19) + window.innerHeight * 0.01;
+    }
+    width = window.innerWidth;
+    height = window.innerHeight;
+    ratio = (height / width) * 0.5;
+    margin = height * 0.02;
+    nopr = parseInt((1 / (ratio / 1.5)) * 1.5);
+    for (i = 0; i < document.getElementsByClassName("cgroup").length; i++) {
+      widthVal = ((width - margin) - (margin * nopr)) / nopr;
+      document.getElementsByClassName("cgroup")[i].style.width = widthVal;
+      remainder = (i + 1)%nopr;
+      if (remainder == 0) { remainder = nopr; }
+      document.getElementsByClassName("cgroup")[i].style.left = margin + ((remainder - 1) * (margin + widthVal));
+      level = ((i + 1) - remainder) / nopr;
+      document.getElementsByClassName("cgroup")[i].style.top = (level * (margin + window.innerHeight * 0.1));
+    }
+    if (ratio > 0.5) {
+      document.getElementById("gold").style.width = "20dvh";
+      document.getElementById("gold").style.height = "20dvh";
+      document.getElementById("silver").style.width = "15dvh";
+      document.getElementById("silver").style.height = "15dvh";
+      document.getElementById("bronze").style.width = "10dvh";
+      document.getElementById("bronze").style.height = "10dvh";
+      document.getElementById("silver").style.top = "30dvh";
+      document.getElementById("bronze").style.top = "67.5dvh";
+      document.getElementById("silver").style.left = "50%";
+      document.getElementById("bronze").style.left = "50%";
+    } else {
+      document.getElementById("gold").style.width = "30dvh";
+      document.getElementById("gold").style.height = "30dvh";
+      document.getElementById("silver").style.width = "25dvh";
+      document.getElementById("silver").style.height = "25dvh";
+      document.getElementById("bronze").style.width = "20dvh";
+      document.getElementById("bronze").style.height = "20dvh";
+      document.getElementById("silver").style.left = (window.innerWidth * 0.5) - window.innerHeight * 0.325;
+      document.getElementById("bronze").style.left = (window.innerWidth * 0.5) + window.innerHeight * 0.3;
+      document.getElementById("silver").style.top = "50%";
+      document.getElementById("bronze").style.top = "50%";
+    }
+  }
+  }
+  resizee();
+  document.getElementById("nameofset").innerHTML = localStorage.getItem(current.concat("n"));
+  document.getElementById("titleslide").style.backgroundImage = "url('".concat(localStorage.getItem(current.concat("p")), ".png')");
+  ar = false;
+  document.addEventListener('keydown', (event) => {
+  if (event.key == "ArrowRight" && ar == false) {
+    for (i = 0; i < document.getElementsByClassName("screen").length; i++) {
+      if (document.getElementsByClassName("screen")[i].classList.contains("hidden")) {} else {
+        screenOn = document.getElementsByClassName("screen")[i].id;
+      }
+    }
+    if (screenOn == "prelude") {
+      skip();
+    }
+    if (screenOn == "questionsslide") {
+      scoreboardSlide();
+    }
+    if (screenOn == "scoreboard") {
+      preludeSlide();
+    }
+  }
+  });
+  ls = false;
+  function loadingSlide() {
+    hideallbutone("loadingscreen");
+    ls = true;
+    window.innerHeight;
+    if (pct == 100 || animationsenabled == false) {
+      preludeSlide();
+    }
+  }
+  { /*functions for pregame slide*/ 
+  dgr = true;
+  function toggletype() {
+    if (!(event.target.classList.contains("selected"))) {
+      if (document.getElementsByClassName("groupbased")[0] == event.target) {
+        document.getElementsByClassName("groupbased")[0].classList.add("selected");
+        document.getElementsByClassName("individualbased")[0].style.backgroundColor = "rgba(255, 255, 255, 0.8)";
+        document.getElementsByClassName("individualbased")[0].style.color = "black";
+        document.getElementById("groups").classList.remove("hidden");
+        document.getElementById("individuals").classList.add("hidden");
+        dgr = true;
+      } else {
+        dgr = false;
+        document.getElementsByClassName("individualbased")[0].style.backgroundColor = "black";
+        document.getElementsByClassName("individualbased")[0].style.color = "white";
+        document.getElementsByClassName("groupbased")[0].classList.remove("selected");
+        document.getElementById("groups").classList.add("hidden");
+        document.getElementById("individuals").classList.remove("hidden");
+      }
+    }
+  }
+  numgroups = 1;
+  function addgroup() {
+    if (numgroups != 10) {
+    numgroups++;
+    newDiv = document.createElement("div");
+    newDiv.classList.add("group");
+    document.getElementById("actualgroups").appendChild(newDiv);
+    newInput = document.createElement("input");
+    newInput.setAttribute("placeholder", "Team Name...");
+    newInput.classList.add("teamname");
+    newDiv.appendChild(newInput);
+    newTxt = document.createElement("textarea");
+    if (numgroups == 1) {
+      newTxt.setAttribute("placeholder", "Enter this team's members' names like this...\nex: John\nSue\nStacy");
+    } else {
+      newTxt.setAttribute("placeholder", "Team Members' Names...");
+    }
+    newTxt.classList.add("names");
+    newDiv.appendChild(newTxt);
+    newImg = document.createElement("img");
+    newImg.src = "delete.png";
+    newImg.setAttribute("onclick", "remove()");
+    newImg.classList.add("remove");
+    newDiv.appendChild(newImg);
+    resizee();
+    }
+  }
+  function remove() {
+    for (i = 0; i < document.getElementsByClassName("remove").length; i++) {
+    if (event.target == document.getElementsByClassName("remove")[i]) {
+      groupToDelete = i;
+      break;
+    }
+  }
+  numgroups--;
+  document.getElementsByClassName("group")[groupToDelete].remove();
+  if (numgroups != 0) {
+    document.getElementsByClassName("names")[0].setAttribute("placeholder", "Enter this team's members' names like this...\nex: John\nSue\nStacy");
+  }
+  resizee();
+  }
+  function start() {
+    if (dgr == true) {NamesTheSame = false;
+    TNtheSame = false;
+    notAllEntered = false;
+    for (i = 0; i < document.getElementsByClassName("group").length; i++) {
+      for (a = 0; a < document.getElementsByClassName("group").length; a++) {
+        if (a == i) { continue; }
+        if (document.getElementsByClassName("teamname")[i].value == document.getElementsByClassName("teamname")[a].value) {
+          TNtheSame = true;
+        }
+      }
+      if (document.getElementsByClassName("names")[i].value == "" || document.getElementsByClassName("teamname")[i].value == "") {
+        notAllEntered = true;
+      }
+    }
+    allnames = [];
+    for (i = 0; i < document.getElementsByClassName("group").length; i++) {
+      vfl = document.getElementsByClassName("names")[i].value;
+      newname = "";
+      for (a = 0; a < vfl.length; a++) {
+        if ((a + 1) >= vfl.length) {
+          if (vfl.substring(a, a+1) != "\n") {
+            newname = newname.concat(vfl.substring(a, a+1));
+          }
+          allnames.push(newname.toUpperCase());
+          newname = "";
+        } else if (vfl.substring(a, a+1) == "\n") {
+          if (newname != "") {
+          allnames.push(newname.toUpperCase());
+          newname = "";
+          }
+        } else {
+          newname = newname.concat(vfl.substring(a, a + 1));
+        }
+      }
+    }
+    for (i = 0; i < allnames.length; i++) {
+      for (a = 0; a < allnames.length; a++) {
+        if (a == i) { continue; }
+        if (allnames[a] == allnames[i]) {
+          NamesTheSame = true;
+        }
+      }
+    }
+    cycval = parseFloat(document.getElementsByClassName("svi")[0].value);
+    loadval = parseFloat(document.getElementsByClassName("svi")[1].value);
+    if (NamesTheSame) { alert("Two or more of the players' names you entered are the same. Please make sure every player's name is unique. :)") }
+    else if (notAllEntered) { alert("One or more of the blanks (team names and team members blanks included) is not filled in.") }
+    else if (TNtheSame) { alert("Two or more team names are the same.") }
+    else if (numgroups < 2) { alert("Please add at least two groups to get started.");
+    } else if ((cycval % 1 != 0 || cycval < 1 || cycval > 100 || !(cycval > 0) || (cycval == 1 && document.getElementsByClassName("svi")[0].value != "1")) && !endlessmode) {
+      alert("The value for the amount of question cycles must be a whole number between 1 and 100.");
+    } else if ((loadval % 1 != 0 || loadval < 1 || loadval > 15 || !(loadval > 0) || (loadval == 1 && document.getElementsByClassName("svi")[1].value != "1"))) {
+      alert("The value for loadbar duration must be a whole number between 1 and 15.");
+    } else {
+      actstart();
+    }} else {
+      NamesTheSame = false;
+      allnames = [];
+      vfl = document.getElementById("individnames").value;
+      newname = "";
+      for (a = 0; a < vfl.length; a++) {
+        if ((a + 1) >= vfl.length) {
+          if (vfl.substring(a, a+1) != "\n") {
+            newname = newname.concat(vfl.substring(a, a+1));
+          }
+          allnames.push(newname.toUpperCase());
+          newname = "";
+        } else if (vfl.substring(a, a+1) == "\n" || (a + 1) >= vfl.length) {
+          if (newname != "") {
+          allnames.push(newname.toUpperCase());
+          newname = "";
+          }
+        } else {
+          newname = newname.concat(vfl.substring(a, a + 1));
+        }
+      }
+      for (i = 0; i < allnames.length; i++) {
+      for (a = 0; a < allnames.length; a++) {
+        if (a == i) { continue; }
+        if (allnames[a] == allnames[i]) {
+          NamesTheSame = true;
+        }
+      }
+    }
+    cycval = parseFloat(document.getElementsByClassName("svi")[0].value);
+    loadval = parseFloat(document.getElementsByClassName("svi")[1].value);
+    if (NamesTheSame) {
+      alert("Two or more players' names are the same. Please make sure every player has their own unique name.");
+    } else if (document.getElementById("individnames").value == "") {
+      alert("Please fill in the blank with player names to begin.");
+    } else if (allnames.length > 100) {
+      alert("Please keep the amount of players below 100.");
+    } else if (allnames.length < 2) {
+      alert("You need at least two players to start.");
+    } else if ((cycval % 1 != 0 || cycval < 1 || cycval > 100 || !(cycval > 0) || (cycval == 1 && document.getElementsByClassName("svi")[0].value != "1")) && !endlessmode) {
+      alert("The value for the amount of question cycles must be a whole number between 1 and 100.");
+    } else if ((loadval % 1 != 0 || loadval < 1 || loadval > 15 || !(loadval > 0) || (loadval == 1 && document.getElementsByClassName("svi")[1].value != "1"))) {
+      alert("The value for loadbar duration must be a whole number between 1 and 15.");
+    } else {
+      actstart(allnames);
+    }
+    }
+  }
+  function actstart(arraya) {
+    document.getElementById("loadbar").style.transition = loadval.toString().concat("s width");
+    numcgroups = 0;
+    numsbgroups = 0;
+    if (dgr) {
+      for (i = 0; i < numgroups; i++) {
+        addcgroup();
+        addsbgroup();
+      }
+      resizee();
+      for (i = 0; i < document.getElementsByClassName("group").length; i++) {
+      vfl = document.getElementsByClassName("names")[i].value;
+      window["names".concat((i + 1).toString())] = [];
+      newname = "";
+      for (a = 0; a < vfl.length; a++) {
+        if ((a + 1) >= vfl.length) {
+          if (vfl.substring(a, a+1) != "\n") {
+            newname = newname.concat(vfl.substring(a, a+1));
+          }
+          window["names".concat((i + 1).toString())].push(newname);
+          newname = "";
+        } else if (vfl.substring(a, a+1) == "\n") {
+          if (newname != "") {
+          window["names".concat((i + 1).toString())].push(newname);
+          newname = "";
+          }
+        } else {
+          newname = newname.concat(vfl.substring(a, a + 1));
+        }
+        }
+      }
+    } else {
+      names = [];
+      vfl = document.getElementById("individnames").value;
+      newname = "";
+      for (a = 0; a < vfl.length; a++) {
+        if ((a + 1) >= vfl.length) {
+          if (vfl.substring(a, a+1) != "\n") {
+            newname = newname.concat(vfl.substring(a, a+1));
+          }
+          names.push(newname);
+          newname = "";
+        } else if (vfl.substring(a, a+1) == "\n" || (a + 1) >= vfl.length) {
+          if (newname != "") {
+          names.push(newname);
+          newname = "";
+          }
+        } else {
+          newname = newname.concat(vfl.substring(a, a + 1));
+        }
+      }
+      for (i = 0; i < names.length; i++) {
+        addcgroupi(names[i]);
+        addsbgroupi(names[i]);
+      }
+      resizee();
+    }
+    loadingSlide();
+  }
+  function addsbgroup() {
+    numsbgroups++;
+    newDiv = document.createElement("div");
+    newDiv.classList.add("sbteam");
+    newDiv.innerHTML = document.getElementsByClassName("teamname")[numsbgroups - 1].value;
+    document.getElementById("sbteams").appendChild(newDiv);
+    newSpan = document.createElement("span");
+    newSpan.style.right = "1dvh";
+    newSpan.style.position = "absolute";
+    newSpan.style.textAlign = "right";
+    newSpan.classList.add("score");
+    newSpan.innerHTML = "0";
+    newDiv.appendChild(newSpan);
+  }
+  function addsbgroupi(arraya) {
+    numsbgroups++;
+    newDiv = document.createElement("div");
+    newDiv.classList.add("sbteam");
+    newDiv.innerHTML = arraya;
+    document.getElementById("sbteams").appendChild(newDiv);
+    newSpan = document.createElement("span");
+    newSpan.style.right = "1dvh";
+    newSpan.style.position = "absolute";
+    newSpan.style.textAlign = "right";
+    newSpan.classList.add("score");
+    newSpan.innerHTML = "0";
+    newDiv.appendChild(newSpan);
+  }
+  function addcgroup() {
+    numcgroups++;
+    newDiv = document.createElement("div");
+    newDiv.setAttribute("onclick", "togglebetween()");
+    newDiv.classList.add("cgroup");
+    document.getElementById("cgroups").appendChild(newDiv);
+    newSpan = document.createElement("span");
+    newSpan.style.fontSize = "1dvh";
+    newDiv.appendChild(newSpan);
+    newBr = document.createElement("br");
+    newSpan.appendChild(newBr);
+    newSpan = document.createElement("span");
+    newSpan.classList.add("cn");
+    newDiv.appendChild(newSpan);
+    newBr = document.createElement("br");
+    newDiv.appendChild(newBr);
+    newSpan = document.createElement("span");
+    newSpan.classList.add("ctn");
+    newSpan.innerHTML = document.getElementsByClassName("teamname")[numcgroups - 1].value;
+    newDiv.appendChild(newSpan);
+  }
+  function addcgroupi(arraya) {
+    numcgroups++;
+    newDiv = document.createElement("div");
+    newDiv.setAttribute("onclick", "togglebetween()");
+    newDiv.classList.add("cgroup");
+    document.getElementById("cgroups").appendChild(newDiv);
+    newSpan = document.createElement("span");
+    newSpan.style.fontSize = "1dvh";
+    newDiv.appendChild(newSpan);
+    newBr = document.createElement("br");
+    newSpan.appendChild(newBr);
+    newSpan = document.createElement("span");
+    newSpan.classList.add("cn");
+    newSpan.innerHTML = arraya;
+    newDiv.appendChild(newSpan);
+  }
+  so = false;
+  function togglesettings() {
+    if (!so) {
+      so = true;
+      document.getElementById("settings").style.right = "calc((100% - 2dvh)";
+      document.getElementById("settingsarea").style.left = "0";
+      document.getElementById("homepregame").style.right = "calc(100% - 2dvh)";
+    } else {
+      so = false;
+      document.getElementById("settings").style.right = "-2dvh";
+      document.getElementById("settingsarea").style.left = "calc(100% + 1dvh)";
+      document.getElementById("homepregame").style.right = "-2dvh";
+    }
+  }
+  allsettings = ["endlessmode", "powerplaysenabled", "animationsenabled", "backgroundmusic", "soundeffects"];
+  endlessmode = true;
+  powerplaysenabled = false;
+  animationsenabled = false;
+  backgroundmusic = false;
+  soundeffects = false;
+  for (i = 0; i < allsettings.length; i++) {
+    toggler(i);
+    window.innerHeight;
+    document.getElementsByClassName("slider")[i].style.transition = "1s left";
+    document.getElementsByClassName("slidergroup")[i].style.transition = "1s background-color";
+  }
+  function toggler(paramt) {
+   numToToggle = parseInt(paramt);
+    if ((window[allsettings[numToToggle]]) == false) {
+      document.getElementsByClassName("slidergroup")[numToToggle].style.backgroundColor = "white";
+      document.getElementsByClassName("slider")[numToToggle].style.left = "3.5dvh";
+      window[allsettings[numToToggle]] = true;
+    } else {
+      document.getElementsByClassName("slidergroup")[numToToggle].style.backgroundColor = "black";
+      document.getElementsByClassName("slider")[numToToggle].style.left = "0";
+      window[allsettings[numToToggle]] = false;
+    }
+    if (endlessmode) {
+      document.getElementsByClassName("n")[0].style.opacity = 0.3;
+      document.getElementsByClassName("n")[1].style.opacity = 0.3;
+      document.getElementsByClassName("svi")[0].style.opacity = 0.3;
+      document.getElementsByClassName("svi")[0].style.pointerEvents = "none";
+    } else {
+      document.getElementsByClassName("n")[0].style.opacity = 1;
+      document.getElementsByClassName("n")[1].style.opacity = 1;
+      document.getElementsByClassName("svi")[0].style.opacity = 1;
+      document.getElementsByClassName("svi")[0].style.pointerEvents = "all";
+    }
+  }
+  document.getElementsByClassName("svi")[0].value = "1";
+  document.getElementsByClassName("svi")[1].value = "5";
+  allinputss = ["numberofcycles", "loadbarduration"];
+  inputss(0);
+  inputss(1);
+  window.addEventListener("keydown", rui);
+  window.addEventListener("paste", rui);
+  window.addEventListener("cut", rui);
+  function rui() {
+    setTimeout(function() {
+    if (document.getElementsByClassName("svi")[0].value.length > 3) {
+      document.getElementsByClassName("svi")[0].value = document.getElementsByClassName("svi")[0].value.substring(0, 3);
+    }
+    if (document.getElementsByClassName("svi")[1].value.length > 2) {
+      document.getElementsByClassName("svi")[1].value = document.getElementsByClassName("svi")[1].value.substring(0, 2);
+    }
+    inputss(0);
+    inputss(1);
+    }, 100);
+  }
+  function inputss(paramt) {
+    paramt = parseInt(paramt);
+    window[allinputss[paramt]] = parseInt(document.getElementsByClassName("svi")[paramt].value);
+    predictedTime = Math.round((parseInt(localStorage.getItem(current.concat("qat"))) * parseInt(document.getElementsByClassName("svi")[0].value) * (40 + parseInt(document.getElementsByClassName("svi")[1].value))) / 60);
+    if (predictedTime < 1) {
+      min = 1;
+    } else {
+      min = predictedTime - 1;
+    }
+    max = predictedTime + 1;
+    if (!predictedTime) {
+    predictedTime = "...";
+    } else {
+    predictedTime = min.toString().concat("-", max.toString(), "min");
+    }
+    document.getElementById("prediction").innerHTML = predictedTime;
+  }
+  }
+  {  //functions for prelude slide
+  function hideallbutone(toShow) {
+    for (i = 0; i < document.getElementsByClassName("screen").length; i++) {
+      document.getElementsByClassName("screen")[i].classList.add("hidden");
+    }
+    document.getElementById(toShow).classList.remove("hidden");
+  }
+  ptcolors = ["#0080fe", "#00acfe", "#00f2fe", "#00fe6f", "#06fe00", "#94fe00", "#fef500", "#fec500", "#fea500", "#fe7c00"];
+  powerplays = ["double", "steal", "splice", "eliminate", "random"];
+  powerplaycolors = ["white", "white", "white", "white", "white"];
+  powerplaydesc = ["Double your score!", "Steal all of the team in first place's points!", "Split every other team's score in half!", "Wipe all of the team in first place's points (unless you're in first)!", "A random power play is in effect!"];
+  questionnumber = 0;
+  qn = 0;
+  slidenum = 1;
+  function preludeSlide() {
+    if (questionnumber == 0) {
+      document.getElementsByClassName("toolbarbutton")[2].style.opacity = 0.5;
+      document.getElementsByClassName("toolbarbutton")[5].style.opacity = 0.5;
+      document.getElementsByClassName("toolbarbutton")[2].style.pointerEvents = "none";
+      document.getElementsByClassName("toolbarbutton")[5].style.pointerEvents = "none";
+      for (i = 0; i < numsbgroups; i++) {
+        window[(i + 1).toString().concat("score")] = 0;
+      }
+      if (dgr) {
+      for (i = 0; i < numgroups; i++) {
+        window[(i + 1).toString().concat("status")] = 0;
+      }
+      } else {
+      for (i = 0; i < names.length; i++) {
+        window[(i + 1).toString().concat("status")] = 0;
+      }
+      }
+    } else { document.getElementsByClassName("toolbarbutton")[2].style.opacity = 1;
+      document.getElementsByClassName("toolbarbutton")[5].style.opacity = 1;
+      document.getElementsByClassName("toolbarbutton")[2].style.pointerEvents = "all";
+      document.getElementsByClassName("toolbarbutton")[5].style.pointerEvents = "all"; }
+    for (i = 0; i < document.getElementsByClassName("cgroup").length; i++) {
+      document.getElementsByClassName("cgroup")[i].style.backgroundImage = "url('halfblack.png')";
+      window[(i + 1).toString().concat("status")] = 0;
+    }
+    if (qn == parseInt(localStorage.getItem(current.concat("qat")))) {
+      qn = 1;
+    } else {
+      qn++;
+    }
+    questionnumber++;
+    hideallbutone("prelude");
+    document.getElementById("answer").innerHTML = "Click here to reveal the answer...";
+    if (!endlessmode) {
+    document.getElementsByClassName("questionval")[0].innerHTML = "Question ".concat(questionnumber.toString(), "/", (parseInt(localStorage.getItem(current.concat("qat"))) * numberofcycles));
+    document.getElementsByClassName("questionval")[1].innerHTML = "Question ".concat(questionnumber.toString(), "/", (parseInt(localStorage.getItem(current.concat("qat"))) * numberofcycles));
+    document.getElementsByClassName("questionval2")[0].innerHTML = "Question ".concat(questionnumber.toString(), "/", (parseInt(localStorage.getItem(current.concat("qat"))) * numberofcycles));
+    } else {
+    document.getElementsByClassName("questionval")[0].innerHTML = "Question ".concat(qn.toString(), "/", (parseInt(localStorage.getItem(current.concat("qat")))));
+    document.getElementsByClassName("questionval")[1].innerHTML = "Question ".concat(qn.toString(), "/", (parseInt(localStorage.getItem(current.concat("qat")))));
+    document.getElementsByClassName("questionval2")[0].innerHTML = "Question ".concat(qn.toString(), "/", (parseInt(localStorage.getItem(current.concat("qat")))));
+    }
+    document.getElementById("loadbar").style.transition = loadval.toString().concat("s width");
+    document.getElementById("loadbar").offsetHeight;
+    document.getElementById("loadbar").style.width = "100%";
+    pointVal = ptvalues[(questionnumber - 1) % ptvalues.length];
+    window.innerHeight;
+    if (powerplaysenabled && pointVal > 33 && pointVal < 100) {
+      chance = Math.floor(Math.random() * 2) + 1;
+      if (chance == 1) {
+        chance = Math.floor(Math.random() * 5) + 1;
+        powerplay = powerplays[chance - 1];
+      } else {
+        powerplay = false;
+      }
+    } else {
+    powerplay = false;
+    }
+    document.getElementById("question").innerHTML = localStorage.getItem(current.concat("q", qn.toString()))
+    if (dgr) {
+    namesToUse = "";
+    if (dgr) {
+    for (i = 0; i < numgroups; i++) {
+      document.getElementsByClassName("cn")[i].innerHTML = window["names" + (i + 1).toString()][(questionnumber - 1) % window["names" + (i + 1).toString()].length];
+    }
+    }
+    for (i = 0; i < document.getElementsByClassName("teamname").length; i++) {
+      if ((i + 1) == document.getElementsByClassName("teamname").length) {
+      namesToUse = namesToUse.concat("and ", window["names" + (i + 1).toString()][(questionnumber - 1) % window["names" + (i + 1).toString()].length], "!");
+      } else if ((i + 2) == document.getElementsByClassName("teamname").length && document.getElementsByClassName("teamname").length == 2) {
+      namesToUse = namesToUse.concat(window["names" + (i + 1).toString()][(questionnumber - 1) % window["names" + (i + 1).toString()].length], " ");
+      } else {
+      namesToUse = namesToUse.concat(window["names" + (i + 1).toString()][(questionnumber - 1) % window["names" + (i + 1).toString()].length], ", ");
+      }
+    }
+    document.getElementById("text4speech").innerHTML = "Get Ready, ".concat(namesToUse);
+    } else {
+    document.getElementById("text4speech").innerHTML = "Get Ready, everyone!";
+    }
+    if (powerplay == false) {
+      document.getElementById("pointvalue").src = game.concat(pointVal.toString(), ".png");
+      document.getElementById("ptdescription").innerHTML = "<br>This next question is worth ".concat(((ptvalues[(questionnumber - 1) % ptvalues.length]).toString()), " points.");
+      if (((questionnumber - 1) % ptvalues.length) == (ptvalues.length) - 1) { document.getElementById("ptdescription").innerHTML = document.getElementById("ptdescription").innerHTML.concat("<br>Don't mess up, or you'll lose everything!") }
+      document.getElementById("loadbar").style.backgroundColor = ptcolors[(questionnumber - 1) % ptvalues.length];
+    } else {
+      document.getElementById("pointvalue").src = game.concat(powerplay, ".png");
+      document.getElementById("ptdescription").innerHTML = "<br>".concat(powerplaydesc[chance - 1]);
+      document.getElementById("loadbar").style.backgroundColor = powerplaycolors[powerplays.indexOf(powerplay)];
+    }
+    setTimeout(resetLoadBar, 1000 * loadval, questionnumber);
+  }
+  function resetLoadBar(param) {
+    for (i = 0; i < document.getElementsByClassName("screen").length; i++) {
+      if (document.getElementsByClassName("screen")[i].classList.contains("hidden")) {} else {
+        screenOn = document.getElementsByClassName("screen")[i].id;
+      }
+    }
+    if (param == slidenum && screenOn != "endofgame") {
+      slidenum++;
+      questionSlide();
+      document.getElementById("loadbar").style.transition = "0s";
+      document.getElementById("loadbar").offsetHeight;
+      document.getElementById("loadbar").style.width = "0%";
+    }
+  }
+  function skip() {
+    slidenum++;
+    questionSlide();
+    document.getElementById("loadbar").style.transition = "0s";
+    document.getElementById("loadbar").offsetHeight;
+    document.getElementById("loadbar").style.width = "0%";
+  }
+  function home() {
+    window.location.href = "play.html";
+  }
+  }
+  { //questions and answers functions
+    function questionSlide() {
+      hideallbutone("questionsslide");
+    }
+    function togglebetween() {
+      if (event.target.tagName.toUpperCase() == "SPAN") {
+        if (event.target.classList.contains("ctn")) {
+          for (i = 0; i < document.getElementsByClassName("ctn").length; i++) {
+            if (document.getElementsByClassName("ctn")[i] == event.target) {
+              numToCC = (i + 1);
+              break;
+            }
+          }
+        } else {
+          for (i = 0; i < document.getElementsByClassName("cn").length; i++) {
+            if (document.getElementsByClassName("cn")[i] == event.target) {
+              numToCC = (i + 1);
+              break;
+            }
+          }
+        }
+      } else {
+        for (i = 0; i < document.getElementsByClassName("cgroup").length; i++) {
+            if (document.getElementsByClassName("cgroup")[i] == event.target) {
+              numToCC = (i + 1);
+              break;
+            }
+          }
+      }
+      if (window[numToCC.toString().concat("status")] == 0) {
+        window[numToCC.toString().concat("status")] = 1;
+        document.getElementsByClassName("cgroup")[numToCC - 1].style.backgroundImage = "url('correct.png')";
+      } else if (window[numToCC.toString().concat("status")] == 1) {
+        window[numToCC.toString().concat("status")] = 2;
+        document.getElementsByClassName("cgroup")[numToCC - 1].style.backgroundImage = "url('incorrect.png')";
+      } else {
+        window[numToCC.toString().concat("status")] = 0;
+        document.getElementsByClassName("cgroup")[numToCC - 1].style.backgroundImage = "url('halfblack.png')";
+      }
+    }
+    function reveal() {
+      event.target.innerHTML = localStorage.getItem(current.concat("a", qn.toString()));
+    }
+  }
+  { //functions for scoreboard slide
+  function scoreboardSlide() {
+    if (questionnumber == numberofcycles * parseInt(localStorage.getItem(current.concat("qat"))) && !endlessmode) { finish(); } else {
+    if (powerplay == false) {for (i = 0; i < numsbgroups; i++) {
+      loopstatus = window[(i + 1).toString().concat("status")];
+      if (loopstatus == 1) {
+        window[(i + 1).toString().concat("score")] = window[(i + 1).toString().concat("score")] + pointVal;
+      }
+      if (loopstatus == 2 && pointVal == ptvalues[ptvalues.length - 1]) { //only for sudden death
+        window[(i + 1).toString().concat("score")] = 0;
+      }
+      document.getElementsByClassName("score")[i].innerHTML = window[(i + 1).toString().concat("score")];}
+    } else {
+      if (powerplay == "random") {
+        chance = Math.floor(Math.random() * 4);
+        powerplay = powerplays[chance];
+      }
+      img = document.createElement("img");
+      img.style.display = "none";
+      img.width = 300;
+      img.height = 300;
+      img.classList.add("hidden");
+      for (i = 0; i < window[powerplay.concat("anim")]; i++) {
+        img.src = powerplay.concat("animf", (i + 1).toString(), ".png");
+      }
+      oc = false;
+      for (i = 0; i < numsbgroups; i++) {
+        if (window[(i + 1).toString().concat("status")] == 1) {
+          oc = true;
+        }
+      }
+      ogarray = [];
+      for (i = 0; i < numsbgroups; i++) {
+      ogarray.push(window[(i + 1).toString().concat("score")]);
+      }
+      decorated = ogarray.map((value, index) => ({ value, index }));
+      decorated.sort((a, b) => b.value - a.value);
+      ogindex = decorated.map(item => item.index);
+      for (i = 0; i < numsbgroups; i++) {
+      loopstatus = window[(i + 1).toString().concat("status")];
+      if (powerplay == "splice") {
+        if (loopstatus != 1 && oc) {
+          window[(i + 1).toString().concat("score")] = Math.floor(window[(i + 1).toString().concat("score")] / 2);
+        }
+      } else if (powerplay == "double") {
+        if (loopstatus == 1) {
+          window[(i + 1).toString().concat("score")] = window[(i + 1).toString().concat("score")] * 2;
+        }
+      } else {}
+      }
+      if (powerplay == "steal" || powerplay == "eliminate") {
+      newindexes = [];
+      for (i = 0; i < ogindex.length; i++) {
+        if (window[(ogindex[i] + 1).toString().concat("status")] != 1) {
+          newindexes.push(ogindex[i]);
+        }
+      }
+      numcorrect = 0;
+          cindexes = [];
+          for (i = 0; i < ogindex.length; i++) {
+            if (window[(ogindex[i] + 1).toString().concat("status")] == 1) {
+              numcorrect++;
+              cindexes.push(ogindex[i]);
+            }
+          }
+      if (powerplay == "steal") {
+        if (newindexes.length > 0 && oc) {
+          std = window[(newindexes[0] + 1).toString().concat("score")];
+
+          for (i = 0; i < cindexes.length; i++) {
+            window[(cindexes[i] + 1).toString().concat("score")] = window[(cindexes[i] + 1).toString().concat("score")] + Math.floor(std / numcorrect);
+          }
+          window[(newindexes[0] + 1).toString().concat("score")] = 0;
+        }
+      } else {
+        if (newindexes.length > 0 && cindexes.length > 0 && oc) {
+        window[(newindexes[0] + 1).toString().concat("score")] = 0; 
+        }
+      }
+      }
+      for (i = 0; i < numsbgroups; i++) {
+        document.getElementsByClassName("score")[i].innerHTML = window[(i + 1).toString().concat("score")];
+      }
+    }
+    renderscoreboardteams();
+    hideallbutone("scoreboard");
+    animation();
+    }
+  }
+  function animation() {
+    if (animationsenabled && oc && powerplay != false) {
+      ar = true;
+      document.getElementById("animationsdiv").style.transition = "0s opacity";
+      window.innerHeight;
+      document.getElementById("animationsdiv").classList.remove("hidden");
+      for (i = 0; i < window[powerplay.concat("anim")]; i++) {
+        setTimeout(newanimframe, i * 41.67, i);
+      }
+      setTimeout(function() {
+        document.getElementById("animationsdiv").style.transition = "1.5s opacity";
+        window.innerHeight;
+        document.getElementById("animationsdiv").classList.add("hidden");
+        setTimeout(function() {
+          ar = false;
+        }, 1500);
+      }, (window[powerplay.concat("anim")] + 2) * 41.67);
+    }
+  }
+  function newanimframe(frame) {
+    document.getElementById("animationsdiv").style.backgroundImage = "url('".concat(powerplay, "animf", (frame + 1).toString(), ".png')");
+  }
+  function renderscoreboardteams() {
+    ogarray = [];
+    for (i = 0; i < numsbgroups; i++) {
+      ogarray.push(window[(i + 1).toString().concat("score")]);
+    }
+    decorated = ogarray.map((value, index) => ({ value, index }));
+    decorated.sort((a, b) => b.value - a.value);
+    ogindex = decorated.map(item => item.index);
+    for (i = 0; i < ogindex.length; i++) {
+      document.getElementsByClassName("sbteam")[ogindex[i]].style.top = i * window.innerHeight * 0.08;
+    }
+  }
+  }
+  { //end of game
+    function finish() {
+    document.getElementsByClassName("bg")[3].style.backgroundImage = "url('suddendeathblackbackground.gif')";
+    document.getElementsByClassName("t2")[0].classList.add("hidden");
+    document.getElementById("returntohome2").classList.remove("hidden");
+    document.getElementById("backtoendslide").classList.remove("hidden");
+      for (i = 0; i < numsbgroups; i++) {
+      loopstatus = window[(i + 1).toString().concat("status")];
+      if (loopstatus == 1) {
+        window[(i + 1).toString().concat("score")] = window[(i + 1).toString().concat("score")] + pointVal;
+      } 
+      if (loopstatus == 2 && pointVal == ptvalues[ptvalues.length - 1]) { //only for sudden death
+        window[(i + 1).toString().concat("score")] = 0;
+      } 
+      document.getElementsByClassName("score")[i].innerHTML = window[(i + 1).toString().concat("score")];
+      }
+      ogarray = [];
+    for (i = 0; i < numsbgroups; i++) {
+      ogarray.push(window[(i + 1).toString().concat("score")]);
+    }
+    decorated = ogarray.map((value, index) => ({ value, index }));
+    decorated.sort((a, b) => b.value - a.value);
+    ogindex = decorated.map(item => item.index);
+    sbh = false;
+    if (dgr) {
+      document.getElementsByClassName("mts")[0].innerHTML = document.getElementsByClassName("teamname")[ogindex[0]].value;
+      document.getElementsByClassName("mts")[1].innerHTML = document.getElementsByClassName("teamname")[ogindex[1]].value;
+      if (document.getElementsByClassName("teamname").length != 2) {
+      document.getElementsByClassName("mts")[2].innerHTML = document.getElementsByClassName("teamname")[ogindex[2]].value;
+      } else {
+        sbh = true;
+      }
+    } else {
+      document.getElementsByClassName("mts")[0].innerHTML = names[ogindex[0]];
+      document.getElementsByClassName("mts")[1].innerHTML = names[ogindex[1]];
+      if (names.length != 2) {
+      document.getElementsByClassName("mts")[2].innerHTML = names[ogindex[2]];
+      } else {
+        sbh = true;
+      }
+    }
+      hideallbutone("endofgame");
+      finalanimations();
+    }
+    medals = ["gold", "silver", "bronze"];
+    function finalanimations() {
+      for (i = 2; i >= 0; i--) {
+      if (sbh) {
+      if (i == 2) {
+        continue;
+      } else {
+      setTimeout(rotateMedal, (1 - i) * 3000, i);
+      }
+      } else {
+      setTimeout(rotateMedal, (2 - i) * 3000, i);
+        }
+      }
+      setTimeout(function() {
+        document.getElementById("returntohome").style.opacity = 1;
+        document.getElementById("showscoreboard").style.opacity = 1;
+      }, 8570);
+    }
+    function rotateMedal(wom) {
+      document.getElementById(medals[wom]).style.backgroundImage = "url('".concat(medals[wom], "moving.gif')");
+      document.getElementById(medals[wom]).style.opacity = 1;
+      document.getElementsByClassName("medaltext")[wom].style.transition = "transform 0.5s ease-in";
+      window.innerHeight;
+      document.getElementsByClassName("medaltext")[wom].style.transform = "translate(-50%, -50%) rotateY(360deg)";
+      setTimeout(function() {
+      document.getElementsByClassName("medaltext")[wom].style.transition = "transform 0.6s linear";
+      window.innerHeight;
+      document.getElementsByClassName("medaltext")[wom].style.transform = "translate(-50%, -50%) rotateY(0deg)";
+      }, 500);
+      setTimeout(function() {
+      document.getElementsByClassName("medaltext")[wom].style.transition = "transform 0.72s linear";
+      window.innerHeight;
+      document.getElementsByClassName("medaltext")[wom].style.transform = "translate(-50%, -50%) rotateY(360deg)";
+      }, 1100);
+      setTimeout(function() {
+      document.getElementsByClassName("medaltext")[wom].style.transition = "transform 0.9s linear";
+      window.innerHeight;
+      document.getElementsByClassName("medaltext")[wom].style.transform = "translate(-50%, -50%) rotateY(0deg)";
+      }, 1820);
+      setTimeout(function() {
+      document.getElementsByClassName("medaltext")[wom].style.transition = "transform 1.25s linear";
+      window.innerHeight;
+      document.getElementsByClassName("medaltext")[wom].style.transform = "translate(-50%, -50%) rotateY(360deg)";
+      }, 2720);
+      setTimeout(function() {
+      document.getElementsByClassName("medaltext")[wom].style.transition = "transform 1.6s linear";
+      window.innerHeight;
+      document.getElementsByClassName("medaltext")[wom].style.transform = "translate(-50%, -50%) rotateY(0deg)";
+      }, 3970);
+      setTimeout(function() {
+      document.getElementsByClassName("medaltext")[wom].style.transition = "transform 2s ease-out";
+      window.innerHeight;
+      document.getElementsByClassName("medaltext")[wom].style.transform = "translate(-50%, -50%) rotateY(360deg)";
+      }, 4570);
+      setTimeout(function() {
+      document.getElementById(medals[wom]).style.backgroundImage = "url('".concat(medals[wom], "still.png')");
+      }, 7000);
+    }
+  }
+</script>
+</html>
