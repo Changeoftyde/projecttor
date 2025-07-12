@@ -867,21 +867,26 @@ iosTextareaFix();
   doubleanim = 64;
   spliceanim = 65;
   stealanim = 117;
+  sdframes = 58;
   eliminateanim = 79;
   for (i = 0; i < ptvalues.length; i++) {
     imgToLoad.push(game.concat(ptvalues[i].toString()));
+  }
+  for (i = 1; i <= sdframes; i++) {
+    imgToLoad.push("suddendeathf".concat(i.toString()));
   }
   for (i = 0; i < powerplayanimlength.length; i++) {
     for (a = 0; a < window[powerplayanimlength[i]]; a++) {
       imgToLoad.push(powerplayanimlength[i].concat("f", (a + 1).toString()))
     }
   }
+  sdal = sdframes;
   eal = eliminateanim;
   stal = stealanim;
   sal = spliceanim;
   dal = doubleanim;
   otheral = 10;
-  totalal = otheral + dal + stal + sal + eal;  
+  totalal = otheral + dal + stal + sal + eal + sdal;  
   cnl = 0;
   pct = 0;
   ls = false;
@@ -895,22 +900,27 @@ iosTextareaFix();
     if (ff == "doub") {
       dal--;
       if (dal < 1) {
-        pct += 22.5;
+        pct += 18;
       }
     } else if (ff == "stea") {
       stal--;
       if (stal < 1) {
-        pct += 22.5;
+        pct += 18;
       }
     } else if (ff == "spli") {
       sal--;
       if (sal < 1) {
-        pct += 22.5;
+        pct += 18;
+      }
+    } else if (ff == "sudd") {
+      sdal--;
+      if (sdal < 1) {
+        pct += 18;
       }
     } else if (ff == "elim") {
       eal--;
       if (eal < 1) {
-        pct += 22.5;
+        pct += 18;
       }
     } else {
       otheral--;
@@ -1653,6 +1663,34 @@ iosTextareaFix();
     hideallbutone("scoreboard");
     animation();
     }
+  }
+  function animatesuddendeath() {
+    numnormal = 0;
+    for (i = 0; i < numsbgroups; i++) {
+      if (window[(i + 1).toString().concat("status")] == 0) {
+        numnormal++;
+      }
+    }
+    if (animationsenabled && numnormal < numsbgroups) {
+      ar = true;
+      document.getElementById("animationsdiv").style.transition = "0s opacity";
+      window.innerHeight;
+      document.getElementById("animationsdiv").classList.remove("hidden");
+      for (i = 0; i < sdframes; i++) {
+        setTimeout(newsdframe, i * 41.67, i);
+      }
+      setTimeout(function() {
+        document.getElementById("animationsdiv").style.transition = "1.5s opacity";
+        window.innerHeight;
+        document.getElementById("animationsdiv").classList.add("hidden");
+        setTimeout(function() {
+          ar = false;
+        }, 1500);
+      }, ((sdframes + 2) * 41.67);
+    }
+  }
+  function newsdframe(frame) {
+    document.getElementById("animationsdiv").style.backgroundImage = "url('".concat("suddendeathf", (frame + 1).toString(), ".png')");
   }
   function animation() {
     if (animationsenabled && oc && powerplay != false) {
