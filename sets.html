@@ -14,9 +14,24 @@
 <div id="heading"><img src="setslogo.png" id="logo"></div>
 <div id="groups">
 </div>
-</div>
+<span id="enot" class="hidden">It's looking a little empty.<br>Click "Create" on the left to make a set.</span></div>
 </body>
 <style>
+.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+#enot {
+  word-wrap: break-word;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  position: absolute;
+  width: 100%;
+  color: black;
+  font-size: 3dvh;
+  text-align: center;
+}
 @font-face {
   font-family: fredokaone;
   src: url("FredokaOne-Regular.otf");
@@ -165,6 +180,9 @@ document.getElementById("groups").innerHTML = "";
 if (localStorage.getItem("darkmode")) {} else {
   localStorage.setItem("darkmode", "0");
 }
+if ((parseInt(localStorage.getItem("numofsets")) > 0) == false) {
+  document.getElementById("enot").classList.remove("hidden");
+}
 arrayOfPictureNames = ["home", "study", "play", "sets", "create", "import", "settings"];
 if (localStorage.getItem("darkmode") == "1") {
   document.body.style.backgroundColor = "black";
@@ -223,6 +241,7 @@ function creategroup(n2c) {
 }
 if (localStorage.getItem("darkmode") == "1") {
 ll = document.getElementsByClassName("group").length;
+document.getElementById("enot").style.color = "white";
 for (i = 0; i < ll; i++) {
   document.getElementsByClassName("group")[i].classList.add("groupdarkmode");
   document.getElementsByClassName("group")[i].classList.remove("grpfilter");
