@@ -1578,7 +1578,11 @@ iosTextareaFix();
   { //functions for scoreboard slide
   function scoreboardSlide() {
     if (questionnumber == numberofcycles * parseInt(localStorage.getItem(current.concat("qat"))) && !endlessmode) { finish(); } else {
-    if (powerplay == false) {for (i = 0; i < numsbgroups; i++) {
+    if (powerplay == false) {			
+			if (pointVal == 144) {
+				animatesuddendeath();
+			}
+			for (i = 0; i < numsbgroups; i++) {
       loopstatus = window[(i + 1).toString().concat("status")];
       if (loopstatus == 1) {
         window[(i + 1).toString().concat("score")] = window[(i + 1).toString().concat("score")] + pointVal;
