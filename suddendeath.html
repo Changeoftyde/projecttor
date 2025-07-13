@@ -114,15 +114,15 @@ Adelaide..." id="individnames"></textarea>
     <div onclick="home()" id="returntohome">Return Home</div>
     <div onclick="hideallbutone('scoreboard')" id="showscoreboard">Show Scoreboard</div>
     <img src="jettendslide.gif" id="jettendslide">
-    <div class="medal" id="gold">
+    <div class="medal" id="gold"><div class="coin"><div class="heads"></div><div class="tails"></div></div>
       <div class="medaltext"><span style="font-size: 4dvh" class="mts">
       </span></div>
     </div>
-    <div class="medal" id="silver">
+    <div class="medal" id="silver"><div class="coin"><div class="heads"></div><div class="tails"></div></div>
       <div class="medaltext"><span style="font-size: 3.5dvh" class="mts">
       </span></div>
     </div>
-    <div class="medal" id="bronze">
+    <div class="medal" id="bronze"><div class="coin"><div class="heads"></div><div class="tails"></div></div>
       <div class="medaltext"><span style="font-size: 3dvh" class="mts">
       </span></div>
     </div>
@@ -130,6 +130,9 @@ Adelaide..." id="individnames"></textarea>
   </div>
 </body>
 <style>
+.medal {
+  color: white;
+}
 #loadingdot {
   top: 33dvh;
   width: 100%;
@@ -335,6 +338,7 @@ textarea {
   border-radius: 1dvh;
 }
 .mts {
+  text-transform: uppercase;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -797,6 +801,116 @@ body {
 }
 .n {
   transition: 1s opacity;
+}
+#silver  .coin {
+  background: #BAC5C7;
+}
+#silver  .coin  .tails {
+  background-color: #33464A;
+  border: 1px solid #33464A;
+}
+#silver  .coin  .heads {
+  background-color: #BAC5C7;
+  border: 1px solid #33464A;
+}
+#silver {
+  color: #33464A; /*just learned css diner 💀💀💀  also shoutout to michael lai on codepen for the coins :)*/
+}
+#silver  .coin::before {
+  background-color: #33464A;
+}
+#silver  .coin::after {
+  background-color: #33464A;
+}
+#bronze  .coin {
+  background: #DAA55A;
+}
+#bronze  .coin  .tails {
+  background-color: #603E0E;
+  border: 1px solid #603E0E;
+}
+#bronze  .coin  .heads {
+  background-color: #DAA55A;
+  border: 1px solid #603E0E;
+}
+#bronze {
+  color: #603E0E;
+}
+#bronze  .coin::before {
+  background-color: #603E0E;
+}
+#bronze  .coin::after {
+  background-color: #603E0E;
+}
+#gold  .coin {
+  background: #FFC800;
+}
+#gold  .coin  .tails {
+  background-color: #907802;
+  border: 1px solid #907802;
+}
+#gold  .coin  .heads {
+  background-color: #FFC800;
+  border: 1px solid #907802;
+}
+#gold {
+  color: #907802;
+}
+#gold  .coin::before {
+  background-color: #907802;
+}
+#gold  .coin::after {
+  background-color: #907802;
+}
+.coin{
+	width: 100%;
+	height: 100%;
+	border-radius: 50%;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+}
+.coin::before {
+  
+		position: absolute;
+		border-radius: 50%;
+		content: '';
+		height: 100%;
+		width: 100%;
+		-webkit-transform: translateZ(-0.75em);
+	
+}
+.coin::after {
+		content: '';
+		left: 42.5%;
+		position: absolute;
+		height: 100%;
+		width: 6.2%;
+		z-index: -10;
+		-webkit-transform: rotateY(-90deg)  translateZ(0.375em);
+		-webkit-transform-origin: 100% 50%;
+	
+}
+.tails{
+	position: absolute;
+	border-radius: 50%;
+	content: '';
+	height: 100%;
+	width: 100%;
+	-webkit-transform: translateZ(-0.005em);
+}
+.heads{
+  background-size: cover;
+  background-position: 50% 50%;
+  background-image: url("coinshine.png");
+	position: absolute;
+	border-radius: 50%;
+	content: '';
+	height: 100%;
+	width: 100%;
+	-webkit-transform: translateZ(-0.755em);
 }
   #toggler {
     overflow: hidden;
@@ -1791,47 +1905,58 @@ iosTextareaFix();
       setTimeout(function() {
         document.getElementById("returntohome").style.opacity = 1;
         document.getElementById("showscoreboard").style.opacity = 1;
-      }, 8570);
+      }, 9570);
     }
     function rotateMedal(wom) {
       document.getElementById(medals[wom]).style.backgroundImage = "url('".concat(medals[wom], "moving.gif')");
       document.getElementById(medals[wom]).style.opacity = 1;
       document.getElementsByClassName("medaltext")[wom].style.transition = "transform 0.5s ease-in";
-      window.innerHeight;
-      document.getElementsByClassName("medaltext")[wom].style.transform = "translate(-50%, -50%) rotateY(360deg)";
-      setTimeout(function() {
-      document.getElementsByClassName("medaltext")[wom].style.transition = "transform 0.6s linear";
+      document.getElementsByClassName("coin")[wom].style.transition = "transform 0.5s ease-in";
       window.innerHeight;
       document.getElementsByClassName("medaltext")[wom].style.transform = "translate(-50%, -50%) rotateY(0deg)";
+      document.getElementsByClassName("coin")[wom].style.transform = "translate(-50%, -50%) rotateY(0deg)";
+      setTimeout(function() {
+      document.getElementsByClassName("medaltext")[wom].style.transition = "transform 0.6s linear";
+      document.getElementsByClassName("coin")[wom].style.transition = "transform 0.6s linear";
+      window.innerHeight;
+      document.getElementsByClassName("medaltext")[wom].style.transform = "translate(-50%, -50%) rotateY(-360deg)";
+      document.getElementsByClassName("coin")[wom].style.transform = "translate(-50%, -50%) rotateY(-360deg)";
       }, 500);
       setTimeout(function() {
       document.getElementsByClassName("medaltext")[wom].style.transition = "transform 0.72s linear";
+      document.getElementsByClassName("coin")[wom].style.transition = "transform 0.72s linear";
       window.innerHeight;
-      document.getElementsByClassName("medaltext")[wom].style.transform = "translate(-50%, -50%) rotateY(360deg)";
+      document.getElementsByClassName("medaltext")[wom].style.transform = "translate(-50%, -50%) rotateY(-720deg)";
+      document.getElementsByClassName("coin")[wom].style.transform = "translate(-50%, -50%) rotateY(-720deg)";
       }, 1100);
       setTimeout(function() {
       document.getElementsByClassName("medaltext")[wom].style.transition = "transform 0.9s linear";
+      document.getElementsByClassName("coin")[wom].style.transition = "transform 0.9s linear";
       window.innerHeight;
-      document.getElementsByClassName("medaltext")[wom].style.transform = "translate(-50%, -50%) rotateY(0deg)";
+      document.getElementsByClassName("medaltext")[wom].style.transform = "translate(-50%, -50%) rotateY(-1080deg)";
+      document.getElementsByClassName("coin")[wom].style.transform = "translate(-50%, -50%) rotateY(-1080deg)";
       }, 1820);
       setTimeout(function() {
       document.getElementsByClassName("medaltext")[wom].style.transition = "transform 1.25s linear";
+      document.getElementsByClassName("coin")[wom].style.transition = "transform 1.25s linear";
       window.innerHeight;
-      document.getElementsByClassName("medaltext")[wom].style.transform = "translate(-50%, -50%) rotateY(360deg)";
+      document.getElementsByClassName("medaltext")[wom].style.transform = "translate(-50%, -50%) rotateY(-1440deg)";
+      document.getElementsByClassName("coin")[wom].style.transform = "translate(-50%, -50%) rotateY(-1440deg)";
       }, 2720);
       setTimeout(function() {
       document.getElementsByClassName("medaltext")[wom].style.transition = "transform 1.6s linear";
+      document.getElementsByClassName("coin")[wom].style.transition = "transform 1.6s linear";
       window.innerHeight;
-      document.getElementsByClassName("medaltext")[wom].style.transform = "translate(-50%, -50%) rotateY(0deg)";
+      document.getElementsByClassName("medaltext")[wom].style.transform = "translate(-50%, -50%) rotateY(-1800deg)";
+      document.getElementsByClassName("coin")[wom].style.transform = "translate(-50%, -50%) rotateY(-1800deg)";
       }, 3970);
       setTimeout(function() {
-      document.getElementsByClassName("medaltext")[wom].style.transition = "transform 2s ease-out";
+      document.getElementsByClassName("medaltext")[wom].style.transition = "transform 3.5s ease-out";
+      document.getElementsByClassName("coin")[wom].style.transition = "transform 3.5s ease-out";
       window.innerHeight;
-      document.getElementsByClassName("medaltext")[wom].style.transform = "translate(-50%, -50%) rotateY(360deg)";
+      document.getElementsByClassName("medaltext")[wom].style.transform = "translate(-50%, -50%) rotateY(-2160deg)";
+      document.getElementsByClassName("coin")[wom].style.transform = "translate(-50%, -50%) rotateY(-2160deg)";
       }, 4570);
-      setTimeout(function() {
-      document.getElementById(medals[wom]).style.backgroundImage = "url('".concat(medals[wom], "still.png')");
-      }, 7000);
     }
   }
 </script>
