@@ -967,8 +967,7 @@ sessionStorage.removeItem("setToUse");
 window.location.href = "urlerror.html";
 }
 { //load images
-//imgToLoad = ["goldstill", "silverstill", "bronzestill", "goldmoving.gif", "silvermoving.gif", "bronzemoving.gif"];
-imgToLoad = [];
+imgToLoad = ["double", "splice", "random", "eliminate", "randomloadbar", "steal"];
 ptvalues = [2, 3, 5, 8, 13, 21, 34, 55, 89, 144];
 game = "sd";
 powerplayanimlength = ["doubleanim", "spliceanim", "stealanim", "eliminateanim"];
@@ -989,11 +988,11 @@ imgToLoad.push(powerplayanimlength[i].concat("f", (a + 1).toString()))
 }
 }
 sdal = sdframes;
-eal = eliminateanim;
-stal = stealanim;
-sal = spliceanim;
-dal = doubleanim;
-otheral = 10;
+eal = eliminateanim + 1;
+stal = stealanim + 1;
+sal = spliceanim + 1;
+dal = doubleanim + 1;
+otheral = 12;
 totalal = otheral + dal + stal + sal + eal + sdal;  
 cnl = 0;
 pct = 0;
@@ -1517,7 +1516,7 @@ document.getElementById(toShow).classList.remove("hidden");
 }
 ptcolors = ["#0080fe", "#00acfe", "#00f2fe", "#00fe6f", "#06fe00", "#94fe00", "#fef500", "#fec500", "#fea500", "#fe7c00"];
 powerplays = ["double", "steal", "splice", "eliminate", "random"];
-powerplaycolors = ["white", "white", "white", "white", "white"];
+powerplaycolors = ["#ff8500", "#19c9db", "#ff6800", "#f7ad00", "white"];
 powerplaydesc = ["Double your score!", "Steal all of the team in first place's points!", "Split every other team's score in half!", "Wipe all of the team in first place's points (unless you're in first)!", "A random power play is in effect!"];
 questionnumber = 0;
 qn = 0;
