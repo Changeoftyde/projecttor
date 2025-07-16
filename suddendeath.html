@@ -294,6 +294,8 @@ border-radius: 1dvh;
 z-index: 1999;
 }
 #jettendslide {
+opacity: 0;
+transition: 3s opacity;
 left: 2dvh;
 bottom: 1dvh;
 position: absolute;
@@ -1970,6 +1972,7 @@ setTimeout(rotateMedal, (2 - i) * 4500, i);
 setTimeout(function() {
 document.getElementById("returntohome").style.opacity = 1;
 document.getElementById("showscoreboard").style.opacity = 1;
+document.getElementById("jettendslide").style.opacity = 1;
 }, 14570);
 }
 function rotateMedal(wom) {
