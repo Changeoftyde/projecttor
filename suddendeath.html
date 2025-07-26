@@ -2056,11 +2056,11 @@ finalanimations();
 }
 medals = ["gold", "silver", "bronze"];
 function finalanimations() {
-if (sbh) {
+if (sbh && soundeffects) {
   document.getElementById("twowaudio").play();
-} else {
+} else if (soundeffects) {
   document.getElementById("threewaudio").play();
-}
+} else {}
 for (i = 2; i >= 0; i--) {
 if (sbh) {
 if (i == 2) {
