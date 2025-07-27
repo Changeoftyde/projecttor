@@ -249,7 +249,6 @@ function creategroup(n2c) {
   newImg.src = n2c.concat("logo.png");
   newDiv.appendChild(newImg);
   document.getElementById("groups").appendChild(newDiv);
-  resizeeverything();
 }
 if (localStorage.getItem("darkmode") == "1") {
   document.getElementById("nameofset").style.color = "black";
@@ -259,6 +258,7 @@ if (localStorage.getItem("darkmode") == "1") {
   document.getElementsByClassName("group")[i].classList.add("groupdarkmode");
 }
 }
+resizeeverything();
 function resizeeverything() {
   width = window.innerWidth;
   height = window.innerHeight;
