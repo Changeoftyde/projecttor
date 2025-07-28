@@ -670,19 +670,18 @@ width: calc(100% - 8dvh);
 left: 50%;
 text-align: center;
 color: white;
-top: 49dvh;
+top: 57dvh;
 position: absolute;
 transform: translate(-50%, 0%);
 font-size: 2.5dvh;
 }
 #pointvalue {
-height: 10dvh;
+height: 30dvh;
 width: auto;
 left: 50%;
 transform: translate(-50%, 0%);
 position: absolute;
-top: 30.5dvh;
-
+top: 22dvh;
 }
 #loadbaroutline2 {
 width: calc(100% - 7dvh);
@@ -731,7 +730,7 @@ border-radius: 3dvh;
 transform: translate(-50%, -100%);
 position: absolute;
 left: 50%;
-top: 50%;
+top: 60dvh;
 }
 #speech {
 overflow: hidden;
@@ -1628,15 +1627,16 @@ if (powerplaysenabled) {
 window.innerHeight;
 document.getElementById("question").innerHTML = localStorage.getItem(current.concat("q", qn.toString()))
 document.getElementById("text4speech").innerHTML = "Get into groups of up to ".concat(numingroup.toString(), "!");
-document.getElementById("pointvalue").src = game.concat(pointVal.toString(), ".png");
 if (mystery) {
 document.getElementById("ptdescription").innerHTML = "<br>This next question is worth an unknown amount of points!";
 document.getElementById("loadbar").style.backgroundColor = "rgba(0, 0, 0, 0)";
 document.getElementById("loadbar").style.backgroundImage = "mysteryloadbar.png";
+document.getElementById("pointvalue").src = "almystery.png";
 } else {
 document.getElementById("ptdescription").innerHTML = "<br>This next question is worth ".concat(pointVal.toString(), " points.");
 document.getElementById("loadbar").style.backgroundColor = ptcolors[ptvalues.indexOf(pointVal)];
 document.getElementById("loadbar").style.backgroundImage = "none";
+document.getElementById("pointvalue").src = game.concat(pointVal.toString(), ".png");
 }
 setTimeout(resetLoadBar, 1000 * loadval, questionnumber);
 }
