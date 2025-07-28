@@ -20,7 +20,7 @@
 <span style="position: absolute; right: 14dvh; top: 52dvh; font-size: 3.5dvh; width: 100%">Animations Enabled</span><div style="top: 52.5dvh" onclick="toggler(2)" class="setval slidergroup"><div class="slider"></div></div>
 <span style="position: absolute; right: 14dvh; top: 56dvh; font-size: 3.5dvh; width: 100%">Alliance-forming Duration (s)</span><input placeholder="1-25" style="top: 56.5dvh" class="setval svi">
 <span style="position: absolute; right: 2dvh; top: 60dvh; font-size: 2dvh; width: 100%">How long it takes for players to ally and scores to be announced.<br>Counted in seconds.</span>
-<span style="position: absolute; right: 14dvh; top: 65dvh; font-size: 3.5dvh; width: 100%">Maximum Alliance Size</span><input placeholder="1-8" style="top: 65dvh" class="setval svi">
+<span style="position: absolute; right: 14dvh; top: 65dvh; font-size: 3.5dvh; width: 100%">Maximum Alliance Size</span><input placeholder="2-8" style="top: 65dvh" class="setval svi">
 <span style="position: absolute; right: 2dvh; top: 69dvh; font-size: 2dvh; width: 100%">How large an alliance can become.<br>Alliances too large will gain no points!</span>
 <span style="position: absolute; right: 2dvh; top: 76.5dvh; font-size: 4.5dvh; width: 100%; text-decoration: underline">Audio</span>
 <span style="position: absolute; right: 14dvh; top: 82dvh; font-size: 3.5dvh; width: 100%">Background Music</span><div style="top: 82.5dvh" onclick="toggler(3)" class="setval slidergroup"><div class="slider"></div></div>
@@ -1319,8 +1319,8 @@ alert("You need at least two players to start.");
 alert("The value for the amount of question cycles must be a whole number between 1 and 100.");
 } else if ((loadval % 1 != 0 || loadval < 1 || loadval > 25 || !(loadval > 0) || (loadval == 1 && document.getElementsByClassName("svi")[1].value != "1"))) {
 alert("The value for alliance-forming duration must be a whole number between 1 and 25.");
-} else if ((numingroup % 1 != 0 || numingroup < 1 || numingroup > 8 || !(numingroup > 0) || (numingroup == 1 && document.getElementsByClassName("svi")[2].value != "1"))) {
-alert("The value for maximum alliance size must be a whole number between 1 and 8.");
+} else if ((numingroup % 1 != 0 || numingroup < 2 || numingroup > 8 || !(numingroup > 0) || (numingroup == 1 && document.getElementsByClassName("svi")[2].value != "1"))) {
+alert("The value for maximum alliance size must be a whole number between 2 and 8.");
 } else {
 actstart(allnames);
 }
