@@ -1006,7 +1006,7 @@ sessionStorage.removeItem("setToUse");
 window.location.href = "urlerror.html";
 }
 { //load images
-imgToLoad = ["almystery"];
+imgToLoad = ["almystery", "alliancesblackbackground"];
 ptvalues = [1000, 1100, 1200, 1300, 1400, 1500];
 game = "al";
 powerplayanimlength = ["doubleanim", "spliceanim", "stealanim", "eliminateanim"];
@@ -1031,7 +1031,7 @@ eal = eliminateanim;
 stal = stealanim;
 sal = spliceanim;
 dal = doubleanim;
-otheral = 7;
+otheral = 8;
 totalal = otheral + dal + stal + sal + eal + sdal;  
 cnl = 0;
 pct = 0;
@@ -1041,41 +1041,9 @@ for (i = 0; i < imgToLoad.length; i++) {
 img = document.createElement("img");
 document.body.appendChild(img);
 img.addEventListener("load", function(event) {
-cnl++;
-ff = event.target.id.substring(0, 4);
-if (ff == "doub") {
-dal--;
-if (dal < 1) {
-pct += 18;
-}
-} else if (ff == "stea") {
-stal--;
-if (stal < 1) {
-pct += 18;
-}
-} else if (ff == "spli") {
-sal--;
-if (sal < 1) {
-pct += 18;
-}
-} else if (ff == "sudd") {
-sdal--;
-if (sdal < 1) {
-pct += 18;
-}
-} else if (ff == "elim") {
-eal--;
-if (eal < 1) {
-pct += 18;
-}
-} else {
-otheral--;
-if (otheral < 1) {
-pct += 10;
-}
-}
+pct += (100 / otheral);
 document.getElementById("loadbar2").style.width = pct.toString() + "%";
-document.getElementById("loadingdot").innerHTML = "Loading... (".concat(Math.floor(cnl / totalal * 100).toString(), "%)");
+document.getElementById("loadingdot").innerHTML = "Loading... (".concat(Math.floor(pct).toString(), "%)");
 if (ls && pct == 100) {
 preludeSlide();
 }
@@ -1162,10 +1130,10 @@ preludeSlide();
 });
 ls = false;
 function loadingSlide() {
-/*hideallbutone("loadingscreen");
+hideallbutone("loadingscreen");
 ls = true;
 window.innerHeight;
-if (pct == 100 || animationsenabled == false*/if (true) {
+if (pct == 100 || animationsenabled == false) {
 preludeSlide();
 }
 }
@@ -1219,62 +1187,7 @@ document.getElementsByClassName("names")[0].setAttribute("placeholder", "Enter t
 resizee();
 }
 function start() {
-if (dgr == true) {NamesTheSame = false;
-TNtheSame = false;
-notAllEntered = false;
-for (i = 0; i < document.getElementsByClassName("group").length; i++) {
-for (a = 0; a < document.getElementsByClassName("group").length; a++) {
-if (a == i) { continue; }
-if (document.getElementsByClassName("teamname")[i].value == document.getElementsByClassName("teamname")[a].value) {
-TNtheSame = true;
-}
-}
-if (document.getElementsByClassName("names")[i].value == "" || document.getElementsByClassName("teamname")[i].value == "") {
-notAllEntered = true;
-}
-}
-allnames = [];
-for (i = 0; i < document.getElementsByClassName("group").length; i++) {
-vfl = document.getElementsByClassName("names")[i].value;
-newname = "";
-for (a = 0; a < vfl.length; a++) {
-if ((a + 1) >= vfl.length) {
-if (vfl.substring(a, a+1) != "\n") {
-newname = newname.concat(vfl.substring(a, a+1));
-}
-allnames.push(newname.toUpperCase());
-newname = "";
-} else if (vfl.substring(a, a+1) == "\n") {
-if (newname != "") {
-allnames.push(newname.toUpperCase());
-newname = "";
-}
-} else {
-newname = newname.concat(vfl.substring(a, a + 1));
-}
-}
-}
-for (i = 0; i < allnames.length; i++) {
-for (a = 0; a < allnames.length; a++) {
-if (a == i) { continue; }
-if (allnames[a] == allnames[i]) {
-NamesTheSame = true;
-}
-}
-}
-cycval = parseFloat(document.getElementsByClassName("svi")[0].value);
-loadval = parseFloat(document.getElementsByClassName("svi")[1].value);
-if (NamesTheSame) { alert("Two or more of the players' names you entered are the same. Please make sure every player's name is unique. :)") }
-else if (notAllEntered) { alert("One or more of the blanks (team names and team members blanks included) is not filled in.") }
-else if (TNtheSame) { alert("Two or more team names are the same.") }
-else if (numgroups < 2) { alert("Please add at least two groups to get started.");
-} else if ((cycval % 1 != 0 || cycval < 1 || cycval > 100 || !(cycval > 0) || (cycval == 1 && document.getElementsByClassName("svi")[0].value != "1")) && !endlessmode) {
-alert("The value for the amount of question cycles must be a whole number between 1 and 100.");
-} else if ((loadval % 1 != 0 || loadval < 1 || loadval > 15 || !(loadval > 0) || (loadval == 1 && document.getElementsByClassName("svi")[1].value != "1"))) {
-alert("The value for loadbar duration must be a whole number between 1 and 15.");
-} else {
-actstart();
-}} else {
+if (true) {
 NamesTheSame = false;
 allnames = [];
 vfl = document.getElementById("individnames").value;
@@ -1312,8 +1225,8 @@ alert("Two or more players' names are the same. Please make sure every player ha
 alert("Please fill in the blank with player names to begin.");
 } else if (allnames.length > 100) {
 alert("Please keep the amount of players below 100.");
-} else if (allnames.length < 2) {
-alert("You need at least two players to start.");
+} else if (allnames.length < numingroup + 2) {
+alert("You need at least ".concat((numingroup + 2).toString(), " players to start."));
 } else if ((cycval % 1 != 0 || cycval < 1 || cycval > 100 || !(cycval > 0) || (cycval == 1 && document.getElementsByClassName("svi")[0].value != "1")) && !endlessmode) {
 alert("The value for the amount of question cycles must be a whole number between 1 and 100.");
 } else if ((loadval % 1 != 0 || loadval < 1 || loadval > 25 || !(loadval > 0) || (loadval == 1 && document.getElementsByClassName("svi")[1].value != "1"))) {
@@ -1570,18 +1483,18 @@ document.getElementsByClassName("toolbarbutton")[2].style.pointerEvents = "none"
 document.getElementsByClassName("toolbarbutton")[5].style.pointerEvents = "none";
 for (i = 0; i < numsbgroups; i++) {
 window[(i + 1).toString().concat("score")] = 0;
-}
-for (i = 0; i < names.length; i++) {
 window[(i + 1).toString().concat("status")] = 0;
 }
-} else { document.getElementsByClassName("toolbarbutton")[2].style.opacity = 1;
+} else {
+document.getElementsByClassName("toolbarbutton")[2].style.opacity = 1;
 document.getElementsByClassName("toolbarbutton")[5].style.opacity = 1;
 document.getElementsByClassName("toolbarbutton")[2].style.pointerEvents = "all";
-document.getElementsByClassName("toolbarbutton")[5].style.pointerEvents = "all"; }
+document.getElementsByClassName("toolbarbutton")[5].style.pointerEvents = "all"; 
+}
 for (i = 0; i < document.getElementsByClassName("cgroup").length; i++) {
 alphabet = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
 if (alphabet.indexOf(document.getElementsByClassName("cn")[i].innerHTML.substring(0, 1).toLowerCase()) > 0) {
-document.getElementsByClassName("cgroup")[i].style.backgroundImage = "url('".concat(document.getElementsByClassName("cn")[numToCC - 1].innerHTML.substring(0, 1).toLowerCase(), "nflag.png')");
+document.getElementsByClassName("cgroup")[i].style.backgroundImage = "url('".concat(document.getElementsByClassName("cn")[i].innerHTML.substring(0, 1).toLowerCase(), "nflag.png')");
 } else {
 document.getElementsByClassName("cgroup")[i].style.backgroundImage = "url('basicnflag.png')";
 }
