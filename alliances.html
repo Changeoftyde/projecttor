@@ -1011,7 +1011,7 @@ sessionStorage.removeItem("setToUse");
 window.location.href = "urlerror.html";
 }
 { //load images
-imgToLoad = ["almystery", "alliancesblackbackground"];
+imgToLoad = ["almystery", "alliancesblackbackground.gif"];
 ptvalues = [1000, 1100, 1200, 1300, 1400, 1500];
 game = "al";
 powerplayanimlength = ["doubleanim", "spliceanim", "stealanim", "eliminateanim"];
@@ -1050,7 +1050,7 @@ img.height = 300;
 img.classList.add("hidden");
 img.id = imgToLoad[i];
 img.style.display = "none";
-if (imgToLoad[i] == "goldmoving.gif" || imgToLoad[i] == "silvermoving.gif" || imgToLoad[i] == "bronzemoving.gif") {
+if (imgToLoad[i] == "alliancesblackbackground.gif") {
 img.src = imgToLoad[i];
 } else {
 img.src = imgToLoad[i].concat(".png");
@@ -1130,7 +1130,7 @@ function loadingSlide() {
 hideallbutone("loadingscreen");
 ls = true;
 window.innerHeight;
-if (pct == 100 || animationsenabled == false) {
+if (pct == 100) {
 preludeSlide();
 }
 }
