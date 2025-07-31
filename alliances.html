@@ -1023,21 +1023,13 @@ eliminateanim = 79;
 for (i = 0; i < ptvalues.length; i++) {
 imgToLoad.push(game.concat(ptvalues[i].toString()));
 }
-for (i = 1; i <= sdframes; i++) {
-imgToLoad.push("suddendeathf".concat(i.toString()));
-}
-for (i = 0; i < powerplayanimlength.length; i++) {
-for (a = 0; a < window[powerplayanimlength[i]]; a++) {
-imgToLoad.push(powerplayanimlength[i].concat("f", (a + 1).toString()))
-}
-}
 sdal = sdframes;
 eal = eliminateanim;
 stal = stealanim;
 sal = spliceanim;
 dal = doubleanim;
 otheral = 8;
-totalal = otheral + dal + stal + sal + eal + sdal;  
+total = otheral;
 cnl = 0;
 pct = 0;
 ls = false;
@@ -1045,7 +1037,7 @@ window.addEventListener("DOMContentLoaded", function() {
 for (i = 0; i < imgToLoad.length; i++) {
 img = document.createElement("img");
 document.body.appendChild(img);
-img.addEventListener("load", function(event) {
+img.addEventListener("load", function() {
 pct += (100 / otheral);
 document.getElementById("loadbar2").style.width = pct.toString() + "%";
 document.getElementById("loadingdot").innerHTML = "Loading... (".concat(Math.floor(pct).toString(), "%)");
