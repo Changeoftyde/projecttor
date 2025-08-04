@@ -84,7 +84,30 @@ Adelaide..." id="individnames"></textarea>
 <div style="background-color: red; background-image: url('alliancesbackground.gif')" class="bg"></div>
 </div>
 <div class="hidden screen" id="scoreboard">
-<div id="animationsdiv" class="hidden"></div>
+<div id="animationsdiv" class="hidden">
+  <div id="animscore"></div>
+  <div id="animbb"></div>
+  <div id="flags">
+  <div style="top: -38%" class="row-wrapper"><div class="row"></div></div>
+  <div style="top: -27%" class="row-wrapper"><div class="row"></div></div>
+  <div style="top: -16%" class="row-wrapper"><div class="row"></div></div>
+  <div style="top: -5%" class="row-wrapper"><div class="row"></div></div>
+  <div style="top: 6%" class="row-wrapper"><div class="row"></div></div>
+  <div style="top: 17%" class="row-wrapper"><div class="row"></div></div>
+  <div style="top: 28%" class="row-wrapper"><div class="row"></div></div>
+  <div style="top: 39%" class="row-wrapper"><div class="row"></div></div>
+  <div style="top: 50%" class="row-wrapper"><div class="row"></div></div>
+  <div style="top: 61%" class="row-wrapper"><div class="row"></div></div>
+  <div style="top: 72%" class="row-wrapper"><div class="row"></div></div>
+  <div style="top: 83%" class="row-wrapper"><div class="row"></div></div>
+  <div style="top: 94%" class="row-wrapper"><div class="row"></div></div>
+  <div style="top: 105%" class="row-wrapper"><div class="row"></div></div>
+  <div style="top: 116%" class="row-wrapper"><div class="row"></div></div>
+  <div style="top: 127%" class="row-wrapper"><div class="row"></div></div>
+  <div style="top: 138%" class="row-wrapper"><div class="row"></div></div>
+</div>
+
+</div>
 <div id="returntohome2" class="hidden" onclick="home()">Return Home</div>
 <div id="backtoendslide" class="hidden" onclick="hideallbutone('endofgame')">Show Results</div>
 <div class="t2">
@@ -209,13 +232,66 @@ transform: translate(-50%, 0%);
 button {
 font-family: fredokaone;
 }
-#animationsdiv {
+      .flagGrp {
+        transition: 10s linear left;
+        height: 100%;
+        position: absolute;
+        transform: translate(-50%, 0%);
+      }
+      .flag {
+        position: absolute;
+        height: 100%;
+        width: 15dvh;
+        left: 50%;
+      }
+      #flags {
+        background-color: rgba(0, 0, 0, 0.5);
+        overflow: hidden;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        z-index: 0;
+        left: 0;
+      }
+      .row-wrapper {
+        position: absolute;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+      .row {
+        width: 100dvw;
+        height: 10dvh;
+        transform: skew(10deg) rotate(10deg);
+        transform-origin: center;
+      }
+#animbb {
 width: 100%;
 height: 100%;
 top: 0;
 left: 0;
 background-size: cover;
 background-position: 50% 50%;
+position: absolute;
+z-index: 1;
+transition: none;
+}
+#animscore {
+width: 100%;
+height: 100%;
+top: 0;
+left: 0;
+background-size: cover;
+background-position: 50% 50%;
+position: absolute;
+z-index: 2;
+transition: none;
+}
+#animationsdiv {
+width: 100%;
+height: 100%;
+top: 0;
+left: 0;
 position: fixed;
 z-index: 10000;
 transition: none;
@@ -1023,12 +1099,32 @@ eliminateanim = 79;
 for (i = 0; i < ptvalues.length; i++) {
 imgToLoad.push(game.concat(ptvalues[i].toString()));
 }
+for (i = 0; i < 4; i++) {
+imgToLoad.push("alf".concat((i + 1).toString()));
+}
+for (a = 0; a < ptvalues.length; a++) {
+for (i = 4; i < 7; i++) {
+imgToLoad.push("al".concat(ptvalues[a].toString(), "f", (i + 1).toString()));
+}
+}
+for (i = 0; i < 7; i++) {
+imgToLoad.push("almysteryf".concat((i + 1).toString()));
+}
+mpt = [3000, 500, 1000];
+for (a = 0; a < mpt.length; a++) {
+for (i = 7; i < 11; i++) {
+imgToLoad.push("almystery".concat(mpt[a].toString(), "f", (i + 1).toString()));
+}
+}
+for (i = 0; i < 28; i++) {
+imgToLoad.push("albbf".concat((i + 1).toString()));
+}
 sdal = sdframes;
 eal = eliminateanim;
 stal = stealanim;
 sal = spliceanim;
 dal = doubleanim;
-otheral = 8;
+otheral = imgToLoad.length;
 total = otheral;
 cnl = 0;
 pct = 0;
@@ -1539,7 +1635,7 @@ document.getElementById("text4speech").innerHTML = "Get into groups of up to ".c
 if (mystery) {
 document.getElementById("ptdescription").innerHTML = "<br>This next question is worth an unknown amount of points!";
 document.getElementById("loadbar").style.backgroundColor = "rgba(0, 0, 0, 0)";
-document.getElementById("loadbar").style.backgroundImage = "mysteryloadbar.png";
+document.getElementById("loadbar").style.backgroundImage = "url('mysteryloadbar.png')";
 document.getElementById("pointvalue").src = "almystery.png";
 } else {
 document.getElementById("ptdescription").innerHTML = "<br>This next question is worth ".concat(pointVal.toString(), " points.");
@@ -1682,11 +1778,123 @@ if (soundeffects) {
 document.getElementById("clickaudio").play();
 }
 }
+function renderflags() {
+  for (i = 0; i < document.getElementsByClassName("flagGrp").length; i++) {
+    document.getElementsByClassName("flagGrp")[i].remove();
+  }
+  ftunames = [];
+  for (i = 0; i < document.getElementsByClassName("sbteam").length; i++) {
+    if (window[(i + 1).toString().concat("status")] == 1) {
+      ftunames.push(document.getElementsByClassName("cn")[i].innerHTML);
+    }
+  }
+  ftu = [];
+  for (i = 0; i < ftunames.length; i++) {
+    alphabet = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
+    if (alphabet.indexOf(ftunames[i].substring(0, 1).toLowerCase()) > 0) {
+    ftu.push(ftunames[i].substring(0, 1).toLowerCase().concat("nflag"));
+    } else {
+    ftu.push("basicnflag");
+    }
+  }
+  let maxwidth = ftu.length * 15 + (ftu.length - 1);
+  for (i = 0; i < document.getElementsByClassName("row").length; i++) {
+    for (a = 0; a < 11; a++) {
+      let newDiv = document.createElement("div");
+      newDiv.classList.add("flagGrp");
+      newDiv.style.width = maxwidth + "dvh";
+
+      if (i / 2 % 1 == 0) {
+        newDiv.classList.add("even");
+      } else {
+        newDiv.classList.add("odd");
+      }
+
+      let pxOffset = ((a - 5) * ((maxwidth + 1) / 100) * window.innerHeight);
+      newDiv.style.left = (window.innerWidth / 2 + pxOffset) + "px";
+
+      document.getElementsByClassName("row")[i].appendChild(newDiv);
+
+      for (b = 0; b < ftu.length; b++) {
+        let newFlag = document.createElement("div");
+        newFlag.style.left = b * 16 + "dvh";
+        newFlag.classList.add("flag");
+        newFlag.style.backgroundImage = "url('".concat(ftu[b], ".png')");
+        newDiv.appendChild(newFlag);
+      }
+    }
+  }
+}
+cotl = 9;
+function animateFlags() {
+  maxwidth = ftu.length * 15 + (ftu.length - 1);
+  for (i = 0; i < document.getElementsByClassName("flagGrp").length; i++) {
+    cfg = document.getElementsByClassName("flagGrp")[i];
+    cotl--;
+    if (cotl == 0) { cotl = 11; }
+    if (i % 11 == cotl && cfg.classList.contains("even")) {
+      cfg.style.transition = "none";
+      window.innerHeight;
+      cfg.style.left = "calc(50% - ".concat(maxwidth + 1 + "dvh)")
+    } else if (i % 11 == cotl) {
+      cfg.style.transition = "none";
+      window.innerHeight;
+      cfg.style.left = "calc(50% + ".concat(maxwidth + 1 + "dvh)")
+    } else {}
+    cfg.style.transition = "10s linear left";
+    window.innerHeight;
+    if (cfg.classList.contains("even")) {
+      cfg.style.left = ((maxwidth + 1) / 100 * window.innerHeight) + cfg.offsetLeft + "px";
+    } else {
+      cfg.style.left = cfg.offsetLeft - ((maxwidth + 1) / 100 * window.innerHeight) + "px";
+    }
+  }
+}
 function animatecorrect() {
-  
+if (animationsenabled) {
+  document.getElementById("animationsdiv").style.transition = "none";
+  window.innerHeight;
+  document.getElementById("animationsdiv").classList.remove("hidden");
+  renderflags();
+  animateFlags();
+  if (mystery) {
+    delay = 1000;
+    numSF = 11;
+    numpreSF = 7;
+    nmanim = "almystery";
+  } else {
+    delay = 0;
+    numSF = 7;
+    numpreSF = 4;
+    nmanim = "al";
+  }
+  for (i = 0; i < numpreSF; i++) {
+    setTimeout(function(frame) {
+      document.getElementById("animscore").style.backgroundImage = "url('".concat(nmanim, "f", frame, ".png')");
+    }, (i * 41.67) + delay, (i + 1).toString());
+  }
+  for (i = numpreSF; i < numSF; i++) {
+    setTimeout(function(frame) {
+      document.getElementById("animscore").style.backgroundImage = "url('".concat(nmanim, pointVal.toString(), "f", frame, ".png')");
+    }, (i * 41.67) + delay, (i + 1).toString());
+  }
+  for (i = 0; i < 28; i++) {
+    setTimeout(function(frame) {
+      document.getElementById("animbb").style.backgroundImage = "url('albbf".concat(frame, ".png')");
+    }, ((i + numSF) * 41.67) + 1000 + delay, (i + 1).toString());
+  }
+  setTimeout(function() {
+    document.getElementById("animationsdiv").style.transition = "1.5s opacity";
+    window.innerHeight;
+    document.getElementById("animationsdiv").classList.add("hidden");
+    ar = false;
+  }, (28 + numSF) * 41.67 + 2000)
+}
 }
 function animateincorrect(message) {
+if (animationsenabled) {
   
+}
 }
 function renderscoreboardteams() {
 ogarray = [];
