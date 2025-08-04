@@ -1591,7 +1591,7 @@ document.getElementsByClassName("toolbarbutton")[5].style.pointerEvents = "all";
 for (i = 0; i < document.getElementsByClassName("cgroup").length; i++) {
 alphabet = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
 whiteLetters = ["b", "d", "e", "g", "i", "k", "l", "o", "q", "r", "y", "z"];
-if (alphabet.indexOf(document.getElementsByClassName("cn")[i].innerHTML.substring(0, 1).toLowerCase()) > 0) {
+if (alphabet.indexOf(document.getElementsByClassName("cn")[i].innerHTML.substring(0, 1).toLowerCase()) > -1) {
 if (whiteLetters.indexOf(document.getElementsByClassName("cn")[i].innerHTML.substring(0, 1).toLowerCase()) > 0) {
 document.getElementsByClassName("cn")[i].style.color = "white";
 } else {
@@ -1737,7 +1737,7 @@ document.getElementById("correctaudio").load();
 }
 alphabet = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
 whiteLetters = ["b", "d", "e", "g", "i", "k", "l", "o", "q", "r", "y", "z"];
-if (alphabet.indexOf(document.getElementsByClassName("cn")[numToCC - 1].innerHTML.substring(0, 1).toLowerCase()) > 0) {
+if (alphabet.indexOf(document.getElementsByClassName("cn")[numToCC - 1].innerHTML.substring(0, 1).toLowerCase()) > -1) {
 if (whiteLetters.indexOf(document.getElementsByClassName("cn")[numToCC - 1].innerHTML.substring(0, 1).toLowerCase()) > 0) {
 document.getElementsByClassName("cn")[numToCC - 1].style.color = "white";
 } else {
@@ -1812,7 +1812,7 @@ ftunames.push(document.getElementsByClassName("cn")[i].innerHTML);
 ftu = [];
 for (i = 0; i < ftunames.length; i++) {
 alphabet = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
-if (alphabet.indexOf(ftunames[i].substring(0, 1).toLowerCase()) > 0) {
+if (alphabet.indexOf(ftunames[i].substring(0, 1).toLowerCase()) > -1) {
 ftu.push(ftunames[i].substring(0, 1).toLowerCase().concat("nflag"));
 } else {
 ftu.push("basicnflag");
