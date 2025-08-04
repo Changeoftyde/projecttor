@@ -86,7 +86,7 @@ Adelaide..." id="individnames"></textarea>
 <div class="hidden screen" id="scoreboard">
 <div id="animationsdiv" class="hidden">
   <div id="animscore"></div>
-  <div id="animbb"></div>
+  <div style="background-image: url('albbf1.png')" id="animbb"></div>
   <div id="flags">
   <div style="top: -38%" class="row-wrapper"><div class="row"></div></div>
   <div style="top: -27%" class="row-wrapper"><div class="row"></div></div>
@@ -243,6 +243,8 @@ font-family: fredokaone;
         height: 100%;
         width: 15dvh;
         left: 50%;
+        background-size: cover;
+        background-position: 50% 50%;
       }
       #flags {
         background-color: rgba(0, 0, 0, 0.5);
@@ -1858,6 +1860,7 @@ function animateFlags() {
 }
 function animatecorrect() {
 if (animationsenabled) {
+  document.getElementById("animbb").style.backgroundImage = "url('albbf1.png')";
   document.getElementById("animationsdiv").style.transition = "none";
   window.innerHeight;
   document.getElementById("animationsdiv").classList.remove("hidden");
@@ -1868,6 +1871,7 @@ if (animationsenabled) {
     numSF = 11;
     numpreSF = 7;
     nmanim = "almystery";
+    document.getElementById("animscore").style.backgroundImage = "url('almysteryf1.png')";
   } else {
     delay = 0;
     numSF = 7;
@@ -1894,7 +1898,8 @@ if (animationsenabled) {
     window.innerHeight;
     document.getElementById("animationsdiv").classList.add("hidden");
     ar = false;
-  }, (28 + numSF) * 41.67 + 2000)
+  }, (28 + numSF) * 41.67 + 2000);
+  document.getElementById("animbb").style.backgroundImage = "url('albbf1.png')";
 }
 }
 function animateincorrect(message) {
