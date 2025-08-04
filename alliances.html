@@ -1831,8 +1831,9 @@ function animateFlags() {
 }
 function animatecorrect() {
 if (animationsenabled) {
-  for (i = 0; i < document.getElementsByClassName("flagGrp").length; i++) {
-    document.getElementsByClassName("flagGrp")[i].remove();
+  nopf = document.getElementsByClassName("flagGrp").length;
+  for (i = 0; i < nopf; i++) {
+    document.getElementsByClassName("flagGrp")[0].remove();
   }
   document.getElementById("animationsdiv").style.transition = "none";
   window.innerHeight;
