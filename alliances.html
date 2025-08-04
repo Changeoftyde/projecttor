@@ -214,6 +214,14 @@ Adelaide..." id="individnames"></textarea>
 <source src="incorrect.ogg" type="audio/ogg">
 <source src="incorrect.mp3" type="audio/mpeg">
 </audio>
+<audio id="alaudio">
+<source src="alcorrect.ogg" type="audio/ogg">
+<source src="alcorrect.mp3" type="audio/mpeg">
+</audio>
+<audio id="almysteryaudio">
+<source src="almysterycorrect.ogg" type="audio/ogg">
+<source src="almysterycorrect.mp3" type="audio/mpeg">
+</audio>
 </div>
 </body>
 <style>
@@ -1893,6 +1901,13 @@ numSF = 7;
 numpreSF = 4;
 nmanim = "al";
 }
+setTimeout(function() {
+  if (mystery && soundeffects) {
+    document.getElementById("almysteryaudio").play();
+  } else if (soundeffects) {
+    document.getElementById("alaudio").play();
+  } else {}
+}, delay)
 for (i = 0; i < numpreSF; i++) {
 setTimeout(function(frame) {
 document.getElementById("animscore").style.backgroundImage = "url('".concat(nmanim, "f", frame, ".png')");
