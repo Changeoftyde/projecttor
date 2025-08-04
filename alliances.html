@@ -1714,6 +1714,7 @@ break;
 }
 }
 if (window[numToCC.toString().concat("status")] == 0) {
+document.getElementsByClassName("cn")[numToCC - 1].style.color = "white";
 window[numToCC.toString().concat("status")] = 1;
 if (soundeffects) {
 document.getElementById("correctaudio").play();
@@ -1721,6 +1722,7 @@ document.getElementById("incorrectaudio").load();
 }
 document.getElementsByClassName("cgroup")[numToCC - 1].style.backgroundImage = "url('correct.png')";
 } else if (window[numToCC.toString().concat("status")] == 1) {
+document.getElementsByClassName("cn")[numToCC - 1].style.color = "white";
 window[numToCC.toString().concat("status")] = 2;
 if (soundeffects) {
 document.getElementById("incorrectaudio").play();
@@ -1734,7 +1736,13 @@ document.getElementById("incorrectaudio").play();
 document.getElementById("correctaudio").load();
 }
 alphabet = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
+whiteLetters = ["b", "d", "e", "g", "i", "k", "l", "o", "q", "r", "y", "z"];
 if (alphabet.indexOf(document.getElementsByClassName("cn")[numToCC - 1].innerHTML.substring(0, 1).toLowerCase()) > 0) {
+if (whiteLetters.indexOf(document.getElementsByClassName("cn")[numToCC - 1].innerHTML.substring(0, 1).toLowerCase()) > 0) {
+document.getElementsByClassName("cn")[numToCC - 1].style.color = "white";
+} else {
+document.getElementsByClassName("cn")[numToCC - 1].style.color = "black";
+}
 document.getElementsByClassName("cgroup")[numToCC - 1].style.backgroundImage = "url('".concat(document.getElementsByClassName("cn")[numToCC - 1].innerHTML.substring(0, 1).toLowerCase(), "nflag.png')");
 } else {
 document.getElementsByClassName("cgroup")[numToCC - 1].style.backgroundImage = "url('basicnflag.png')";
