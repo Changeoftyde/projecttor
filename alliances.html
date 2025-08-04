@@ -1131,6 +1131,7 @@ dal = doubleanim;
 otheral = imgToLoad.length;
 total = otheral;
 cnl = 0;
+numdone = 0;
 pct = 0;
 ls = false;
 window.addEventListener("DOMContentLoaded", function() {
@@ -1138,10 +1139,11 @@ for (i = 0; i < imgToLoad.length; i++) {
 img = document.createElement("img");
 document.body.appendChild(img);
 img.addEventListener("load", function() {
+numdone++;
 pct += (100 / otheral);
 document.getElementById("loadbar2").style.width = pct.toString() + "%";
 document.getElementById("loadingdot").innerHTML = "Loading... (".concat(Math.floor(pct).toString(), "%)");
-if (ls && pct == 100) {
+if (ls && numdone == imgToLoad.length) {
 preludeSlide();
 }
 })
@@ -1230,7 +1232,7 @@ function loadingSlide() {
 hideallbutone("loadingscreen");
 ls = true;
 window.innerHeight;
-if (pct == 100) {
+if (numdone == imgToLoad.length) {
 preludeSlide();
 }
 }
