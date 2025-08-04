@@ -86,7 +86,6 @@ Adelaide..." id="individnames"></textarea>
 <div class="hidden screen" id="scoreboard">
 <div id="animationsdiv" class="hidden">
 <div id="animscore"></div>
-  <div style="background-image: url('albbf1.png')" id="animbb"></div>
 <div id="flags">
 <div style="top: -38%" class="row-wrapper"><div class="row"></div></div>
 <div style="top: -27%" class="row-wrapper"><div class="row"></div></div>
@@ -1122,9 +1121,6 @@ for (i = 7; i < 11; i++) {
 imgToLoad.push("almystery".concat(mpt[a].toString(), "f", (i + 1).toString()));
 }
 }
-for (i = 0; i < 28; i++) {
-imgToLoad.push("albbf".concat((i + 1).toString()));
-}
 sdal = sdframes;
 eal = eliminateanim;
 stal = stealanim;
@@ -1594,9 +1590,16 @@ document.getElementsByClassName("toolbarbutton")[5].style.pointerEvents = "all";
 }
 for (i = 0; i < document.getElementsByClassName("cgroup").length; i++) {
 alphabet = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
+whiteLetters = ["b", "d", "e", "g", "i", "k", "l", "o", "q", "r", "y", "z"];
 if (alphabet.indexOf(document.getElementsByClassName("cn")[i].innerHTML.substring(0, 1).toLowerCase()) > 0) {
+if (whiteLetters.indexOf(document.getElementsByClassName("cn")[i].innerHTML.substring(0, 1).toLowerCase()) > 0) {
+document.getElementsByClassName("cn")[i].style.color = "white";
+} else {
+document.getElementsByClassName("cn")[i].style.color = "black";
+}
 document.getElementsByClassName("cgroup")[i].style.backgroundImage = "url('".concat(document.getElementsByClassName("cn")[i].innerHTML.substring(0, 1).toLowerCase(), "nflag.png')");
 } else {
+document.getElementsByClassName("cn")[i].style.color = "black";
 document.getElementsByClassName("cgroup")[i].style.backgroundImage = "url('basicnflag.png')";
 }
 window[(i + 1).toString().concat("status")] = 0;
@@ -1861,7 +1864,6 @@ cfg.style.left = cfg.offsetLeft - ((maxwidth + 1) / 100 * window.innerHeight) + 
 }
 function animatecorrect() {
 if (animationsenabled) {
-document.getElementById("animbb").style.backgroundImage = "url('albbf1.png')";
 document.getElementById("animationsdiv").style.transition = "none";
 window.innerHeight;
 document.getElementById("animationsdiv").classList.remove("hidden");
@@ -1889,18 +1891,12 @@ setTimeout(function(frame) {
 document.getElementById("animscore").style.backgroundImage = "url('".concat(nmanim, pointVal.toString(), "f", frame, ".png')");
 }, (i * 41.67) + delay, (i + 1).toString());
 }
-for (i = 0; i < 28; i++) {
-setTimeout(function(frame) {
-document.getElementById("animbb").style.backgroundImage = "url('albbf".concat(frame, ".png')");
-}, ((i + numSF) * 41.67) + 1000 + delay, (i + 1).toString());
-}
 setTimeout(function() {
 document.getElementById("animationsdiv").style.transition = "1.5s opacity";
 window.innerHeight;
 document.getElementById("animationsdiv").classList.add("hidden");
 ar = false;
   }, (28 + numSF) * 41.67 + 3000);
-  document.getElementById("animbb").style.backgroundImage = "url('albbf1.png')";
 }
 }
 function animateincorrect(message) {
