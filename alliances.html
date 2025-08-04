@@ -85,6 +85,7 @@ Adelaide..." id="individnames"></textarea>
 </div>
 <div class="hidden screen" id="scoreboard">
 <div id="animationsdiv" class="hidden">
+<span id="wrongmessage"></span>
 <div id="animscore"></div>
 <div id="flags">
 <div style="top: -38%" class="row-wrapper"><div class="row"></div></div>
@@ -178,18 +179,6 @@ Adelaide..." id="individnames"></textarea>
 <source src="threew.ogg" type="audio/ogg">
 <source src="threew.mp3" type="audio/mpeg">
 </audio>
-<audio id="stealaudio">
-<source src="steal.ogg" type="audio/ogg">
-<source src="steal.mp3" type="audio/mpeg">
-</audio>
-<audio id="spliceaudio">
-<source src="splice.ogg" type="audio/ogg">
-<source src="splice.mp3" type="audio/mpeg">
-</audio>
-<audio id="eliminateaudio">
-<source src="eliminate.ogg" type="audio/ogg">
-<source src="eliminate.mp3" type="audio/mpeg">
-</audio>
 <audio id="sdbgaudio" loop>
 <source src="alliancesbgmusic.ogg" type="audio/ogg">
 <source src="alliancesbgmusic.mp3" type="audio/mpeg">
@@ -197,14 +186,6 @@ Adelaide..." id="individnames"></textarea>
 <audio id="clickaudio">
 <source src="click.ogg" type="audio/ogg">
 <source src="click.mp3" type="audio/mpeg">
-</audio>
-<audio id="doubleaudio">
-<source src="double.ogg" type="audio/ogg">
-<source src="double.mp3" type="audio/mpeg">
-</audio>
-<audio id="suddendeathaudio">
-<source src="suddendeath.ogg" type="audio/ogg">
-<source src="suddendeath.mp3" type="audio/mpeg">
 </audio>
 <audio id="correctaudio">
 <source src="correct.ogg" type="audio/ogg">
@@ -222,10 +203,26 @@ Adelaide..." id="individnames"></textarea>
 <source src="almysterycorrect.ogg" type="audio/ogg">
 <source src="almysterycorrect.mp3" type="audio/mpeg">
 </audio>
+<audio id="wrongmessageaudio">
+<source src="wrongmessage.ogg" type="audio/ogg">
+<source src="wrongmessage.mp3" type="audio/mpeg">
+</audio>
 </div>
 </body>
 <style>
-
+#wrongmessage {
+  font-size: 5dvh;
+  color: white;
+  text-align: center;
+  word-wrap: break-word;
+  width: 95%;
+  height: auto;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 1000;
+  transform: translate(-50%, -50%);
+}
 #loadingdot {
 top: 33dvh;
 width: 100%;
@@ -1096,7 +1093,7 @@ sessionStorage.removeItem("setToUse");
 window.location.href = "urlerror.html";
 }
 { //load images
-imgToLoad = ["almystery", "alliancesblackbackground.gif", "basicnflag"];
+imgToLoad = ["almystery", "alliancesblackbackground.gif", "basicnflag", "saturatedincorrect"];
 ptvalues = [1000, 1100, 1200, 1300, 1400, 1500];
 game = "al";
 powerplayanimlength = ["doubleanim", "spliceanim", "stealanim", "eliminateanim"];
@@ -1809,7 +1806,7 @@ if (soundeffects) {
 document.getElementById("clickaudio").play();
 }
 }
-function renderflags() {
+function renderflags(normal) {
 nopf = document.getElementsByClassName("flagGrp").length;
 for (i = 0; i < nopf; i++) {
 document.getElementsByClassName("flagGrp")[0].remove();
@@ -1851,7 +1848,11 @@ for (b = 0; b < ftu.length; b++) {
 let newFlag = document.createElement("div");
 newFlag.style.left = b * 16 + "dvh";
 newFlag.classList.add("flag");
+if (normal == 0) {
 newFlag.style.backgroundImage = "url('".concat(ftu[b], ".png')");
+} else {
+newFlag.style.backgroundImage = "url('saturatedincorrect.png')";
+}
 newDiv.appendChild(newFlag);
 }
 }
@@ -1884,10 +1885,12 @@ cfg.style.left = cfg.offsetLeft - ((maxwidth + 1) / 100 * window.innerHeight) + 
 }
 function animatecorrect() {
 if (animationsenabled) {
+document.getElementById("animscore").classList.remove("hidden");
+document.getElementById("wrongmessage").classList.add("hidden");
 document.getElementById("animationsdiv").style.transition = "none";
 window.innerHeight;
 document.getElementById("animationsdiv").classList.remove("hidden");
-renderflags();
+renderflags(0);
 animateFlags();
 if (mystery) {
 delay = 1000;
@@ -1926,9 +1929,27 @@ ar = false;
   }, (28 + numSF) * 41.67 + 800);
 }
 }
+messages = ["No points!<br>You need to be in a group to score points.", "No points!<br>Your group is too large!", "No points!<br>You must switch your team between questions!"];
 function animateincorrect(message) {
 if (animationsenabled) {
-
+  if (soundeffects) {
+    document.getElementById("wrongmessageaudio").play();
+  }
+  document.getElementById("animationsdiv").style.transition = "none";
+  window.innerHeight;
+  document.getElementById("animationsdiv").classList.remove("hidden");
+  ar = true;
+  renderflags(1);
+  animateFlags();
+  document.getElementById("animscore").classList.add("hidden");
+  document.getElementById("wrongmessage").classList.remove("hidden");
+  document.getElementById("wrongmessage").innerHTML = messages[message];
+  setTimeout(function() {
+    document.getElementById("animationsdiv").style.transition = "1.5s opacity";
+    window.innerHeight;
+    document.getElementById("animationsdiv").classList.add("hidden");
+    ar = false;
+  }, 2258);
 }
 }
 function renderscoreboardteams() {
