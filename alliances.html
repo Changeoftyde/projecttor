@@ -1087,7 +1087,7 @@ sessionStorage.removeItem("setToUse");
 window.location.href = "urlerror.html";
 }
 { //load images
-imgToLoad = ["almystery", "alliancesblackbackground.gif"];
+imgToLoad = ["almystery", "alliancesblackbackground.gif", "basicnflag"];
 ptvalues = [1000, 1100, 1200, 1300, 1400, 1500];
 game = "al";
 powerplayanimlength = ["doubleanim", "spliceanim", "stealanim", "eliminateanim"];
@@ -1096,6 +1096,10 @@ spliceanim = 65;
 stealanim = 117;
 sdframes = 58;
 eliminateanim = 79;
+alphabet = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
+for (i = 0; i < alphabet.length; i++) {
+imgToLoad.push(alphabet[i].concat("nflag"));
+}
 for (i = 0; i < ptvalues.length; i++) {
 imgToLoad.push(game.concat(ptvalues[i].toString()));
 }
