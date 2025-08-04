@@ -203,10 +203,6 @@ Adelaide..." id="individnames"></textarea>
 <source src="almysterycorrect.ogg" type="audio/ogg">
 <source src="almysterycorrect.mp3" type="audio/mpeg">
 </audio>
-<audio id="wrongmessageaudio">
-<source src="wrongmessage.ogg" type="audio/ogg">
-<source src="wrongmessage.mp3" type="audio/mpeg">
-</audio>
 </div>
 </body>
 <style>
@@ -1933,7 +1929,7 @@ messages = ["No points!<br>You need to be in a group to score points.", "No poin
 function animateincorrect(message) {
 if (animationsenabled) {
   if (soundeffects) {
-    document.getElementById("wrongmessageaudio").play();
+    document.getElementById("incorrectaudio").play();
   }
   document.getElementById("animationsdiv").style.transition = "none";
   window.innerHeight;
