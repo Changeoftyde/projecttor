@@ -86,7 +86,7 @@ Adelaide..." id="individnames"></textarea>
 <div class="hidden screen" id="scoreboard">
 <div id="animationsdiv" class="hidden">
   <div id="animscore"></div>
-  <div style="background-image: url('albbf1.png')" id="animbb"></div>
+  <div id="animbb"></div>
   <div id="flags">
   <div style="top: -38%" class="row-wrapper"><div class="row"></div></div>
   <div style="top: -27%" class="row-wrapper"><div class="row"></div></div>
@@ -243,8 +243,6 @@ font-family: fredokaone;
         height: 100%;
         width: 15dvh;
         left: 50%;
-        background-size: cover;
-        background-position: 50% 50%;
       }
       #flags {
         background-color: rgba(0, 0, 0, 0.5);
@@ -1089,7 +1087,7 @@ sessionStorage.removeItem("setToUse");
 window.location.href = "urlerror.html";
 }
 { //load images
-imgToLoad = ["almystery", "alliancesblackbackground.gif", "basicnflag"];
+imgToLoad = ["almystery", "alliancesblackbackground.gif"];
 ptvalues = [1000, 1100, 1200, 1300, 1400, 1500];
 game = "al";
 powerplayanimlength = ["doubleanim", "spliceanim", "stealanim", "eliminateanim"];
@@ -1098,32 +1096,8 @@ spliceanim = 65;
 stealanim = 117;
 sdframes = 58;
 eliminateanim = 79;
-alphabet = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
-for (i = 0; i < alphabet.length; i++) {
-imgToLoad.push(alphabet[i].concat("nflag"));
-}
 for (i = 0; i < ptvalues.length; i++) {
 imgToLoad.push(game.concat(ptvalues[i].toString()));
-}
-for (i = 0; i < 4; i++) {
-imgToLoad.push("alf".concat((i + 1).toString()));
-}
-for (a = 0; a < ptvalues.length; a++) {
-for (i = 4; i < 7; i++) {
-imgToLoad.push("al".concat(ptvalues[a].toString(), "f", (i + 1).toString()));
-}
-}
-for (i = 0; i < 7; i++) {
-imgToLoad.push("almysteryf".concat((i + 1).toString()));
-}
-mpt = [3000, 500, 1000];
-for (a = 0; a < mpt.length; a++) {
-for (i = 7; i < 11; i++) {
-imgToLoad.push("almystery".concat(mpt[a].toString(), "f", (i + 1).toString()));
-}
-}
-for (i = 0; i < 28; i++) {
-imgToLoad.push("albbf".concat((i + 1).toString()));
 }
 sdal = sdframes;
 eal = eliminateanim;
@@ -1133,7 +1107,6 @@ dal = doubleanim;
 otheral = imgToLoad.length;
 total = otheral;
 cnl = 0;
-numdone = 0;
 pct = 0;
 ls = false;
 window.addEventListener("DOMContentLoaded", function() {
@@ -1141,11 +1114,10 @@ for (i = 0; i < imgToLoad.length; i++) {
 img = document.createElement("img");
 document.body.appendChild(img);
 img.addEventListener("load", function() {
-numdone++;
 pct += (100 / otheral);
 document.getElementById("loadbar2").style.width = pct.toString() + "%";
 document.getElementById("loadingdot").innerHTML = "Loading... (".concat(Math.floor(pct).toString(), "%)");
-if (ls && numdone == imgToLoad.length) {
+if (ls && pct == 100) {
 preludeSlide();
 }
 })
@@ -1234,7 +1206,7 @@ function loadingSlide() {
 hideallbutone("loadingscreen");
 ls = true;
 window.innerHeight;
-if (numdone == imgToLoad.length) {
+if (pct == 100) {
 preludeSlide();
 }
 }
@@ -1787,9 +1759,8 @@ document.getElementById("clickaudio").play();
 }
 }
 function renderflags() {
-  for (i = 0; i < document.getElementsByClassName("flagGrp").length; i++) {
-    document.getElementsByClassName("flagGrp")[i].remove();
-  }
+
+  window.innerHeight;
   ftunames = [];
   for (i = 0; i < document.getElementsByClassName("sbteam").length; i++) {
     if (window[(i + 1).toString().concat("status")] == 1) {
@@ -1860,7 +1831,9 @@ function animateFlags() {
 }
 function animatecorrect() {
 if (animationsenabled) {
-  document.getElementById("animbb").style.backgroundImage = "url('albbf1.png')";
+  for (i = 0; i < document.getElementsByClassName("flagGrp").length; i++) {
+    document.getElementsByClassName("flagGrp")[i].remove();
+  }
   document.getElementById("animationsdiv").style.transition = "none";
   window.innerHeight;
   document.getElementById("animationsdiv").classList.remove("hidden");
@@ -1871,7 +1844,6 @@ if (animationsenabled) {
     numSF = 11;
     numpreSF = 7;
     nmanim = "almystery";
-    document.getElementById("animscore").style.backgroundImage = "url('almysteryf1.png')";
   } else {
     delay = 0;
     numSF = 7;
@@ -1898,8 +1870,7 @@ if (animationsenabled) {
     window.innerHeight;
     document.getElementById("animationsdiv").classList.add("hidden");
     ar = false;
-  }, (28 + numSF) * 41.67 + 2000);
-  document.getElementById("animbb").style.backgroundImage = "url('albbf1.png')";
+  }, (28 + numSF) * 41.67 + 3000)
 }
 }
 function animateincorrect(message) {
