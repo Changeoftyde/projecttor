@@ -1881,7 +1881,6 @@ cfg.style.left = cfg.offsetLeft - ((maxwidth + 1) / 100 * window.innerHeight) + 
 }
 function animatecorrect() {
 if (animationsenabled) {
-document.getElementById("animscore").classList.remove("hidden");
 document.getElementById("wrongmessage").classList.add("hidden");
 document.getElementById("animationsdiv").style.transition = "none";
 window.innerHeight;
@@ -1937,7 +1936,7 @@ if (animationsenabled) {
   ar = true;
   renderflags(1);
   animateFlags();
-  document.getElementById("animscore").classList.add("hidden");
+  document.getElementById("animscore").style.backgroundImage = "url('bigredx.png')";
   document.getElementById("wrongmessage").classList.remove("hidden");
   document.getElementById("wrongmessage").innerHTML = messages[message];
   setTimeout(function() {
