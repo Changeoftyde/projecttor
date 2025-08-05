@@ -1762,11 +1762,11 @@ event.target.innerHTML = localStorage.getItem(current.concat("a", qn.toString())
 }
 }
 { //functions for scoreboard slide
+previousvictors = [-1];
 function scoreboardSlide() {
 if (backgroundmusic) {
 document.getElementById("sdbgaudio").pause();
 }
-previousvictors = [-1];
 if (questionnumber == numberofcycles * parseInt(localStorage.getItem(current.concat("qat"))) && !endlessmode) { finish(); } else {
 nc = 0;
 victors = [];
@@ -1787,7 +1787,7 @@ animatecorrect();
 animateincorrect(0);
 } else if (nc > numingroup) {
 animateincorrect(1);
-} else if (previousvictors == victors) {
+} else if (previousvictors == victors && victors.length != 0) {
 animateincorrect(2);
 } else {}
 for (i = 0; i < numcgroups; i++) {
