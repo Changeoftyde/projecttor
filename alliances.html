@@ -1783,11 +1783,11 @@ for (i = 0; i < victors.length; i++) {
     ntb++;
   }
 }
-if (nc > 1 && nc <= numingroup && ntgt == ntb) {
+if (nc > 1 && nc <= numingroup && ntgt != ntb) {
 for (a = 0; a < numcgroups; a++) {
-if (window[(a + 1).toString().concat("status")] == 1) {
-window[(a + 1).toString().concat("score")] = window[(a + 1).toString().concat("score")] + Math.floor(pointVal / nc);
-}
+  if (window[(a + 1).toString().concat("status")] == 1) {
+    window[(a + 1).toString().concat("score")] = window[(a + 1).toString().concat("score")] + Math.floor(pointVal / nc);
+  }
 }
 animatecorrect();
 } else if (nc == 1) {
