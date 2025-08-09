@@ -51,7 +51,7 @@ Rachel
 Adelaide..." id="individnames"></textarea>
 </div>
 <button onclick="start()" id="startbutton">Start</button>
-<div class="bg" style="background-image: url('classicwbackground.gif')"></div>
+<div class="bg" style="background-image: url('classicwbackground.gif'); background-color: black"></div>
 </div>
 <div class="hidden screen" id="prelude">
 <div id="jett">
@@ -694,7 +694,7 @@ left: 2dvh;
 }
 .sbteam {
 padding: 1dvh;
-background-color: rgba(0, 0, 0, 0.5);
+background-color: rgba(255, 255, 255, 0.5);
 font-size: 4dvh;
 width: calc(100% - 2dvh);
 overflow: hidden;
@@ -966,11 +966,11 @@ src: url("FredokaOne-Regular.otf");
   width: 13dvh;
   height: 8dvh;
 
-  background-color: black;
+  background-color: white;
   border: none;
   border-radius: 2.5dvh;
 
-  color: white;
+  color: black;
   font-family: fredokaone;
   font-size: 3.5dvh;
 
@@ -987,7 +987,7 @@ height: 56dvh;
 }
 #individnames {
 border-radius: 1dvh;
-outline: 1dvh solid black;
+outline: 1dvh solid white;
 border: none;
 resize: none;
 background-color: rgba(255, 255, 255, 0.8);
@@ -1038,7 +1038,7 @@ position: absolute;
 width: calc(100% - 2dvh);
 height: 15dvh;
 border-radius: 1dvh;
-outline: 1dvh solid black;
+outline: 1dvh solid white;
 }
 #actualgroups {
 border-radius: 1dvh;
@@ -1062,6 +1062,7 @@ height: 4dvh;
 left: 50%;
 transform: translate(-50%, 0%);
 top: 0;
+filter: invert(1);
 position: absolute;
 }
 .hidden {
@@ -1096,8 +1097,8 @@ background-color: rgba(255, 255, 255, 0.8);
 font-size: 2dvh;
 }
 .selected {
-background-color: black;
-color: white;
+background-color: white;
+color: black;
 }
 .individualbased {
 position: absolute;
@@ -1116,7 +1117,7 @@ transition: 1s opacity;
 overflow: hidden;
 width: calc(100% - 7dvh);
 height: 2.5dvh;
-outline: 1.5dvh solid black;
+outline: 1.5dvh solid white;
 border-radius: 1dvh;
 position: absolute;
 left: 3.5dvh;
@@ -1130,7 +1131,7 @@ overflow: hidden;
 width: calc(100% - 7dvh);
 height: 25dvh;
 color: white;
-outline: 1.5dvh solid black;
+outline: 1.5dvh solid white;
 position: absolute;
 left: 3.5dvh;
 top: 3.5dvh;
@@ -1249,6 +1250,13 @@ const ro = new ResizeObserver(() => {
 
 ro.observe(document.getElementById("whiteboardDiv"));
 function resizee() {
+  wb = document.getElementById("whiteboard");
+  window.innerHeight;
+  wb.height = window.innerHeight * 0.45;
+  wb.width = window.innerHeight * 10;
+  wrect = wb.getBoundingClientRect();
+  wctx = wb.getContext("2d");
+  wctx.fillStyle = "white";
 qag.style.width = window.innerWidth - document.getElementById("whiteboardDiv").offsetWidth - 0.02 * window.innerHeight + "px";
 document.getElementById("flipContainer").style.height = 0.2 * window.innerHeight + document.getElementById("fpmessage").offsetHeight + "px";
 for (i = 0; i < document.getElementsByClassName("group").length; i++) {
@@ -1334,8 +1342,8 @@ document.getElementById("individuals").classList.add("hidden");
 dgr = true;
 } else {
 dgr = false;
-document.getElementsByClassName("individualbased")[0].style.backgroundColor = "black";
-document.getElementsByClassName("individualbased")[0].style.color = "white";
+document.getElementsByClassName("individualbased")[0].style.backgroundColor = "white";
+document.getElementsByClassName("individualbased")[0].style.color = "black";
 document.getElementsByClassName("groupbased")[0].classList.remove("selected");
 document.getElementById("groups").classList.add("hidden");
 document.getElementById("individuals").classList.remove("hidden");
