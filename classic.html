@@ -5,6 +5,13 @@
 <!DOCTYPE html>
 <html>
 <body>
+<div id="reminders">
+<div class="srembg hidden" style="background-color: rgba(0, 0, 0, 0.01)" id="srem3"><div id="blackpart"></div><div style="top: 38dvh" class="srem"><img src="jettfullbody.png" class="srimgjett"><div class="wrapbox"></div><button onclick="document.getElementById('srem3').classList.add('hidden'); document.getElementById('cgroups').style.background = 'none'; if (soundeffects) { document.getElementById('clickaudio').play(); }" class="srembutton">Got it!</button>Click the buttons highlighted below to control which participants or teams score points for correct answers.</div></div>
+<div class="srembg hidden" id="srem4"><div class="toggler"><div class="groupbased2 selected">Group-Based</div><div style="background-color: white" class="individualbased2">Individual-Based</div></div><div style="top: 68.75dvh" class="srem">
+<img src="jettfullbody.png" class="srimgjett"><div class="wrapbox"></div><button onclick="document.getElementById('srem4').classList.add('hidden'); if (soundeffects) { document.getElementById('clickaudio').play(); }" class="srembutton">Got it!</button>Use the buttons highlighted above to switch between a free-for-all between your participants or a battle between up to ten teams.</div></div>
+<div class="srembg hidden" id="srem5"><img style="left: 20.5dvh; bottom: 21dvh" id="speechtriangle" src="speechtrianglejett.png"><div style="bottom: 3.5dvh; left: 26dvh" id="speech"><span class="text4speech"></div></span><div style="top: 37dvh" class="srem">
+<img src="jettfullbody.png" class="srimgjett"><div class="wrapbox"></div><button onclick="document.getElementById('srem5').classList.add('hidden'); preludeSlide(); if (soundeffects) { document.getElementById('clickaudio').play(); }" class="srembutton">Got it!</button>Read the blank below to determine which participants are representing their teams for this question.</div></div>
+</div>
 <div class="screen" id="pregame">
 <button onclick="togglesettings()" id="settings"><span style="position: absolute; right: 4dvh; bottom: 0dvh">Settings</span></button><div id="settingsarea">
 <img onclick="togglesettings()" src="closesettings.png" id="closesettings">
@@ -194,7 +201,71 @@ Adelaide..." id="individnames"></textarea>
 </div>
 </body>
 <style>
-
+#blackpart {
+  background-color: rgba(0, 0, 0, 0.79);
+  width: 100%;
+  height: 76dvh;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.srembg {
+  z-index: 10000;
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.8);
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+.wrapbox {
+  position: relative;
+  float: left;
+  width: 19dvh;
+  height: 43.28dvh;
+  margin-left: -8.3dvh;
+  shape-outside: inset(20dvh 0 0 0); /* 20dvh empty space above */
+  clip-path: inset(20dvh 0 0 0); /* for visual debug */
+}
+.srembutton {
+    background-color: white;         
+    height: 4.5dvh;
+    width: 12.5dvh;
+    color: #ff8500;
+    outline: 1.5dvh solid #ff8500;
+    font-family: fredokaone;
+    font-size: 3.5dvh;
+    text-align: center;
+    position: absolute;
+    border: none;
+    border-radius: 1dvh;
+    bottom: -3dvh;
+    right: 8.102dvh;
+  }
+.srimgjett {
+    width: 18dvh;
+    height: 22.28dvh;
+    position: absolute;
+    bottom: -2dvh;
+    left: -7.704dvh;
+  }
+.srem {
+    font-size: 3.5dvh;
+    color: #ff8500;
+    text-align: left;
+    word-wrap: break-word;
+    
+    background-color: white;
+    outline: 2dvh solid #ff8500;
+    border-radius: 2dvh;
+    padding: 1dvh;
+    width: 36dvh;
+    height: 36dvh;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    position: absolute;
+  }
 #loadingdot {
 top: 33dvh;
 width: 100%;
@@ -713,6 +784,15 @@ position: absolute;
 top: 0;
 left: 0;
 }
+.text4speech {
+width: 100%;
+height: auto;
+color: #ff8d34;
+position: absolute;
+transform: translate(-50%, -50%);
+left: 50%;
+top: 50%;
+}
 #text4speech {
 width: 100%;
 height: auto;
@@ -923,6 +1003,16 @@ left: 50%;
 top: 70%;
 position: absolute;
 }
+.groupbased2 {
+position: absolute;
+height: 100%;
+right: 0;
+top: 0;
+width: 50%;
+text-align: center;
+background-color: rgba(255, 255, 255, 0.8);
+font-size: 2dvh;
+}
 .groupbased {
 position: absolute;
 height: 100%;
@@ -937,6 +1027,16 @@ font-size: 2dvh;
 background-color: black;
 color: white;
 }
+.individualbased2 {
+position: absolute;
+height: 100%;
+left: 0;
+top: 0;
+width: 50%;
+text-align: center;
+font-size: 2dvh;
+background-color: rgba(255, 255, 255, 0.8);
+}
 .individualbased {
 position: absolute;
 height: 100%;
@@ -949,6 +1049,16 @@ background-color: rgba(255, 255, 255, 0.8);
 }
 .n {
 transition: 1s opacity;
+}
+.toggler {
+overflow: hidden;
+width: calc(100% - 7dvh);
+height: 2.5dvh;
+outline: 1.5dvh solid black;
+border-radius: 1dvh;
+position: absolute;
+left: 3.5dvh;
+top: 33.5dvh;
 }
 #toggler {
 overflow: hidden;
@@ -983,6 +1093,10 @@ top: 0;
 }
 </style>
 <script>
+if (localStorage.getItem("rem4") != "1") {
+  localStorage.setItem("rem4", "1");
+  document.getElementById("srem4").classList.remove("hidden");
+}
 { //ios textarea blur fix
 function iosTextareaFix() {
 const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
@@ -1307,7 +1421,14 @@ addsbgroupi(names[i]);
 }
 resizee();
 }
-preludeSlide();
+if (localStorage.getItem("rem5") != "1" && dgr == true) {
+  localStorage.setItem("rem5", "1");
+  prelfirsthalf();
+  window.innerHeight;
+  document.getElementById("srem5").classList.remove("hidden");
+} else {
+  preludeSlide();
+}
 }
 function addsbgroup() {
 numsbgroups++;
@@ -1478,6 +1599,82 @@ powerplaydesc = ["Double your score!", "Steal all of the team in first place's p
 questionnumber = 0;
 qn = 0;
 slidenum = 1;
+function prelfirsthalf() {
+if (soundeffects) {
+document.getElementById("clickaudio").play();
+}
+if (questionnumber == 0) {
+document.getElementsByClassName("toolbarbutton")[2].style.opacity = 0.5;
+document.getElementsByClassName("toolbarbutton")[5].style.opacity = 0.5;
+document.getElementsByClassName("toolbarbutton")[2].style.pointerEvents = "none";
+document.getElementsByClassName("toolbarbutton")[5].style.pointerEvents = "none";
+for (i = 0; i < numsbgroups; i++) {
+window[(i + 1).toString().concat("score")] = 0;
+}
+if (dgr) {
+for (i = 0; i < numgroups; i++) {
+window[(i + 1).toString().concat("status")] = 0;
+}
+} else {
+for (i = 0; i < names.length; i++) {
+window[(i + 1).toString().concat("status")] = 0;
+}
+}
+}
+else { 
+document.getElementsByClassName("toolbarbutton")[2].style.opacity = 1;
+document.getElementsByClassName("toolbarbutton")[5].style.opacity = 1;
+document.getElementsByClassName("toolbarbutton")[2].style.pointerEvents = "all";
+document.getElementsByClassName("toolbarbutton")[5].style.pointerEvents = "all"; }
+for (i = 0; i < document.getElementsByClassName("cgroup").length; i++) {
+document.getElementsByClassName("cgroup")[i].style.backgroundImage = "url('halfblack.png')";
+window[(i + 1).toString().concat("status")] = 0;
+}
+if (qn == parseInt(localStorage.getItem(current.concat("qat")))) {
+qn = 1;
+} else {
+qn++;
+}
+questionnumber++;
+hideallbutone("prelude");
+document.getElementById("answer").innerHTML = "Click here to reveal the answer...";
+if (!endlessmode) {
+document.getElementsByClassName("questionval")[0].innerHTML = "Question ".concat(questionnumber.toString(), "/", (parseInt(localStorage.getItem(current.concat("qat"))) * numberofcycles));
+document.getElementsByClassName("questionval")[1].innerHTML = "Question ".concat(questionnumber.toString(), "/", (parseInt(localStorage.getItem(current.concat("qat"))) * numberofcycles));
+document.getElementsByClassName("questionval2")[0].innerHTML = "Question ".concat(questionnumber.toString(), "/", (parseInt(localStorage.getItem(current.concat("qat"))) * numberofcycles));
+} else {
+document.getElementsByClassName("questionval")[0].innerHTML = "Question ".concat(qn.toString(), "/", (parseInt(localStorage.getItem(current.concat("qat")))));
+document.getElementsByClassName("questionval")[1].innerHTML = "Question ".concat(qn.toString(), "/", (parseInt(localStorage.getItem(current.concat("qat")))));
+document.getElementsByClassName("questionval2")[0].innerHTML = "Question ".concat(qn.toString(), "/", (parseInt(localStorage.getItem(current.concat("qat")))));
+}
+pointVal = 100;
+window.innerHeight;
+document.getElementById("question").innerHTML = localStorage.getItem(current.concat("q", qn.toString()))
+if (dgr) {
+namesToUse = "";
+if (dgr) {
+for (i = 0; i < numgroups; i++) {
+document.getElementsByClassName("cn")[i].innerHTML = window["names" + (i + 1).toString()][(questionnumber - 1) % window["names" + (i + 1).toString()].length];
+}
+}
+for (i = 0; i < document.getElementsByClassName("teamname").length; i++) {
+if ((i + 1) == document.getElementsByClassName("teamname").length) {
+namesToUse = namesToUse.concat("and ", window["names" + (i + 1).toString()][(questionnumber - 1) % window["names" + (i + 1).toString()].length], "!");
+} else if ((i + 2) == document.getElementsByClassName("teamname").length && document.getElementsByClassName("teamname").length == 2) {
+namesToUse = namesToUse.concat(window["names" + (i + 1).toString()][(questionnumber - 1) % window["names" + (i + 1).toString()].length], " ");
+} else {
+namesToUse = namesToUse.concat(window["names" + (i + 1).toString()][(questionnumber - 1) % window["names" + (i + 1).toString()].length], ", ");
+}
+}
+document.getElementById("text4speech").innerHTML = "Get Ready, ".concat(namesToUse);
+document.getElementsByClassName("text4speech")[0].innerHTML = "Get Ready, ".concat(namesToUse);
+} else {
+document.getElementById("text4speech").innerHTML = "Get Ready, everyone!";
+document.getElementsByClassName("text4speech")[0].innerHTML = "Get Ready, everyone!";
+}
+questionnumber = 0;
+qn = 0;
+}
 function preludeSlide() {
 if (soundeffects) {
   document.getElementById("clickaudio").play();
@@ -1584,6 +1781,11 @@ window.location.href = "play.html";
 function questionSlide() {
 if (soundeffects) {
   document.getElementById("clickaudio").play();
+}
+if (localStorage.getItem("rem3") != "1") {
+document.getElementById("cgroups").style.backgroundColor = "rgba(0, 0, 0, 0.79)";
+localStorage.setItem("rem3", "1");
+document.getElementById("srem3").classList.remove("hidden");
 }
 hideallbutone("questionsslide");
 }
@@ -1773,6 +1975,12 @@ window.innerHeight;
 document.getElementsByClassName("threedmedal")[wom].style.transform = "translate(-50%, -50%) rotateY(2520deg)";
 }, 4570);
 }
+}
+if (localStorage.getItem("darkmode") == "1") {
+  for (i = 0; i < document.getElementsByClassName("srem").length; i++) {
+    document.getElementsByClassName("srem")[i].style.backgroundColor = "black";
+    document.getElementsByClassName("srembutton")[i].style.backgroundColor = "black";
+  }
 }
 </script>
 </html>
