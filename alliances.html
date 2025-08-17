@@ -8,6 +8,7 @@
 <div id="allreminders">
 <div class="srembg hidden" id="srem1"><div class="srem"><img src="jettfullbody.png" class="srimgjett"><div class="wrapbox"></div><button onclick="preludeSlide(); document.getElementById('srem1').classList.add('hidden')" class="srembutton">Got it!</button><span id="ineedtochangetexthere"></span></div></div>
 <div class="srembg hidden" id="srem2"><div class="srem"><img src="jettfullbody.png" class="srimgjett"><div class="wrapbox"></div><button onclick="document.getElementById('srem2').classList.add('hidden'); if (soundeffects) { document.getElementById('clickaudio').play(); }" class="srembutton">Got it!</button>Make sure to select EVERY participant's name in the winning alliance, not just the individual who answered the question.</div></div>
+<div class="srembg hidden" style="background-color: rgba(0, 0, 0, 0.01)" id="srem3"><div id="blackpart"></div><div class="srem"><img src="jettfullbody.png" class="srimgjett"><div class="wrapbox"></div><button onclick="document.getElementById('srem3').classList.add('hidden'); if (soundeffects) { document.getElementById('clickaudio').play(); }" class="srembutton">Got it!</button>Click the buttons below to control which participants score points for correct answers.</div></div>
 </div>
 <div class="screen" id="pregame">
 <button onclick="togglesettings()" id="settings"><span style="position: absolute; right: 4dvh; bottom: 0dvh">Settings</span></button><div id="settingsarea">
@@ -210,6 +211,14 @@ Adelaide..." id="individnames"></textarea>
 </div>
 </body>
 <style>
+#blackpart {
+  background-color: rgba(0, 0, 0, 0.79);
+  width: 100%;
+  height: 76dvh;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
 .srembg {
   z-index: 10000;
   position: fixed;
@@ -1857,10 +1866,18 @@ if (soundeffects) {
 document.getElementById("clickaudio").play();
 }
 hideallbutone("questionsslide");
-if (localStorage.getItem("rem2") != "1") {
+if (localStorage.getItem("rem2") != "1" && localStorage.getItem("rem3") != "1") {
+document.getElementsByClassName("srembutton")[1].setAttribute("onclick", "document.getElementById('srem2').classList.add('hidden'); document.getElementById('srem3').classList.remove('hidden'); if (soundeffects) { document.getElementById('clickaudio').play(); }")
+localStorage.setItem("rem2", "1");
+localStorage.setItem("rem3", "1");
+document.getElementById("srem2").classList.remove("hidden");
+} else if (localStorage.getItem("rem2") != "1") {
 localStorage.setItem("rem2", "1");
 document.getElementById("srem2").classList.remove("hidden");
-}
+} else if (localStorage.getItem("rem3") != "1") {
+localStorage.setItem("rem3", "1");
+document.getElementById("srem3").classList.remove("hidden");
+} else {}
 }
 function togglebetween() {
 if (event.target.tagName.toUpperCase() == "SPAN") {
