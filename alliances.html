@@ -5,6 +5,10 @@
 <!DOCTYPE html>
 <html>
 <body>
+<div id="allreminders">
+<div class="srembg hidden" id="srem1"><div class="srem"><img src="jettfullbody.png" class="srimgjett"><div class="wrapbox"></div><button onclick="preludeSlide(); document.getElementById('srem1').classList.add('hidden')" class="srembutton">Got it!</button><span id="ineedtochangetexthere"></span></div></div>
+<div class="srembg hidden" id="srem2"><div class="srem"><img src="jettfullbody.png" class="srimgjett"><div class="wrapbox"></div><button onclick="document.getElementById('srem2').classList.add('hidden'); if (soundeffects) { document.getElementById('clickaudio').play(); }" class="srembutton">Got it!</button>Make sure to select EVERY participant's name in the winning alliance, not just the individual who answered the question.</div></div>
+</div>
 <div class="screen" id="pregame">
 <button onclick="togglesettings()" id="settings"><span style="position: absolute; right: 4dvh; bottom: 0dvh">Settings</span></button><div id="settingsarea">
 <img onclick="togglesettings()" src="closesettings.png" id="closesettings">
@@ -206,6 +210,63 @@ Adelaide..." id="individnames"></textarea>
 </div>
 </body>
 <style>
+.srembg {
+  z-index: 10000;
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.8);
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+.wrapbox {
+  position: relative;
+  float: left;
+  width: 19dvh;
+  height: 43.28dvh;
+  margin-left: -8.3dvh;
+  shape-outside: inset(20dvh 0 0 0); /* 20dvh empty space above */
+  clip-path: inset(20dvh 0 0 0); /* for visual debug */
+}
+.srembutton {
+    background-color: white;         
+    height: 4.5dvh;
+    width: 12.5dvh;
+    color: #ff8500;
+    outline: 1.5dvh solid #ff8500;
+    font-family: fredokaone;
+    font-size: 3.5dvh;
+    text-align: center;
+    position: absolute;
+    border: none;
+    border-radius: 1dvh;
+    bottom: -3dvh;
+    right: 8.102dvh;
+  }
+.srimgjett {
+    width: 18dvh;
+    height: 22.28dvh;
+    position: absolute;
+    bottom: -2dvh;
+    left: -7.704dvh;
+  }
+.srem {
+    font-size: 3.5dvh;
+    color: #ff8500;
+    text-align: left;
+    word-wrap: break-word;
+    
+    background-color: white;
+    outline: 2dvh solid #ff8500;
+    border-radius: 2dvh;
+    padding: 1dvh;
+    width: 36dvh;
+    height: 36dvh;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    position: absolute;
+  }
 #wrongmessage {
   font-size: 5dvh;
   color: white;
@@ -1235,7 +1296,15 @@ hideallbutone("loadingscreen");
 ls = true;
 window.innerHeight;
 if (numdone == imgToLoad.length) {
-preludeSlide();
+if (localStorage.getItem("rem1") != "1") {
+  localStorage.setItem("rem1", "1");
+  prelfirsthalf();
+  window.innerHeight;
+  document.getElementById("srem1").classList.remove("hidden");
+} else {
+  preludeSlide();
+  ls = false;
+}
 }
 }
 { /*functions for pregame slide*/ 
@@ -1570,6 +1639,98 @@ ptcolors = ["#23b6c6", "#1cbfa8", "#25c85d", "#3dc724", "#ffca16", "#ffb130"];
 questionnumber = 0;
 qn = 0;
 slidenum = 1;
+function prelfirsthalf() {
+if (soundeffects) {
+document.getElementById("clickaudio").play();
+}
+if (questionnumber == 0) {
+document.getElementsByClassName("toolbarbutton")[2].style.opacity = 0.5;
+document.getElementsByClassName("toolbarbutton")[5].style.opacity = 0.5;
+document.getElementsByClassName("toolbarbutton")[2].style.pointerEvents = "none";
+document.getElementsByClassName("toolbarbutton")[5].style.pointerEvents = "none";
+if (numingroup != 2) {
+document.getElementById("ineedtochangetexthere").textContent = "Have your participants get into groups no smaller than 2 and no larger than ".concat(numingroup.toString(), " before every single question.");
+} else {
+document.getElementById("ineedtochangetexthere").textContent = "Have your participants get into groups of two before every single question.";
+}
+for (i = 0; i < numsbgroups; i++) {
+window[(i + 1).toString().concat("score")] = 0;
+window[(i + 1).toString().concat("status")] = 0;
+}
+} else {
+document.getElementsByClassName("toolbarbutton")[2].style.opacity = 1;
+document.getElementsByClassName("toolbarbutton")[5].style.opacity = 1;
+document.getElementsByClassName("toolbarbutton")[2].style.pointerEvents = "all";
+document.getElementsByClassName("toolbarbutton")[5].style.pointerEvents = "all"; 
+}
+for (i = 0; i < document.getElementsByClassName("cgroup").length; i++) {
+alphabet = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
+whiteLetters = ["b", "d", "e", "g", "i", "k", "l", "o", "q", "r", "y", "z"];
+if (alphabet.indexOf(document.getElementsByClassName("cn")[i].innerHTML.substring(0, 1).toLowerCase()) > -1) {
+if (whiteLetters.indexOf(document.getElementsByClassName("cn")[i].innerHTML.substring(0, 1).toLowerCase()) > 0) {
+document.getElementsByClassName("cn")[i].style.color = "white";
+} else {
+document.getElementsByClassName("cn")[i].style.color = "black";
+}
+document.getElementsByClassName("cgroup")[i].style.backgroundImage = "url('".concat(document.getElementsByClassName("cn")[i].innerHTML.substring(0, 1).toLowerCase(), "nflag.png')");
+} else {
+document.getElementsByClassName("cn")[i].style.color = "black";
+document.getElementsByClassName("cgroup")[i].style.backgroundImage = "url('basicnflag.png')";
+}
+window[(i + 1).toString().concat("status")] = 0;
+}
+if (qn == parseInt(localStorage.getItem(current.concat("qat")))) {
+qn = 1;
+} else {
+qn++;
+}
+questionnumber++;
+hideallbutone("prelude");
+document.getElementById("answer").innerHTML = "Click here to reveal the answer...";
+if (!endlessmode) {
+document.getElementsByClassName("questionval")[0].innerHTML = "Question ".concat(questionnumber.toString(), "/", (parseInt(localStorage.getItem(current.concat("qat"))) * numberofcycles));
+document.getElementsByClassName("questionval")[1].innerHTML = "Question ".concat(questionnumber.toString(), "/", (parseInt(localStorage.getItem(current.concat("qat"))) * numberofcycles));
+document.getElementsByClassName("questionval2")[0].innerHTML = "Question ".concat(questionnumber.toString(), "/", (parseInt(localStorage.getItem(current.concat("qat"))) * numberofcycles));
+} else {
+document.getElementsByClassName("questionval")[0].innerHTML = "Question ".concat(qn.toString(), "/", (parseInt(localStorage.getItem(current.concat("qat")))));
+document.getElementsByClassName("questionval")[1].innerHTML = "Question ".concat(qn.toString(), "/", (parseInt(localStorage.getItem(current.concat("qat")))));
+document.getElementsByClassName("questionval2")[0].innerHTML = "Question ".concat(qn.toString(), "/", (parseInt(localStorage.getItem(current.concat("qat")))));
+}
+if (powerplaysenabled) {
+chance = Math.floor(Math.random() * 7);
+if (chance == 0) {
+mystery = true;
+chance = Math.floor(Math.random() * 3);
+mptvals = [500, 1500, 3000];
+pointVal = mptvals[chance];
+} else {
+mystery = false;
+chance = Math.floor(Math.random() * 6);
+pointVal = ptvalues[chance];
+}
+} else {
+mystery = false;
+pointVal = 1000;
+}
+window.innerHeight;
+document.getElementById("question").innerHTML = localStorage.getItem(current.concat("q", qn.toString()))
+document.getElementById("text4speech").innerHTML = "Get into groups of up to ".concat(numingroup.toString(), "!");
+if (mystery) {
+document.getElementById("ptdescription").innerHTML = "<br>This next question is worth an unknown amount of points!";
+document.getElementById("loadbar").style.backgroundColor = "rgba(0, 0, 0, 0)";
+document.getElementById("loadbar").style.backgroundImage = "url('mysteryloadbar.png')";
+document.getElementById("pointvalue").src = "almystery.png";
+} else {
+document.getElementById("ptdescription").innerHTML = "<br>This next question is worth ".concat(pointVal.toString(), " points.");
+document.getElementById("loadbar").style.backgroundColor = ptcolors[ptvalues.indexOf(pointVal)];
+document.getElementById("loadbar").style.backgroundImage = "none";
+document.getElementById("pointvalue").src = game.concat(pointVal.toString(), ".png");
+}
+ogmyst = mystery;
+ogptval = pointVal;
+questionnumber = 0;
+qn = 0;
+}
 function preludeSlide() {
 if (soundeffects) {
 document.getElementById("clickaudio").play();
@@ -1628,6 +1789,7 @@ document.getElementsByClassName("questionval2")[0].innerHTML = "Question ".conca
 document.getElementById("loadbar").style.transition = loadval.toString().concat("s width");
 document.getElementById("loadbar").offsetHeight;
 document.getElementById("loadbar").style.width = "100%";
+if (localStorage.getItem("rem1") == "1") {
 if (powerplaysenabled) {
 chance = Math.floor(Math.random() * 7);
 if (chance == 0) {
@@ -1643,6 +1805,10 @@ pointVal = ptvalues[chance];
 } else {
 mystery = false;
 pointVal = 1000;
+}
+} else {
+mystery = ogmyst;
+pointVal = ogptval;
 }
 window.innerHeight;
 document.getElementById("question").innerHTML = localStorage.getItem(current.concat("q", qn.toString()))
@@ -1691,6 +1857,10 @@ if (soundeffects) {
 document.getElementById("clickaudio").play();
 }
 hideallbutone("questionsslide");
+if (localStorage.getItem("rem2") != "1") {
+localStorage.setItem("rem2", "1");
+document.getElementById("srem2").classList.remove("hidden");
+}
 }
 function togglebetween() {
 if (event.target.tagName.toUpperCase() == "SPAN") {
