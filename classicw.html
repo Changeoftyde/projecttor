@@ -1928,6 +1928,7 @@ questionnumber = 0;
 qn = 0;
 }
 function preludeSlide() {
+wb.height = 0.45 * window.innerHeight;
 if (soundeffects) {
   document.getElementById("clickaudio").play();
 }
@@ -1956,7 +1957,7 @@ document.getElementsByClassName("toolbarbutton")[5].style.opacity = 1;
 document.getElementsByClassName("toolbarbutton")[2].style.pointerEvents = "all";
 document.getElementsByClassName("toolbarbutton")[5].style.pointerEvents = "all"; }
 for (i = 0; i < document.getElementsByClassName("cgroup").length; i++) {
-document.getElementsByClassName("cgroup")[i].style.backgroundImage = "url('halfblack.png')";
+document.getElementsByClassName("cgroup")[i].style.backgroundImage = "url('halfwhite.png')";
 window[(i + 1).toString().concat("status")] = 0;
 }
 if (qn == parseInt(localStorage.getItem(current.concat("qat")))) {
