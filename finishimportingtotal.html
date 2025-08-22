@@ -7,6 +7,23 @@
   referrerpolicy="no-referrer">
 </script>
 <body>
+<div id="reminders">
+<div class="srembg hidden" id="srem6"><div class="srem"><img src="torafullbody.png" class="srimgtora"><div class="wrapbox"></div><div onclick="document.getElementById('srem6').classList.add('hidden'); document.getElementById('srem7').classList.remove('hidden')" class="srembutton">Got it!</div>Use the <img src="add.png" class="imginsidetext"> and <img src="delete.png" class="imginsidetext"> buttons to add and remove questions you want to study. You can have up to 300 questions and 300 answers.</div></div>
+<div class="srembg hidden" id="srem7">
+<div class="picture"><select class="category"><option>Biology and Life Science</option></select><div class="actualpics">
+<div style="background-image: url('1.png')" class="picselection2"></div>
+<div style="background-image: url('2.png')" class="picselection2"></div>
+<div style="background-image: url('3.png')" class="picselection2"></div>
+<div style="background-image: url('4.png')" class="picselection2"></div>
+<div style="background-image: url('5.png')" class="picselection2"></div>
+<div style="background-image: url('6.png')" class="picselection2"></div>
+<div style="background-image: url('7.png')" class="picselection2"></div>
+<div style="background-image: url('8.png')" class="picselection2"></div>
+<div style="background-image: url('9.png')" class="picselection2"></div>
+<div style="background-image: url('10.png')" class="picselection2"></div>
+</div></div>
+<div style="top: 69.75dvh" class="srem"><img src="torafullbody.png" class="srimgtora"><div class="wrapbox"></div><div onclick="document.getElementById('srem7').classList.add('hidden')" class="srembutton">Got it!</div>Use the dropdown menu to select between 27 study subjects, each with 10 pictures to scroll through and pick from.</div></div>
+</div>
 <div id="sidebar">
 <a href="index.html"><div style="top: 0dvh" class="hyperlink"><img src="home.png" class="hpimg"><p class=" hplabel">Home</p></div></a>
 <a href="study.html"><div style="top: 13.5dvh" class="hyperlink"><img src="study.png" class="hpimg"><p class="hplabel">Study</p></div></a>
@@ -53,6 +70,112 @@
 </div>
 </body>
 <style>
+.srembg {
+  z-index: 10000;
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.8);
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+.imginsidetext {
+  height: 3.5dvh;
+  width: 3.5dvh;
+  position: relative;
+  vertical-align: baseline;
+}
+.wrapbox {
+  position: relative;
+  float: right;
+  width: 19dvh;
+  height: 43.28dvh;
+  margin-right: -9.2dvh;
+  shape-outside: inset(20dvh 0 0 0); /* 20dvh empty space above */
+  clip-path: inset(20dvh 0 0 0); /* for visual debug */
+}
+  .srembutton {
+    background-color: white;         
+    height: 4.5dvh;
+    width: 12.5dvh;
+    color: #c12020;
+    outline: 1.5dvh solid #c12020;
+    font-family: fredokaone;
+    font-size: 3.5dvh;
+    text-align: center;
+    position: absolute;
+    border: none;
+    border-radius: 1dvh;
+    bottom: -3dvh;
+    left: 8.102dvh;
+  }
+  .srimgtora {
+    width: 18dvh;
+    height: 22.28dvh;
+    position: absolute;
+    bottom: -2dvh;
+    right: -8.604dvh;
+  }
+  .srem {
+    font-size: 3.5dvh;
+    color: #c12020;
+    text-align: left;
+    word-wrap: break-word;
+    
+    background-color: white;
+    outline: 2dvh solid #c12020;
+    border-radius: 2dvh;
+    padding: 1dvh;
+    width: 36dvh;
+    height: 36dvh;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    position: absolute;
+  }
+  .actualpics {
+  width: 100%;
+  overflow: hidden;
+  height: calc(100% - 3dvh);
+  left: 0;
+  position: absolute;
+  bottom: 0;
+}
+.picselection2 {
+  outline-offset: -1dvh;
+  background-size: cover;
+  background-position: 50% 50%;
+  position: absolute;
+  top: 1dvh;
+  height: 8dvh;
+  border-radius: 1dvh;
+}
+.category {
+  pointer-events: none;
+  width: 100%;
+  height: 3dvh;
+  left: 0;
+  top: 0;
+  position: absolute;
+  border-radius: 0;
+  border: 0;
+  background-color: black;
+  color: white;
+}
+.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+.picture {
+  width: calc(((100% - 14.75dvh) - 8dvh) / 2 - 2.5dvh);
+  height: 13dvh;
+  outline: 0.5dvh solid black;
+  background-color: white;
+  border-radius: 0.5dvh;
+  position: absolute;
+  right: 5.5dvh;
+  top: 26.5dvh;
+}
 .deletegroup {
   width: 4dvh;
   height: 4dvh;
@@ -406,6 +529,10 @@ select {
 }
 </style>
 <script>
+if (localStorage.getItem("rem6") != "1") {
+  document.getElementById("srem6").classList.remove("hidden");
+  localStorage.setItem("rem6", "1");
+}
 if (localStorage.getItem("numofsets")) {} else {
   localStorage.setItem("numofsets", "0");
 }
@@ -644,12 +771,15 @@ function resizeeverything() {
   nopr = parseInt((1 / (ratio / 1.5)) * 1.5);
   for (i = 0; i < document.getElementsByClassName("picselection").length; i++) {
     document.getElementsByClassName("picselection")[i].style.width = (document.getElementById("actualpics").offsetWidth - (((1 + nopr) / 100) * window.innerHeight)) / nopr;
+    document.getElementsByClassName("picselection2")[i].style.width = (document.getElementById("actualpics").offsetWidth - (((1 + nopr) / 100) * window.innerHeight)) / nopr;
     widthVal = (document.getElementById("actualpics").offsetWidth - (((1 + nopr) / 100) * window.innerHeight)) / nopr;
     remainder = (i + 1) % nopr;
     if (remainder == 0) { remainder = nopr }
     document.getElementsByClassName("picselection")[i].style.left = (0.01 * window.innerHeight) + ((remainder - 1) * (widthVal + (0.01 * window.innerHeight)));
+    document.getElementsByClassName("picselection2")[i].style.left = (0.01 * window.innerHeight) + ((remainder - 1) * (widthVal + (0.01 * window.innerHeight)));
     level = ((i + 1) - remainder) / nopr;
     document.getElementsByClassName("picselection")[i].style.top = 0.01 * window.innerHeight + (level * (0.09 * window.innerHeight));
+    document.getElementsByClassName("picselection2")[i].style.top = 0.01 * window.innerHeight + (level * (0.09 * window.innerHeight));
   }
   //resize the text/name
 }
@@ -686,6 +816,15 @@ if (localStorage.getItem("darkmode") == "1") {
   document.getElementById("qaa").style.outline = "1.5dvh solid white";
   document.getElementById("qaa").style.color = "white";
   document.getElementById("addquestion").style.filter = "invert(1)";
+  document.getElementsByClassName("imginsidetext")[0].style.filter = "invert(1)";
+  for (i = 0; i < document.getElementsByClassName("srem").length; i++) {
+    document.getElementsByClassName("srem")[i].style.backgroundColor = "black";
+    document.getElementsByClassName("srembutton")[i].style.backgroundColor = "black";
+  }
+  document.getElementsByClassName("picture")[0].style.backgroundColor = "black";
+  document.getElementsByClassName("picture")[0].style.outline = "0.5dvh solid white";
+  document.getElementsByClassName("category")[0].style.backgroundColor = "white";
+  document.getElementsByClassName("category")[0].style.color = "black";
 }
 palmtree();
 </script>
