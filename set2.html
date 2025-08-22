@@ -725,14 +725,14 @@ if (localStorage.getItem("darkmode") == "1") {
   document.getElementById("nameofset").style.color = "black";
   document.getElementById("qaa").style.outline = "1.5dvh solid white";
   document.getElementById("qaa").style.color = "white";
+  document.getElementsByClassName("obj")[2].style.filter = "invert(1)";
   for (i = 0; i < document.getElementsByClassName("obj").length; i++) {
+    if (i != 2) {
     document.getElementsByClassName("obj")[i].style.color = "white";
     document.getElementsByClassName("obj")[i].style.outline = "1.5dvh solid white";
-    if (i == 2) {
-      document.getElementsByClassName("obj")[i].style.backgroundImage = "url('downloaddarkmode.png')";
     }
   }
-  document.getElementById("addquestion").src = "adddarkmode.png";
+  document.getElementById("addquestion").style.filter = "invert(1)";
 }
 palmtree();
 </script>
