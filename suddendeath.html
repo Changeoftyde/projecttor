@@ -2332,5 +2332,11 @@ document.getElementsByClassName("threedmedal")[wom].style.transform = "translate
 }, 4570);
 }
 }
+if (localStorage.getItem("darkmode") == "1") {
+  for (i = 0; i < document.getElementsByClassName("srem").length; i++) {
+    document.getElementsByClassName("srem")[i].style.backgroundColor = "black";
+    document.getElementsByClassName("srembutton")[i].style.backgroundColor = "black";
+  }
+}
 </script>
 </html>
