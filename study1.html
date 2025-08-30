@@ -534,7 +534,7 @@ gametypes = [["l"], ["l","t"], ["l","t"], ["l","t","v"], ["t","v"], ["t","w"], [
 gamedifs = [1, 2, 2, 4, 3, 2, 2, 2, 4, 3, 4, 5, 5, 2, 2, 2, 2, 1, 5, 5, 2, 2, 5, 5, 1, 1, 0, 4, 4, 4, 4];
 ogorder = ["w", "a", "s", "t", "v", "l"];
 longnames = ["auditory", "logical", "social", "tactile", "visual", "written"];
-userpref = ["a", "s", "w"];
+userpref = [];
 for (i = 0; i < 6; i++) {
   if (localStorage.getItem(longnames[i]) == "1") {
     userpref.push(longnames[i].substring(0, 1));
