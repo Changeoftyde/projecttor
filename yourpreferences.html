@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Input Saver</title>
+</head>
+<body>
+
+  <label for="written">Written: </label><input id="written"><br>
+  <label for="auditory">Auditory: </label><input id="auditory"><br>
+  <label for="visual">Visual: </label><input id="visual"><br>
+  <label for="tactile">Tactile: </label><input id="tactile"><br>
+  <label for="social">Social: </label><input id="social"><br>
+  <label for="logical">Logical: </label><input id="logical"><br>
+  <label for="pref">Pref: </label><input id="pref"><br>
+  <label for="aorw">Aorw: </label><input id="aorw"><br>
+  <label for="timed">Timed: </label><input id="timed"><br><br>
+
+  <button id="saveButton">Save Inputs</button>
+
+  <script>
+    const inputIds = ["written", "auditory", "visual", "tactile", "social", "logical", "pref", "aorw", "timed"];
+
+    document.getElementById("saveButton").addEventListener("click", () => {
+      inputIds.forEach(id => {
+        const input = document.getElementById(id);
+        if (input) {
+          localStorage.setItem(id, input.value);
+        }
+      });
+      alert("All values saved!");
+    });
+
+    // Optional: load saved values on page load
+    window.addEventListener("DOMContentLoaded", () => {
+      inputIds.forEach(id => {
+        const savedValue = localStorage.getItem(id);
+        if (savedValue !== null) {
+          const input = document.getElementById(id);
+          if (input) input.value = savedValue;
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
