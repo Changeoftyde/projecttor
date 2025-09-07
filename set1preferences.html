@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Input Saver</title>
+</head>
+<body>
+
+  <label for="1terms">1terms: </label><input id="1terms"><br>
+  <label for="1whiteboard">1whiteboard: </label><input id="1whiteboard"><br>
+  <label for="1chronological">1chronological: </label><input id="1chronological"><br><br>
+
+  <button id="saveButton">Save Inputs</button>
+
+  <script>
+    const inputIds = ["1terms", "1whiteboard", "1chronological"];
+
+    document.getElementById("saveButton").addEventListener("click", () => {
+      inputIds.forEach(id => {
+        const input = document.getElementById(id);
+        if (input) {
+          localStorage.setItem(id, input.value);
+        }
+      });
+      alert("All values saved!");
+    });
+
+    // Optional: load saved values on page load
+    window.addEventListener("DOMContentLoaded", () => {
+      inputIds.forEach(id => {
+        const savedValue = localStorage.getItem(id);
+        if (savedValue !== null) {
+          const input = document.getElementById(id);
+          if (input) input.value = savedValue;
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
