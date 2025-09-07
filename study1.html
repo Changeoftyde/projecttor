@@ -739,6 +739,13 @@ function resizeeverything() {
   margin = window.innerHeight * 0.02;
   nopr = parseInt((1 / (ratio / 2)) * 1.1);
   cm2 = document.getElementById("not").offsetHeight + document.getElementById("desconot").offsetHeight + window.innerHeight * 0.0375;
+  if (document.getElementsByClassName("mmlogo")[0].offsetWidth <= document.getElementById("magicmemorize").offsetWidth * 0.95) {
+    document.getElementsByClassName("mmlogo")[0].style.height = "95%";
+    document.getElementsByClassName("mmlogo")[0].style.width = "auto";
+  } else {
+    document.getElementsByClassName("mmlogo")[0].style.width = "95%";
+    document.getElementsByClassName("mmlogo")[0].style.height = "auto";
+  }
   for (i = 0; i < 3; i++) {
     document.getElementsByClassName("sat")[i].style.top = cm2;
     cm2 += window.innerHeight * 0.05;
