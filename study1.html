@@ -373,7 +373,7 @@ if (parseInt(localStorage.getItem("numofsets")) < parseInt(current)) {
 if (localStorage.getItem("pref")) {} else {
   window.location.href = "yourpreferences.html";
 }
-if (localStorage.getItem("whiteboardrecommended")) {} else {
+if (localStorage.getItem(current.concat("whiteboardrecommended"))) {} else {
   window.location.href = "set".concat(current, "preferences.html");
 }
 document.getElementById("nameofset").innerHTML = localStorage.getItem(current.concat("n"));
@@ -455,7 +455,7 @@ function showpopup(nameofgame) {
       document.getElementsByClassName("satwtg")[0].textContent = "Whiteboard";
       document.getElementById("not").innerHTML = "Explain";
       document.getElementById("actpopup").style.backgroundImage = "url('defaultstudymodebackground.png')";
-      if (localStorage.getItem('whiteboardrecommended') != "1") {
+      if (localStorage.getItem(current.concat('whiteboardrecommended')) != "1") {
       document.getElementById("desconot").innerHTML = "Study by finding a friend and taking turns explaining the concept on the screen to one another.";
       } else {
       document.getElementById("desconot").innerHTML = "Study by finding a friend and taking turns explaining the concept on the screen to one another. Use the button below to decide whether you'd like a whiteboard to help explain a concept.";
