@@ -682,6 +682,22 @@ if (localStorage.getItem("darkmode") == "1") {
   for (i = 0; i < ll; i++) {
   document.getElementsByClassName("group")[i].classList.add("groupdarkmode");
 }
+  for (i = 0; i < document.getElementsByClassName("desc").length; i++) {
+    document.getElementsByClassName("desc")[i].style.color = "white";
+  }
+  document.getElementsByClassName("slidergroup")[0].style.outline = "0.5dvh solid white";
+  document.getElementsByClassName("slidergroup")[0].style.backgroundColor = "black";
+  document.getElementsByClassName("slidergroup")[1].style.outline = "0.5dvh solid white";
+  document.getElementsByClassName("slidergroup")[1].style.backgroundColor = "black";
+  document.getElementsByClassName("slidergroup")[2].style.outline = "0.5dvh solid white";
+  document.getElementsByClassName("slidergroup")[2].style.backgroundColor = "black";
+  document.getElementById("actpopup").style.backgroundColor = "black";
+  document.getElementById("playbutton").style.backgroundColor = "black";
+  document.getElementById("close").style.backgroundColor = "black";
+  document.getElementById("actpopup").style.color = "white";
+  document.getElementById("desconot").style.color = "white";
+  document.getElementById("playbutton").style.color = "white";
+  document.getElementById("close").style.color = "white";
 }
 orderofgrps = ["r"];
 if (localStorage.getItem("pref")) {} else { window.location.href = "userquestions.html" };
