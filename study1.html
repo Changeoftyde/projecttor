@@ -530,6 +530,12 @@ sstudymodes = ["Cast Fishing", "Continuous Tic-Tac-Toe", "Explain", "Guess the T
 tstudymodes = ["2048", "Grid Breaker", "Hot Seat", "Fill-in-the-Blank"];
 vstudymodes = ["Flashcards", "Chronological Order", "Matching", "Sketch and Answer"];
 lstudymodes = ["Answer with an Antonym", "Process of Elimination", "True or False"];
+if (localStorage.getItem(current.concat("terms")) != "1") {
+  lstudymodes.splice(0, 1);
+}
+if (localStorage.getItem(current.concat("chronological")) != "1") {
+  vstudymodes.splice(1, 1);
+}
 allgames = ["Answer with an Antonym", "Process of Elimination", "Matching-Singleplayer", "Chronological Order", "Flashcards", "Unscramble", "Matching-Multiplayer", "True or False", "Hot Seat", "Hot Seat-Multiplayer", "Hot Seat-Auditory", "Explain", "Explain with Whiteboard", "Hot Seat-True or False", "Hot Seat-Multiplayer True or False", "Guess the Term", "Ask and Answer", "Sketch and Answer", "Read and Speak", "Listen and Speak", "Unscramble-Auditory", "Fill-in-the-Blank", "Read and Answer", "Timed Read and Answer", "Use Notes to Answer", "Use Notes to Speak", "Practice Quiz", "Cast Fishing", "Continuous Tic-Tac-Toe", "2048", "Grid Breaker"];
 gametypes = [["l"], ["l","t"], ["l","t"], ["l","t","v"], ["t","v"], ["t","w"], ["s","t","v"], ["l","t"], ["l","t","w"], ["l","s","t","w"], ["a","l","t"], ["a","s"], ["a","s","v","w"], ["l","t","w"], ["l","s","t","w"], ["a","s","v"], ["a","s"], ["l","v","w"], ["a","w"], ["a"], ["a","t"], ["l","t","w"], ["w"], ["w"], ["l","w"], ["a","l","w"], ["l","w"], ["s","t","w"], ["s","t","w"], ["t","v","w"], ["t","v","w"]];
 gamedifs = [1, 2, 2, 4, 3, 2, 2, 2, 4, 3, 4, 5, 5, 2, 2, 2, 2, 1, 5, 5, 2, 2, 5, 5, 1, 1, 0, 4, 4, 4, 4];
@@ -595,6 +601,15 @@ if (userpref.length == 1) {
     }
   }
   }
+  }
+}
+oldrstudymodes = rstudymodes;
+rstudymodes = [];
+for (i = 0; i < oldrstudymodes.length; i++) {
+  if (localStorage.getItem(current.concat("terms")) != "1" || oldrstudymodes[i] == "Answer with an Antonym") {}
+  else if (localStorage.getItem(current.concat("chronological")) != "1" || oldrstudymodes[i] == "Chronological Order") {}
+  else if (localStorage.getItem(current.concat("whiteboardrecommended")) != "1" || oldrstudymodes[i] == "Explain with Whiteboard") {} else {
+    rstudymodes.push(oldrstudymodes[i]);
   }
 }
 if (rstudymodes.length <= 2) {
