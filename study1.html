@@ -617,9 +617,9 @@ if (userpref.length == 1) {
 oldrstudymodes = rstudymodes;
 rstudymodes = [];
 for (i = 0; i < oldrstudymodes.length; i++) {
-  if (localStorage.getItem(current.concat("terms")) != "1" || oldrstudymodes[i] == "Answer with an Antonym") {}
-  else if (localStorage.getItem(current.concat("chronological")) != "1" || oldrstudymodes[i] == "Chronological Order") {}
-  else if (localStorage.getItem(current.concat("whiteboardrecommended")) != "1" || oldrstudymodes[i] == "Explain with Whiteboard") {} else {
+  if (localStorage.getItem(current.concat("terms")) != "1" && oldrstudymodes[i] == "Answer with an Antonym") {}
+  else if (localStorage.getItem(current.concat("chronological")) != "1" && oldrstudymodes[i] == "Chronological Order") {}
+  else if (localStorage.getItem(current.concat("whiteboardrecommended")) != "1" && oldrstudymodes[i] == "Explain with Whiteboard") {} else {
     rstudymodes.push(oldrstudymodes[i]);
   }
 }
