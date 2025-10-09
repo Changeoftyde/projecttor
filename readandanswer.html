@@ -636,6 +636,38 @@ function check() {
         newword = "";
       }
     }
+    nallwords = [];
+    unimportantWords = [
+  "a","an","the","about","above","across","after","against","along","amid","among","around",
+  "at","before","behind","below","beneath","beside","between","beyond","by","despite","down",
+  "during","except","for","from","in","inside","into","near","of","off","on","onto","out",
+  "outside","over","since","through","throughout","till","to","toward","under","underneath",
+  "until","up","upon","with","within","without",
+  "der","die","das","ein","eine","einer","einem","einen","eines","dem","den","des",
+  "an","auf","aus","bei","durch","für","gegen","hinter","in","mit","nach","neben","ohne",
+  "seit","um","unter","über","von","vor","während","wegen","zu","zum","zur",
+  "il","lo","la","i","gli","le","un","una","uno","del","della","dello","dei","degli","dell'",
+  "a","da","di","in","su","con","tra","fra","sopra","sotto","senza","dopo","prima","fino","entro",
+  "le","la","les","un","une","des","du","de","d'","au","aux",
+  "à","chez","dans","en","sur","sous","devant","derrière","par","pour","sans","vers",
+  "avec","entre","pendant","jusqu’à","depuis","avant","après","près","autour",
+  "el","la","los","las","un","una","unos","unas","al","del",
+  "a","ante","bajo","con","contra","de","desde","en","entre","hacia","hasta",
+  "sin","sobre","tras","durante","mediante"
+];
+    for (i = 0; i < allwords.length; i++) {
+      if (unimportantWords.indexOf(allwords[i]) == -1) {
+        nallwords.push(allwords[i]);
+      }
+    }
+    allwords = nallwords;
+    nallwords = [];
+        for (i = 0; i < allwords.length; i++) {
+      if (unimportantWords.indexOf(allwordsa[i]) == -1) {
+        nallwords.push(allwordsa[i]);
+      }
+    }
+    allwordsa = nallwords;
     numtobeat = allwordsa.length * 0.85;
     numhave = 0;
     for (i = 0; i < allwords.length; i++) {
