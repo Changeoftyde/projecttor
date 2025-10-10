@@ -430,8 +430,48 @@
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
 }
+  .sqqdm {
+    width: calc(100% - 7dvh);
+    right: 1dvh;
+    top: 4.5dvh;
+    background-color: black;
+    border-radius: 0.5dvh;
+    position: absolute;
+    padding: 0.5dvh;
+    color: white;
+    word-wrap: break-word;
+  }
 </style>
 <script>
+if (localStorage.getItem("darkmode") == "1") {
+  document.getElementById("title").transition = "none";
+  window.innerHeight;
+  document.getElementById("title").style.color = "#3a3a3a";
+  window.innerHeight;
+  document.getElementById("title").style.transition = "0.3s color";
+  document.body.style.backgroundColor = "black";
+  document.getElementById("answer").style.color = "white";
+  document.getElementById("check").style.outline = "1.5dvh solid #3a3a3a";
+  document.getElementById("check").style.backgroundColor = "black";
+  document.getElementById("redo").style.outline = "1.5dvh solid #3a3a3a";
+  document.getElementById("redo").style.backgroundColor = "black";
+  document.getElementById("finish").style.outline = "1.5dvh solid #3a3a3a";
+  document.getElementById("finish").style.backgroundColor = "black";
+  document.getElementById("next").style.outline = "1.5dvh solid #3a3a3a";
+  document.getElementById("next").style.backgroundColor = "black";
+  document.getElementById("popup").style.backgroundColor = "#3a3a3a";
+  document.getElementById("question").style.color = "white";
+  document.getElementById("gatb").style.backgroundImage = "linear-gradient(rgba(0,0,0,0), #3a3a3a)";
+  document.getElementById("desc").style.color = "white";
+  document.getElementById("whitebit").style.backgroundColor = "black";
+  document.getElementById("fmq").style.backgroundColor = "#3a3a3a";
+  document.getElementById("lilgrayguy").style.backgroundImage = "linear-gradient(rgba(0,0,0,0), #3a3a3a)";
+  document.getElementById("middlecircle").style.backgroundColor = "black";
+  document.getElementById("frontcircle").style.backgroundColor = "black";
+  document.getElementById("sq").style.color = "white";
+  document.getElementById("textim").style.color = "black";
+}
+
 if (sessionStorage.getItem("setToUse")) {
 current = sessionStorage.getItem("setToUse");
 sessionStorage.removeItem("setToUse");
@@ -546,8 +586,10 @@ function showresults() {
   }
   if (howdidido == 360) {
   document.getElementById("percentage").style.backgroundColor = "#2dcc70";
-  } else {
+  } else if (localStorage.getItem("darkmode") != "1") {
   document.getElementById("percentage").style.backgroundImage = "conic-gradient(".concat(cfc, " 0deg, ", cfc, " ", howdidido, "deg, #efefef ", howdidido, "deg, #efefef 360deg)");
+  } else {
+  document.getElementById("percentage").style.backgroundImage = "conic-gradient(".concat(cfc, " 0deg, ", cfc, " ", howdidido, "deg, #3a3a3a ", howdidido, "deg, #3a3a3a 360deg)");
   }
   document.getElementById("textim").innerHTML = Math.floor(ofo * 100) + "%";
   document.getElementById("firstpart").classList.add("hidden")
@@ -557,15 +599,17 @@ function showresults() {
   }, 3000);
   setTimeout(function() {
       document.getElementById("textim").style.color = cfc;
-
   animate(360, 2000, easeInOut, (val) => {
     // Build a valid conic-gradient
     frontcircle.style.backgroundColor = "rgba(0,0,0,0)";
+    if (localStorage.getItem("darkmode") == "1") {
+    frontcircle.style.backgroundImage = 
+      `conic-gradient(from 0deg, rgba(0,0,0,0) 0deg ${val}deg, black ${val}deg 360deg)`
+    } else {
     frontcircle.style.backgroundImage = 
       `conic-gradient(from 0deg, rgba(0,0,0,0) 0deg ${val}deg, white ${val}deg 360deg)`
-    
+    }
   })}, 1000);
-  
   setTimeout(function() {
     document.getElementById("percentage").style.top = "30dvh";
     document.getElementById("percentage").style.left = "10.5dvh";
@@ -579,21 +623,31 @@ function showresults() {
     document.getElementById("redo").classList.remove("hidden");
   }, 6000)
 }
+
 allcorrect = 0;
 function createsq(type) {
   if (type == "e") {
     newSQ = document.createElement("div");
     newSQ.innerHTML = "Nice Work! No struggle questions to show.";
+    if (localStorage.getItem("darkmode") == "1") {
+    newSQ.classList.add("sqqdm");
+    } else {
     newSQ.classList.add("sqq");
+    }
     document.getElementById("fmq").appendChild(newSQ);
   } else {
     newSQ = document.createElement("div");
     newSQ.innerHTML = "Q: " + localStorage.getItem(current.concat("q", type)) + "<br><span style='font-weight: bold'>A: " + localStorage.getItem(current.concat("a", type)) + "</span>";
+    if (localStorage.getItem("darkmode") == "1") {
+    newSQ.classList.add("sqqdm");
+    } else {
     newSQ.classList.add("sqq");
+    }
     document.getElementById("fmq").appendChild(newSQ);
     resizeSQs();
   }
 }
+
 window.addEventListener("resize", resizeSQs);
 function resizeSQs() {
   totaltop = 0.045 * window.innerHeight;
@@ -704,25 +758,35 @@ function check() {
     if (currentq == allnumbers.length) {
       clbl = 100;
     }
+    if (localStorage.getItem("darkmode") == "1") {
+      document.getElementById("title").style.color = "white";
+      document.getElementById("popup").style.boxShadow = "0 0 10dvh black";
+    } else {
+      document.getElementById("title").style.color = "#c12020";
+      document.getElementById("popup").style.boxShadow = "0 0 10dvh rgb(173, 173, 173)";
+    }
     allcorrect++;
     pose("happy");
     document.getElementById("answer").style.pointerEvents = "none";
     document.getElementById("insloadbar").style.backgroundColor = "#2dcc70";
     document.getElementById("popup").style.top = "60dvh";
-    document.getElementById("popup").style.boxShadow = "0 0 10dvh rgb(173, 173, 173)";
     random = Math.floor(Math.random() * congratsmsg.length);
     document.getElementById("title").innerHTML = congratsmsg[random];
-    document.getElementById("title").style.color = "#c12020";
     document.getElementById("desc").innerHTML = "<span style='font-weight: bold'>Correct Answer: </span>".concat(localStorage.getItem(current.concat("a", allnumbers[currentq - 1])), "<br><br><br><br><br>");
   } else {
+    if (localStorage.getItem("darkmode") == "1") {
+      document.getElementById("title").style.color = "white";
+      document.getElementById("popup").style.boxShadow = "0 0 10dvh black";
+    } else {
+      document.getElementById("title").style.color = "#c12020";
+      document.getElementById("popup").style.boxShadow = "0 0 10dvh rgb(173, 173, 173)";
+    }
     document.getElementById("answer").style.pointerEvents = "none";
     pose("confused");
     allnumbers.push(allnumbers[currentq - 1]);
     document.getElementById("popup").style.top = "60dvh";
-    document.getElementById("popup").style.boxShadow = "0 0 10dvh rgb(173, 173, 173)";
     random = Math.floor(Math.random() * nopemsg.length);
     document.getElementById("title").innerHTML = nopemsg[random];
-    document.getElementById("title").style.color = "#c12020";
     document.getElementById("desc").innerHTML = "<span style='font-weight: bold'>Your Answer: </span>".concat(document.getElementById("answer").value, "<br><br><span style='font-weight: bold'>Correct Answer: </span>", localStorage.getItem(current.concat("a", allnumbers[currentq - 1])), "<br><br><br><br><br>");
   }
   if (clbl != 100) {
