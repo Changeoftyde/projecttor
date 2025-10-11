@@ -725,11 +725,13 @@ function toggleaudio() {
     recognition.start();
 
     recognition.onerror = (event) => {
+      if (event.error != "aborted") {
       alert( "Error: " + event.error );
+      }
     };
     recognition.onresult = (event) => {
-      transcript = event.results[0][0].transcript;
-      document.getElementById("answer").value = document.getElementById("answer").value.concat(" ", transcript);
+      ttou = event.results[0][0].transcript;
+      document.getElementById("answer").value = document.getElementById("answer").value.concat(" ", ttou);
     };
     }
   } else {
