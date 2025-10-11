@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Voice Level Visualizer</title>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      background: #111;
+      color: white;
+      font-family: sans-serif;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 1.2em;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-bottom: 30px;
+    }
+    .bars {
+      display: flex;
+      gap: 5px;
+      height: 100px;
+      align-items: flex-end;
+    }
+    .bar {
+      width: 10px;
+      background: limegreen;
+      height: 10px;
+      border-radius: 4px;
+      transition: height 0.1s ease;
+    }
+  </style>
+</head>
+<body>
+
+  <button id="start">🎙️ Start Microphone</button>
+  <div class="bars" id="bars"></div>
+
+  <script>
+    const startButton = document.getElementById("start");
+    const barsContainer = document.getElementById("bars");
+
+    // Create visual bars
+    const numBars = 32;
+    for (let i = 0; i < numBars; i++) {
+      const bar = document.createElement("div");
+      bar.classList.add("bar");
+      barsContainer.appendChild(bar);
+    }
+    const bars = document.querySelectorAll(".bar");
+
+    startButton.onclick = async () => {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const source = audioCtx.createMediaStreamSource(stream);
+        const analyser = audioCtx.createAnalyser();
+        analyser.fftSize = 64;
+
+        const dataArray = new Uint8Array(analyser.frequencyBinCount);
+        source.connect(analyser);
+
+        function draw() {
+          requestAnimationFrame(draw);
+          analyser.getByteFrequencyData(dataArray);
+
+          bars.forEach((bar, i) => {
+            const value = dataArray[i];
+            const height = Math.max(4, (value / 255) * 100);
+            bar.style.height = `${height}px`;
+            bar.style.background = `hsl(${120 - height}, 100%, 50%)`;
+          });
+        }
+
+        draw();
+        startButton.disabled = true;
+        startButton.innerText = "🎧 Listening...";
+      } catch (err) {
+        alert("Microphone access denied or not available.");
+        console.error(err);
+      }
+    };
+  </script>
+
+</body>
+</html>
