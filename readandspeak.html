@@ -707,70 +707,151 @@ function resizeSQs() {
   }
 }
 audio = false;
-recognition = null;
+let recognition = null;
+let finalTranscript = "";
+let restartTimer = null;
+
 function toggleaudio() {
-  // if SpeechRecognition not supported
   const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
   if (!SpeechRecognition) {
     alert("Your browser does not support speech recognition.");
     return;
   }
 
-  // turn ON
+  // TURN ON
   if (!audio) {
     audio = true;
+    finalTranscript = ""; // you can persist if you want
 
-    // instant UI feedback
+    // UI instant feedback
     if (localStorage.getItem("darkmode") != "1") {
       document.getElementById("microphone").src = "microphonered.png";
     } else {
       document.getElementById("audio").style.backgroundColor = "#c12020";
     }
 
+    // create a fresh recognition each toggle
     recognition = new SpeechRecognition();
-    recognition.lang = document.getElementById("lildropdown").value;
-    recognition.continuous = true;
-    recognition.interimResults = true;
+    recognition.lang = document.getElementById("lildropdown").value || "en-US";
+    recognition.continuous = true;          // try to keep listening
+    recognition.interimResults = true;      // get quick partial results
+    recognition.maxAlternatives = 1;
+
+    const answerBox = document.getElementById("answer");
 
     recognition.onresult = (event) => {
-      let transcript = "";
-      for (let i = event.resultIndex; i < event.results.length; i++) {
-        transcript += event.results[i][0].transcript;
+      let interimTranscript = "";
+      // process only the new results
+      for (let i = event.resultIndex; i < event.results.length; ++i) {
+        const result = event.results[i];
+        const text = result[0].transcript;
+        if (result.isFinal) {
+          finalTranscript = (finalTranscript + " " + text).trim();
+        } else {
+          interimTranscript += text;
+        }
       }
-      const answerBox = document.getElementById("answer");
-      answerBox.value = answerBox.value.concat(" ", transcript.trim());
+      // Show final + interim so user sees immediate feedback
+      answerBox.value = (finalTranscript + " " + interimTranscript).trim();
     };
 
     recognition.onerror = (event) => {
-      if (event.error !== "aborted") {
-        alert("Error: " + event.error);
+      // common errors: 'no-speech', 'network', 'not-allowed', 'service-not-allowed'
+      console.warn("SpeechRecognition error:", event.error);
+      if (event.error === "not-allowed" || event.error === "service-not-allowed") {
+        alert("Microphone access denied. Please allow microphone for this site.");
+        // turn off if permission denied
+        stopRecognition();
+      } else if (event.error === "no-speech") {
+        // often transient: restart if still toggled on
+        if (audio) {
+          safeRestartRecognition();
+        }
+      } else {
+        // for other errors, try restarting a couple times
+        if (audio) safeRestartRecognition();
       }
     };
 
-    // ensures recognition doesn’t hang after stopping
     recognition.onend = () => {
-      if (audio) return; // if still supposed to be on, ignore
-      recognition.abort(); // hard stop if toggled off
+      // If still supposed to be ON, restart after a small delay
+      if (audio) {
+        safeRestartRecognition();
+      }
     };
 
-    // start recognition (small built-in delay)
-    recognition.start();
-
-  // turn OFF
-  } else {
-    audio = false;
-
-    if (localStorage.getItem("darkmode") != "1") {
-      document.getElementById("microphone").src = "microphone.png";
-    } else {
-      document.getElementById("audio").style.backgroundColor = "#3a3a3a";
+    // Kick off
+    try {
+      recognition.start();
+    } catch (e) {
+      console.warn("recognition.start() failed:", e);
     }
 
-    // abort stops instantly (faster than stop)
-    if (recognition) recognition.abort();
+  // TURN OFF
+  } else {
+    stopRecognition();
   }
 }
 
+// Helper: stop & cleanup
+function stopRecognition() {
+  audio = false;
+  if (localStorage.getItem("darkmode") != "1") {
+    document.getElementById("microphone").src = "microphone.png";
+  } else {
+    document.getElementById("audio").style.backgroundColor = "#3a3a3a";
+  }
+
+  if (restartTimer) {
+    clearTimeout(restartTimer);
+    restartTimer = null;
+  }
+
+  if (recognition) {
+    try {
+      // abort is faster, stop will let final results fire
+      recognition.abort();
+    } catch (e) { /* ignore */ }
+    recognition = null;
+  }
+}
+
+// Helper: restart but avoid rapid flapping
+function safeRestartRecognition() {
+  if (!audio) return;
+  if (restartTimer) return; // already scheduled
+
+  // small delay reduces race conditions and gives browser time to free resources
+  restartTimer = setTimeout(() => {
+    restartTimer = null;
+    if (!audio) return;
+    try {
+      // create a new Recognition instance for a clean start (safer cross-browser)
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      if (!SpeechRecognition) return stopRecognition();
+
+      // preserve language choice
+      const newRec = new SpeechRecognition();
+      newRec.lang = document.getElementById("lildropdown").value || "en-US";
+      newRec.continuous = true;
+      newRec.interimResults = true;
+      newRec.maxAlternatives = 1;
+
+      // copy handlers from current code:
+      newRec.onresult = recognition? recognition.onresult : (evt)=>{};
+      newRec.onerror = recognition? recognition.onerror : (evt)=>{};
+      newRec.onend = recognition? recognition.onend : (evt)=>{};
+
+      // replace and start
+      recognition = newRec;
+      recognition.start();
+    } catch (err) {
+      console.warn("safeRestartRecognition error:", err);
+      // if restart fails repeatedly, disable
+      stopRecognition();
+    }
+  }, 250); // 250 ms is a good compromise
+}
 function check() {
   document.getElementById("check").setAttribute("onclick", "");
   if (audio) { toggleaudio() }
