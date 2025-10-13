@@ -718,9 +718,10 @@ function toggleaudio() {
     return;
   }
 
+  const answerBox = document.getElementById("answer");
+
   if (!audio) {
     audio = true;
-
     if (localStorage.getItem("darkmode") != "1") {
       document.getElementById("microphone").src = "microphonered.png";
     } else {
@@ -729,31 +730,36 @@ function toggleaudio() {
 
     recognition = new SpeechRecognition();
     recognition.lang = document.getElementById("lildropdown").value;
-    recognition.continuous = false; // ✅ must be false for Safari
-    recognition.interimResults = false; // ✅ also improves speed and reliability
+    recognition.continuous = true;       // true for Safari pseudo-continuous
+    recognition.interimResults = true;   // true so we capture partials immediately
+
+    let tempTranscript = "";
 
     recognition.onresult = (event) => {
-      const transcript = event.results[0][0].transcript.trim();
-      const answerBox = document.getElementById("answer");
-      answerBox.value = answerBox.value.concat(" ", transcript);
+      let finalTranscript = "";
+      for (let i = event.resultIndex; i < event.results.length; ++i) {
+        const transcript = event.results[i][0].transcript;
+        if (event.results[i].isFinal) {
+          finalTranscript += transcript + " ";
+        } else {
+          tempTranscript = transcript;
+        }
+      }
+      answerBox.value = answerBox.value.trim() + " " + finalTranscript + tempTranscript;
     };
 
     recognition.onerror = (event) => {
-      if (event.error !== "aborted") {
-        console.log("Speech recognition error:", event.error);
-      }
+      console.log("Speech recognition error:", event.error);
     };
 
     recognition.onend = () => {
-      // ✅ Safari: immediately restart for pseudo-continuous effect
-      if (audio) recognition.start();
+      if (audio) recognition.start(); // restart if still active
     };
 
     recognition.start();
 
   } else {
     audio = false;
-
     if (localStorage.getItem("darkmode") != "1") {
       document.getElementById("microphone").src = "microphone.png";
     } else {
@@ -761,8 +767,8 @@ function toggleaudio() {
     }
 
     if (recognition) {
-      recognition.onend = null; // prevent auto-restart loop
-      recognition.stop(); // Safari prefers stop() to abort()
+      recognition.onend = null;  // prevent auto-restart
+      recognition.stop();
     }
   }
 }
