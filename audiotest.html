@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Toggleable Speech Recognition</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem;
+    }
+    #microphone {
+      width: 50px;
+      cursor: pointer;
+    }
+    #output {
+      margin-top: 1rem;
+      padding: 1rem;
+      border: 1px solid #ccc;
+      width: 100%;
+      max-width: 500px;
+      min-height: 50px;
+    }
+    #status {
+      margin-top: 0.5rem;
+      font-style: italic;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Speech Recognition Demo</h1>
+  <img id="microphone" src="microphone_off.png" alt="Toggle Microphone">
+  <div id="status">Microphone is off</div>
+  <div id="output"></div>
+
+  <script>
+    // Toggleable speech recognition
+    let audioOn = false;
+    const output = document.getElementById("output");
+    const status = document.getElementById("status");
+    const mic = document.getElementById("microphone");
+
+    // Check browser support
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+      alert("Your browser does not support speech recognition.");
+    }
+
+    const recognition = SpeechRecognition ? new SpeechRecognition() : null;
+    if (recognition) {
+      recognition.continuous = true;  // Keep listening
+      recognition.interimResults = true; // Show results while speaking
+      recognition.lang = 'en-US';
+
+      recognition.onresult = (event) => {
+        let transcript = '';
+        for (let i = event.resultIndex; i < event.results.length; i++) {
+          transcript += event.results[i][0].transcript;
+        }
+        output.textContent = transcript;
+      };
+
+      recognition.onstart = () => {
+        status.textContent = "Microphone is on";
+        mic.src = "microphone_on.png";
+      };
+
+      recognition.onend = () => {
+        status.textContent = "Microphone is off";
+        mic.src = "microphone_off.png";
+        if (audioOn) recognition.start(); // auto-restart if still toggled on
+      };
+
+      recognition.onerror = (event) => {
+        console.error("Recognition error:", event.error);
+      };
+    }
+
+    // Toggle microphone
+    mic.addEventListener("click", () => {
+      if (!SpeechRecognition) return;
+      audioOn = !audioOn;
+      if (audioOn) {
+        recognition.start();
+      } else {
+        recognition.stop();
+      }
+    });
+  </script>
+
+</body>
+</html>
