@@ -710,44 +710,65 @@ audio = false;
 sr = window.SpeechRecognition || window.webkitSpeechRecognition;
 recognition = null;
 function toggleaudio() {
+  // if SpeechRecognition not supported
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SR) {
+    alert("Your browser does not support speech recognition.");
+    return;
+  }
+
+  // turn ON
   if (!audio) {
-    if (!sr) { alert("Your browser does not support speech recognition.") } else {
     audio = true;
+
+    // instant UI feedback
     if (localStorage.getItem("darkmode") != "1") {
-    document.getElementById("microphone").src = "microphonered.png";
+      document.getElementById("microphone").src = "microphonered.png";
     } else {
-    document.getElementById("audio").style.backgroundColor = "#c12020";
+      document.getElementById("audio").style.backgroundColor = "#c12020";
     }
-    recognition = new sr();
+
+    recognition = new SR();
     recognition.lang = document.getElementById("lildropdown").value;
     recognition.continuous = false;
     recognition.interimResults = false;
-    recognition.start();
+
+    recognition.onresult = (event) => {
+      const transcript = event.results[0][0].transcript;
+      const answerBox = document.getElementById("answer");
+      answerBox.value = answerBox.value.concat(" ", transcript);
+    };
 
     recognition.onerror = (event) => {
-      if (event.error != "aborted") {
-      alert( "Error: " + event.error );
+      if (event.error !== "aborted") {
+        alert("Error: " + event.error);
       }
     };
-    recognition.onresult = (event) => {
-      ttou = event.results[0][0].transcript;
-      document.getElementById("answer").value = document.getElementById("answer").value.concat(" ", ttou);
-    };
+
+    // ensures recognition doesn’t hang after stopping
     recognition.onend = () => {
-      if (!audio) return; // if user manually stopped, skip restart
-      recognition.start(); // auto-restart if desired
+      if (audio) return; // if still supposed to be on, ignore
+      recognition.abort(); // hard stop if toggled off
     };
-    }
+
+    // start recognition (small built-in delay)
+    recognition.start();
+
+  // turn OFF
   } else {
     audio = false;
+
     if (localStorage.getItem("darkmode") != "1") {
-    document.getElementById("microphone").src = "microphone.png";
+      document.getElementById("microphone").src = "microphone.png";
     } else {
-    document.getElementById("audio").style.backgroundColor = "#3a3a3a";
+      document.getElementById("audio").style.backgroundColor = "#3a3a3a";
     }
-    recognition.stop();
+
+    // abort stops instantly (faster than stop)
+    if (recognition) recognition.abort();
   }
 }
+
 function check() {
   document.getElementById("check").setAttribute("onclick", "");
   if (audio) { toggleaudio() }
