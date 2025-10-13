@@ -735,18 +735,36 @@ function toggleaudio() {
 
     let tempTranscript = "";
 
-    recognition.onresult = (event) => {
-      let finalTranscript = "";
-      for (let i = event.resultIndex; i < event.results.length; ++i) {
-        const transcript = event.results[i][0].transcript;
-        if (event.results[i].isFinal) {
-          finalTranscript += transcript + " ";
-        } else {
-          tempTranscript = transcript;
-        }
-      }
-      answerBox.value = answerBox.value.trim() + " " + finalTranscript + tempTranscript;
-    };
+    let tempTranscript = ""; // stores current interim transcript
+
+recognition.onresult = (event) => {
+  let finalTranscript = "";
+
+  for (let i = event.resultIndex; i < event.results.length; ++i) {
+    const transcript = event.results[i][0].transcript;
+
+    if (event.results[i].isFinal) {
+      finalTranscript += transcript + " ";
+    }
+  }
+
+  // Append final transcript once and clear interim
+  if (finalTranscript) {
+    answerBox.value = answerBox.value.trim()
+      ? answerBox.value.trim() + " " + finalTranscript.trim()
+      : finalTranscript.trim();
+    tempTranscript = "";
+  } else {
+    // Update interim transcript without modifying the final value
+    tempTranscript = event.results[event.results.length - 1][0].transcript;
+  }
+
+  // Show both final + interim
+  answerBox.value = answerBox.value.trim()
+    ? answerBox.value.trim() + " " + tempTranscript
+    : tempTranscript;
+};
+
 
     recognition.onerror = (event) => {
       console.log("Speech recognition error:", event.error);
