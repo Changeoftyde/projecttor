@@ -1,83 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cross-Browser Speech Recognition</title>
-<style>
-  body { font-family: sans-serif; display: flex; flex-direction: column; align-items: center; padding: 2rem; }
-  #microphone { width: 60px; cursor: pointer; margin-bottom: 1rem; }
-  #output { width: 100%; max-width: 600px; min-height: 50px; border: 1px solid #ccc; padding: 1rem; }
-  #status { margin-top: 0.5rem; font-style: italic; color: #555; }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Speech Recognition Demo</title>
+  <style>
+    body { font-family: sans-serif; text-align: center; margin-top: 50px; }
+    button { font-size: 1.2em; padding: 10px 20px; border-radius: 10px; cursor: pointer; }
+    #output { margin-top: 30px; font-size: 1.2em; color: #333; }
+  </style>
 </head>
 <body>
 
-<h1>Speech Recognition Demo</h1>
-<img id="microphone" src="microphone_off.png" alt="Toggle Microphone">
-<div id="status">Microphone is off</div>
-<div id="output"></div>
+  <h1>🎙️ Speech Recognition Test</h1>
+  <button id="startBtn">Start Listening</button>
+  <div id="output">Say something...</div>
 
-<script>
-const mic = document.getElementById("microphone");
-const output = document.getElementById("output");
-const status = document.getElementById("status");
+  <script>
+    // Check for browser support
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
-let audioOn = false;
-let recognition = null;
-
-// Cross-browser setup
-const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-
-if (!SpeechRecognition) {
-  status.textContent = "Speech recognition not supported in this browser.";
-  mic.style.display = "none";
-} else {
-  recognition = new SpeechRecognition();
-  recognition.continuous = true;
-  recognition.interimResults = true;
-  recognition.lang = 'en-US';
-
-  recognition.onresult = (event) => {
-    let transcript = '';
-    for (let i = event.resultIndex; i < event.results.length; i++) {
-      transcript += event.results[i][0].transcript;
-    }
-    output.textContent = transcript;
-  };
-
-  recognition.onstart = () => {
-    status.textContent = "Microphone is on";
-    mic.src = "microphone_on.png";
-  };
-
-  recognition.onend = () => {
-    status.textContent = "Microphone is off";
-    mic.src = "microphone_off.png";
-    // Auto-restart if still toggled on (works in Chrome/Edge, limited in Safari)
-    if (audioOn) recognition.start();
-  };
-
-  recognition.onerror = (event) => {
-    console.error("Recognition error:", event.error);
-  };
-}
-
-// Toggle microphone
-mic.addEventListener("click", () => {
-  if (!recognition) return;
-  audioOn = !audioOn;
-  try {
-    if (audioOn) {
-      recognition.start();
+    if (!SpeechRecognition) {
+      document.getElementById('output').innerText = "Speech recognition not supported in this browser.";
     } else {
-      recognition.stop();
+      const recognition = new SpeechRecognition();
+      recognition.lang = 'en-US'; // You can change this
+      recognition.continuous = false;
+      recognition.interimResults = false;
+
+      const startBtn = document.getElementById('startBtn');
+      const output = document.getElementById('output');
+
+      startBtn.addEventListener('click', () => {
+        recognition.start();
+        output.innerText = "Listening...";
+      });
+
+      recognition.onresult = (event) => {
+        const transcript = event.results[0][0].transcript;
+        output.innerHTML = `You said: <strong>${transcript}</strong>`;
+      };
+
+      recognition.onerror = (event) => {
+        output.innerText = "Error: " + event.error;
+      };
+
+      recognition.onend = () => {
+        output.innerText += "\n(Recognition ended)";
+      };
     }
-  } catch (err) {
-    console.warn("Recognition toggle error:", err);
-  }
-});
-</script>
+  </script>
 
 </body>
 </html>
