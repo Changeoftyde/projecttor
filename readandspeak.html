@@ -733,6 +733,10 @@ function toggleaudio() {
       ttou = event.results[0][0].transcript;
       document.getElementById("answer").value = document.getElementById("answer").value.concat(" ", ttou);
     };
+    recognition.onend = () => {
+      if (!audio) return; // if user manually stopped, skip restart
+      recognition.start(); // auto-restart if desired
+    };
     }
   } else {
     audio = false;
