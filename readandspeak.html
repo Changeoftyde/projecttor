@@ -733,37 +733,40 @@ function toggleaudio() {
     recognition.continuous = true;       // true for Safari pseudo-continuous
     recognition.interimResults = true;   // true so we capture partials immediately
 
-    let tempTranscript = "";
-
     let tempTranscript = ""; // stores current interim transcript
+
+let tempTranscript = ""; // stores current interim transcript
 
 recognition.onresult = (event) => {
   let finalTranscript = "";
 
+  // Collect all final transcripts from this event
   for (let i = event.resultIndex; i < event.results.length; ++i) {
-    const transcript = event.results[i][0].transcript;
-
     if (event.results[i].isFinal) {
-      finalTranscript += transcript + " ";
+      finalTranscript += event.results[i][0].transcript + " ";
     }
   }
 
-  // Append final transcript once and clear interim
+  // Append final transcript to answerBox
   if (finalTranscript) {
     answerBox.value = answerBox.value.trim()
       ? answerBox.value.trim() + " " + finalTranscript.trim()
       : finalTranscript.trim();
-    tempTranscript = "";
-  } else {
-    // Update interim transcript without modifying the final value
-    tempTranscript = event.results[event.results.length - 1][0].transcript;
+    tempTranscript = ""; // clear interim transcript
   }
 
-  // Show both final + interim
+  // Update tempTranscript with latest interim result
+  const lastResult = event.results[event.results.length - 1];
+  if (!lastResult.isFinal) {
+    tempTranscript = lastResult[0].transcript;
+  }
+
+  // Show final + interim without duplicating
   answerBox.value = answerBox.value.trim()
     ? answerBox.value.trim() + " " + tempTranscript
     : tempTranscript;
 };
+
 
 
     recognition.onerror = (event) => {
