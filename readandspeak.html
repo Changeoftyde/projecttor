@@ -745,7 +745,7 @@ function toggleaudio() {
           tempTranscript = transcript;
         }
       }
-      answerBox.value = answerBox.value.trim() + " " + finalTranscript + tempTranscript;
+      answerBox.value = finalTranscript + tempTranscript;
     };
 
     recognition.onerror = (event) => {
