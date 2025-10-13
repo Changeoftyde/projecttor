@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
@@ -732,6 +732,10 @@ function toggleaudio() {
     recognition.onresult = (event) => {
       ttou = event.results[0][0].transcript;
       document.getElementById("answer").value = document.getElementById("answer").value.concat(" ", ttou);
+    };
+    recognition.onend = () => {
+      if (!audio) return; // if user manually stopped, skip restart
+      recognition.start(); // auto-restart if desired
     };
     }
   } else {
