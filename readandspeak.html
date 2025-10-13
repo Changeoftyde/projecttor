@@ -739,7 +739,7 @@ let tempTranscript = ""; // stores current interim transcript
 
 let finalText = ""; // store confirmed final transcript
 
-recognition.onresult = (event) => {
+/*recognition.onresult = (event) => {
   let interimText = "";
 
   for (let i = event.resultIndex; i < event.results.length; i++) {
@@ -751,9 +751,8 @@ recognition.onresult = (event) => {
     }
   }
 
-  // Replace visible value with final + current interim
   answerBox.value = (finalText + interimText).trim();
-};
+};*/
     recognition.onerror = (event) => {
       console.log("Speech recognition error:", event.error);
     };
