@@ -707,12 +707,11 @@ function resizeSQs() {
   }
 }
 audio = false;
-sr = window.SpeechRecognition || window.webkitSpeechRecognition;
 recognition = null;
 function toggleaudio() {
   // if SpeechRecognition not supported
-  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-  if (!SR) {
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SpeechRecognition) {
     alert("Your browser does not support speech recognition.");
     return;
   }
@@ -728,15 +727,18 @@ function toggleaudio() {
       document.getElementById("audio").style.backgroundColor = "#c12020";
     }
 
-    recognition = new SR();
+    recognition = new SpeechRecognition();
     recognition.lang = document.getElementById("lildropdown").value;
-    recognition.continuous = false;
-    recognition.interimResults = false;
+    recognition.continuous = true;
+    recognition.interimResults = true;
 
     recognition.onresult = (event) => {
-      const transcript = event.results[0][0].transcript;
+      let transcript = "";
+      for (let i = event.resultIndex; i < event.results.length; i++) {
+        transcript += event.results[i][0].transcript;
+      }
       const answerBox = document.getElementById("answer");
-      answerBox.value = answerBox.value.concat(" ", transcript);
+      answerBox.value = answerBox.value.concat(" ", transcript.trim());
     };
 
     recognition.onerror = (event) => {
