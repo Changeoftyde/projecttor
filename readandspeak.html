@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
@@ -733,26 +733,21 @@ function toggleaudio() {
     recognition.continuous = true;       // true for Safari pseudo-continuous
     recognition.interimResults = true;   // true so we capture partials immediately
 
-    let tempTranscript = ""; // stores current interim transcript
+    let tempTranscript = "";
 
-let tempTranscript = ""; // stores current interim transcript
+    recognition.onresult = (event) => {
+      let finalTranscript = "";
+      for (let i = event.resultIndex; i < event.results.length; ++i) {
+        const transcript = event.results[i][0].transcript;
+        if (event.results[i].isFinal) {
+          finalTranscript += transcript + " ";
+        } else {
+          tempTranscript = transcript;
+        }
+      }
+      answerBox.value = answerBox.value.trim() + " " + finalTranscript + tempTranscript;
+    };
 
-let finalText = ""; // store confirmed final transcript
-
-/*recognition.onresult = (event) => {
-  let interimText = "";
-
-  for (let i = event.resultIndex; i < event.results.length; i++) {
-    const result = event.results[i];
-    if (result.isFinal) {
-      finalText += result[0].transcript + " "; // add confirmed text
-    } else {
-      interimText = result[0].transcript; // latest interim text
-    }
-  }
-
-  answerBox.value = (finalText + interimText).trim();
-};*/
     recognition.onerror = (event) => {
       console.log("Speech recognition error:", event.error);
     };
@@ -760,7 +755,8 @@ let finalText = ""; // store confirmed final transcript
     recognition.onend = () => {
       if (audio) recognition.start(); // restart if still active
     };
-   recognition.start();
+
+    recognition.start();
 
   } else {
     audio = false;
@@ -779,7 +775,7 @@ let finalText = ""; // store confirmed final transcript
 
 function check() {
   document.getElementById("check").setAttribute("onclick", "");
-  if (audio) { toggleaudio() } 
+  if (audio) { toggleaudio() }
   document.getElementById("audio").setAttribute("onclick", "");
   if (localStorage.getItem("gn") == "1") {
     correcton = localStorage.getItem(current.concat("a", allnumbers[currentq - 1])).toUpperCase() == document.getElementById("answer").value.toUpperCase();
