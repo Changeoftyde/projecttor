@@ -960,7 +960,11 @@ function next() {
   pose("normal");
   document.getElementById("popup").style.top = "90dvh";
     document.getElementById("popup").style.boxShadow = "none";
+    if (localStorage.getItem("darkmode") == "1") {
+    document.getElementById("title").style.color = "#3a3a3a";
+    } else {
     document.getElementById("title").style.color = "#efefef";
+    }
     document.getElementById("desc").innerHTML = "";
     document.getElementById("question").style.opacity = 0;
     document.getElementById("answer").style.opacity = 0;
