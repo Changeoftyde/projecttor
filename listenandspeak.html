@@ -54,6 +54,7 @@
 </body>
 <style>
 #stopra {
+  transition: 0.6s opacity;
   width: 9.5dvh;
   height: 9.5dvh;
   background-color: #efefef;
@@ -66,6 +67,7 @@
   background-image: url('stopaudio.png');
 }
 #readaloud {
+  transition: 0.6s opacity;
   width: 9.5dvh;
   height: 9.5dvh;
   background-color: #efefef;
@@ -1021,6 +1023,10 @@ function next() {
     document.getElementById("answer").style.opacity = 0;
     document.getElementById("check").style.opacity = 0;
     document.getElementById("audio").style.opacity = 0;
+    document.getElementById("stopra").style.opacity = 0;
+    document.getElementById("readaloud").style.opacity = 0;
+    document.getElementById("stopra").style.pointerEvents = "none";
+    document.getElementById("readaloud").style.pointerEvents = "none";
     document.getElementById("lildropdown").style.opacity = 0;
     currentq++;
     setTimeout(function() {
@@ -1031,6 +1037,10 @@ function next() {
     document.getElementById("lildropdown").style.opacity = 1;
     document.getElementById("check").style.opacity = 1;
     document.getElementById("audio").style.opacity = 1;
+    document.getElementById("stopra").style.opacity = 1;
+    document.getElementById("readaloud").style.opacity = 1;
+    document.getElementById("stopra").style.pointerEvents = "all";
+    document.getElementById("readaloud").style.pointerEvents = "all";
     document.getElementById("audio").setAttribute("onclick", "toggleaudio()");
     document.getElementById("qtext").innerHTML = localStorage.getItem(current.concat("q", allnumbers[currentq - 1]));
     document.getElementById("answer").value = "";
