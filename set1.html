@@ -671,6 +671,7 @@ function redirectstudy() {
 }
 function deleteset() {
   for (i = (parseInt(current) + 1); i < 11; i++) {
+    localStorage.setItem((i - 1).toString().concat("bt"), localStorage.getItem(i.toString().concat("bt")));
     localStorage.setItem((i - 1).toString().concat("n"), localStorage.getItem(i.toString().concat("n")));
     localStorage.setItem((i - 1).toString().concat("a"), localStorage.getItem(i.toString().concat("a")));
     localStorage.setItem((i - 1).toString().concat("qat"), localStorage.getItem(i.toString().concat("qat")));
