@@ -640,12 +640,15 @@ function showresults() {
   }
   if (finalTime == "1:00:00+") {
     best = prevRec;
+    document.getElementById("scores").innerHTML = "Your Time: ".concat(prevRec, "<br>Best Time: ", prevRec);
   } else if (finalTime == "0:00") {
     best = "0:00";
     localStorage.setItem(current.concat("bt"), "0:00");
+    document.getElementById("scores").innerHTML = "Your Time: ".concat(finalTime, "<br>Best Time: ", finalTime);
   } else if (prevRec == "1:00:00+") {
     best = finalTime;
     localStorage.setItem(current.concat("bt"), finalTime);
+    document.getElementById("scores").innerHTML = "Your Time: ".concat(finalTime, "<br>Best Time: ", finalTime);
   } else {
     oldtime = prevRec;
     newTime = finalTime;
