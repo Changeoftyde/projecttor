@@ -635,6 +635,8 @@ function showresults() {
   finaltime = "8:36";
   if (localStorage.getItem(current.concat("bt"))) {
     prevRec = localStorage.getItem(current.concat("bt"));
+  } else if (localStorage.getItem(current.concat("bt")) == null) {
+    prevRec = "1:00:00+";
   } else {
     prevRec = "1:00:00+";
   }
