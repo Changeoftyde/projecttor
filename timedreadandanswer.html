@@ -632,14 +632,14 @@ const frontcircle = document.getElementById("frontcircle")
 // ===== Your Results Function =====
 function showresults() {
   timeticking = false;
-  if (localStorage.getItem(current.concat("bt")) == null) {
+  if (localStorage.getItem(current.concat("bt")) == "null") {
     prevRec = "1:00:00+";
   } else if (localStorage.getItem(current.concat("bt"))) {
     prevRec = localStorage.getItem(current.concat("bt"));
   } else {
     prevRec = "1:00:00+";
   }
-  if (prevRec === null) {
+  if (prevRec.toString() == "null") {
     prevRec = "1:00:00+";
   }
   if (finalTime == "1:00:00+") {
