@@ -544,6 +544,9 @@ lstudymodes = ["Answer with an Antonym", "Process of Elimination", "True or Fals
 if (localStorage.getItem(current.concat("terms")) != "1") {
   lstudymodes.splice(0, 1);
 }
+if (parseInt(localStorage.getItem(current.concat("qat"))) < 3) {
+  lstudymodes.splice(1, 1);
+}
 if (localStorage.getItem(current.concat("chronological")) != "1") {
   vstudymodes.splice(1, 1);
 }
@@ -620,6 +623,7 @@ for (i = 0; i < oldrstudymodes.length; i++) {
   if (localStorage.getItem(current.concat("terms")) != "1" && oldrstudymodes[i] == "Answer with an Antonym") {}
   else if (localStorage.getItem(current.concat("chronological")) != "1" && oldrstudymodes[i] == "Chronological Order") {}
   else if (localStorage.getItem(current.concat("whiteboardrecommended")) != "1" && oldrstudymodes[i] == "Explain with Whiteboard") {}
+  else if (parseInt(localStorage.getItem(current.concat("qat"))) < 3 && oldrstudymodes[i] == "Process of Elimination") {}
   else if (rstudymodes.indexOf(oldrstudymodes[i]) > -1) {} else {
     rstudymodes.push(oldrstudymodes[i]);
   }
