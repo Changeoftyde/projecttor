@@ -464,14 +464,6 @@
   }
 </style>
 <script>
-sessionStorage.setItem("setToUse", "1");
-localStorage.setItem("1qat", "3");
-for (i = 1; i <= 3; i++) {
-localStorage.setItem("1q".concat(i.toString()), "Question ".concat(i.toString(), "?"));
-localStorage.setItem("1a".concat(i.toString()), "Answer ".concat(i.toString(), "."));
-}
-localStorage.setItem("1a1", "The quick brown fox jumps over the lazy dog.");
-localStorage.setItem("darkmode", "1");
 if (localStorage.getItem("darkmode") == "1") {
   document.getElementById("title").transition = "none";
   window.innerHeight;
