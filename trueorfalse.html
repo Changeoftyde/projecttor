@@ -750,12 +750,22 @@ function check(inputtof) {
   }
   if (trueOrFalse) {
     document.getElementById("true").style.backgroundColor = "rgba(45, 204, 112, 0.3)";
+    if (localStorage.getItem("darkmode") != "1") {
     document.getElementById("false").style.outline = "1.5dvh solid #efefef";
     document.getElementById("false").style.color = "#efefef";
     } else {
+    document.getElementById("false").style.outline = "1.5dvh solid #3a3a3a";
+    document.getElementById("false").style.color = "#3a3a3a";
+    }
+    } else {
     document.getElementById("false").style.backgroundColor = "rgba(255, 133, 0, 0.3)";
+    if (localStorage.getItem("darkmode") != "1") {
     document.getElementById("true").style.outline = "1.5dvh solid #efefef";
-    document.getElementById("true").style.color = "#efefef";  
+    document.getElementById("true").style.color = "#efefef";
+    } else {
+    document.getElementById("true").style.outline = "1.5dvh solid #3a3a3a";
+    document.getElementById("true").style.color = "#3a3a3a";
+    }
     }
   if (clbl != 100) {
   clbl += (100 - clbl) / (allnumbers.length + 1 - currentq);
