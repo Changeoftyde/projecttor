@@ -477,12 +477,11 @@ if (localStorage.getItem("darkmode") == "1") {
   window.innerHeight;
   document.getElementById("title").style.transition = "0.3s color";
   document.body.style.backgroundColor = "black";
-  document.getElementById("answer").style.color = "white";
   document.getElementById("redo").style.outline = "1.5dvh solid #3a3a3a";
   document.getElementById("redo").style.backgroundColor = "black";
   document.getElementById("finish").style.outline = "1.5dvh solid #3a3a3a";
   document.getElementById("finish").style.backgroundColor = "black";
-  document.getElementById("next").style.outline = "1.5dvh solid #3a3a3a";
+  document.getElementById("next").style.outlineColor = "#3a3a3a";
   document.getElementById("next").style.backgroundColor = "black";
   document.getElementById("popup").style.backgroundColor = "#3a3a3a";
   document.getElementById("question").style.color = "white";
@@ -701,13 +700,20 @@ function resizeSQs() {
 }
 numgray = 0;
 function check(inputtof) {
+  if (!(document.getElementsByClassName("true")[inputtof-1].classList.contains("alrused"))) {
   if (inputtof == correctOne) {
     needtofinish = true;
     correcton = false;
   } else {
     numgray++;
+    document.getElementsByClassName("true")[inputtof - 1].classList.add("alrused");
+    if (localStorage.getItem("darkmode") != "1") {
     document.getElementsByClassName("true")[inputtof - 1].style.outline = "1.5dvh solid #efefef";
     document.getElementsByClassName("true")[inputtof - 1].style.color = "#efefef";
+    } else {
+    document.getElementsByClassName("true")[inputtof - 1].style.outline = "1.5dvh solid #3a3a3a";
+    document.getElementsByClassName("true")[inputtof - 1].style.color = "#3a3a3a";
+    }
     if (numgray == 2) {
       needtofinish = true;
       correcton = true;
@@ -766,8 +772,13 @@ function check(inputtof) {
   }
   for (i = 0; i < 3; i++) {
     if (i == correctOne - 1) {} else {
+      if (localStorage.getItem("darkmode") != "1") {
       document.getElementsByClassName("true")[i].style.outline = "1.5dvh solid #efefef";
       document.getElementsByClassName("true")[i].style.color = "#efefef";
+      } else {
+      document.getElementsByClassName("true")[i].style.outline = "1.5dvh solid #3a3a3a";
+      document.getElementsByClassName("true")[i].style.color = "#3a3a3a";
+      }
     }
   }
   
@@ -776,6 +787,7 @@ function check(inputtof) {
   }
   document.getElementById("insloadbar").style.width = clbl + "%";
 
+  }
   }
 }
 function pose(exp) {
@@ -843,6 +855,7 @@ function next() {
     document.getElementsByClassName("true")[i].style.outline = "1.5dvh solid #c12020";
     document.getElementsByClassName("true")[i].style.opacity = 1;
     document.getElementsByClassName("true")[i].style.pointerEvents = "all";
+    document.getElementsByClassName("true")[i].classList.remove("alrused");
   }
     }, 700)
     setTimeout(function() {
