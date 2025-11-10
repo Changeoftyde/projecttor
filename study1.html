@@ -545,7 +545,7 @@ if (localStorage.getItem(current.concat("terms")) != "1") {
   lstudymodes.splice(0, 1);
 }
 if (parseInt(localStorage.getItem(current.concat("qat"))) < 3) {
-  lstudymodes.splice(1, 1);
+  lstudymodes.splice(lstudymodes.indexOf("Process of Elimination"), 1);
 }
 if (localStorage.getItem(current.concat("chronological")) != "1") {
   vstudymodes.splice(1, 1);
