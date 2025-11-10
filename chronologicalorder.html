@@ -726,8 +726,10 @@ for (i = 1; i <= parseInt(localStorage.getItem(current.concat("qat"))); i++) {
   whichqstouse.push(1);
   newDiv = document.createElement('div');
   newDiv.classList.add("peanutbutter");
+  if (localStorage.getItem("darkmode") == "1") {
   newDiv.style.outlineColor = "white";
   newDiv.style.color = "white";
+  } 
   newDiv.setAttribute("onclick", "endis(".concat(i.toString(), ")"));
   newDiv.innerHTML = "<b>Q: ".concat(localStorage.getItem(current.concat("q", i.toString())), "</b><br>A: ", localStorage.getItem(current.concat("a", i.toString())));
   document.getElementById("allquestions").appendChild(newDiv);
