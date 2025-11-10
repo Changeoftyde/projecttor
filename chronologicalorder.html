@@ -886,12 +886,12 @@ function setupforediting() {
   for (i = 0; i < whichqstouse.length; i++) {
     if (whichqstouse[i] == 1) {
       newDiv = document.createElement('div');
-      newDiv.classList.add("pb2");
-      newDiv.style.color = "white";
-      newDiv.style.outlineColor = "white";
+      newDiv.classList.add("pb2")
       if (localStorage.getItem("darkmode") != "1") {
       newDiv.innerHTML = "<b>Q: ".concat(localStorage.getItem(current.concat("q", (i + 1).toString())), "</b><br>A: <span class='pb2ins' contenteditable='true'>", localStorage.getItem(current.concat("a", (i + 1).toString())), "</span>");
       } else {
+      newDiv.style.color = "white";
+      newDiv.style.outlineColor = "white";
       newDiv.innerHTML = "<b>Q: ".concat(localStorage.getItem(current.concat("q", (i + 1).toString())), "</b><br>A: <span class='pb2ins' style='border: 0.25dvh dashed #3a3a3a' contenteditable='true'>", localStorage.getItem(current.concat("a", (i + 1).toString())), "</span>");
       }
       document.getElementById("allquestions2").appendChild(newDiv);
