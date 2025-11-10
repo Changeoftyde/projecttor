@@ -1,0 +1,2325 @@
+<!DOCTYPE html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<html>
+<body>
+<div id="firstpart" class="">
+<div id="fullscreen">
+ <div id="popup">
+   <span id="title">
+   </span>
+   <div id="showanswer"><span id="desc"></span><div id="gatb"></div></div>
+   <div id="torabody"></div>
+   <div id="torahead"></div>
+   <button id="next" onclick="next()">Next</button>
+ </div>
+  </div>
+  <button onclick="check()" id="check">Next</button>
+<div class="hidden" id="alldateselectors">
+  <input onkeydown="setTimeout(function() {document.getElementsByClassName('ddp')[0].style.left = getpercentfromarray() + '%'}, 100)" class="dateselector">
+</div>
+<div class="hidden" id="timeline">
+  <div class="ddp">
+    <div class="ddpcircle"><div class="ddpinnercircle"></div></div>
+    <div class="ddptriangle"></div>
+    <div class="yehim"></div></div>
+</div>
+<span class="jsonarray"></span>
+
+
+
+ <div id="question"><span id="qtext">Deselect the questions that do not have answers that are dates in time. 
+ </span></div>
+   <div id="degradient"></div>
+
+ <div id="allquestions">
+ </div>
+ <div class="hidden" id="allquestions2">
+ </div>
+ <div id="loadbar"><div id="insloadbar"></div></div><span onclick="window.location.href = 'study'.concat(current.concat('.html'))" id="x">X</span>
+</div>
+<div id="secondpart" class="hidden">
+     <button class="hidden" id="finish" onclick="finish()">Done</button>
+   <button class="hidden" id="redo" onclick="redo()">Redo</button>
+  <div id="torabody2"></div>
+  <div id="torahead2"></div>
+  <div class="fmq2"><div id="lilgrayguy"></div></div>
+  <div id="fmq">
+    <div id="whitebit"></div>
+    <span id="sq">Struggle Questions</span>
+  </div>
+  <div id="percentage">
+  <div id="middlecircle">
+    <span id="textim"></span>
+  </div>
+  <div id="frontcircle"></div>
+  </div>
+</div>
+</body>
+<style>
+.dateselector {
+  font-family: fredokaone;
+  display: inline-block;
+  text-align: center;
+  min-width: 30dvh;
+  position: relative;
+  margin-left: 50%;
+  margin-top: 2dvh;
+  transform: translateX(-50%);
+  background-color: transparent;
+  border: 0.25dvh dashed #efefef;
+  font-size: 2.5dvh;
+} 
+#alldateselectors {
+  font-size: 3dvh;
+  text-align: center;
+  width: 30dvh;
+  height: 15dvh;
+  top: 63dvh;
+  transform: translateX(-50%);
+  left: 50%;
+  position: absolute;
+  transition: 0.6s opacity;
+}
+.ddpinnercircle {
+  width: 2dvh;
+  height: 2dvh;
+  background-color: white;
+  left: 1dvh;
+  top: 1dvh;
+  position: absolute;
+  border-radius: 1dvh;
+  z-index: 3;
+}
+.ddptriangle {
+  top: 2.4dvh;
+  position: absolute;
+  height: 6dvh;
+  border-left: 2dvh solid transparent;
+  border-right: 2dvh solid transparent;
+  border-top: 4dvh solid #c12020;
+}
+.ddpcircle {
+  width: 4dvh;
+  height: 4dvh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: #c12020;
+  border-radius: 2dvh;
+}
+.yehim {
+  width: 0;
+  left: 50%;
+  top: 0;
+  position: absolute;
+}
+.stillddp {
+  width: 4dvh;
+  height: 10dvh;
+  transform: translate(-50%, 0%);
+  position: absolute;
+  bottom: 5dvh;
+  z-index: 10;
+  pointer-events: all;
+}
+.ddp {
+  width: 4dvh;
+  height: 10dvh;
+  transform: translate(-50%, 0%);
+  position: absolute;
+  bottom: 5dvh;
+  z-index: 10;
+  pointer-events: all;
+  transition: 0.6s opacity;
+}
+.jsonarray {
+  width: 100%;
+  position: absolute;
+  left: 0;
+  bottom: 20dvh;
+  text-align: center;
+  height: 5dvh;
+}
+#currentslider {
+  width: 10dvh;
+  height: 10dvh;
+  position: absolute;
+  top: 30dvh;
+  right: 10.1dvh;
+  background-color: yellow;
+}
+.pb2 {
+  padding: 1.5dvh;
+  width: calc(100% - 4dvh);
+  margin-top: 0.5dvh;
+  outline: 0.5dvh solid #c12020;
+  color: #c12020;
+  border-radius: 1dvh;
+  font-size: 2.5dvh;
+  margin-left: 0.5dvh;
+  margin-bottom: 2dvh;
+  transition: 0.6s;
+}
+.pb2ins {
+  min-width: 20dvh;
+  border: 0.25dvh dashed #efefef;
+  display: inline-block;
+  border-radius: 0.5dvh;
+}
+#allquestions2 {
+  overflow-y: scroll;
+  overflow-x: hidden;
+  width: calc(100% - 6dvh);
+  left: 50%;
+  position: absolute;
+  top: 40dvh;
+  height: 45dvh;
+  transform: translate(-50%, 0%);
+  transition: 0.6s opacity;
+}
+#degradient {
+  width: 100%;
+  height: 15dvh;
+  background-image: linear-gradient(rgba(0,0,0,0), white);
+  bottom: 15dvh;
+  left: 3dvh;
+  position: fixed;
+  pointer-events: none;
+  z-index: 1;
+}
+.peanutbutter {
+  padding: 1.5dvh;
+  width: calc(100% - 4dvh);
+  margin-top: 0.5dvh;
+  outline: 0.5dvh solid #c12020;
+  color: #c12020;
+  border-radius: 1dvh;
+  font-size: 2.5dvh;
+  margin-left: 0.5dvh;
+  margin-bottom: 2dvh;
+  transition: 0.6s;
+}
+#allquestions {
+  overflow-y: scroll;
+  overflow-x: hidden;
+  width: calc(100% - 6dvh);
+  left: 50%;
+  position: absolute;
+  top: 40dvh;
+  height: 45dvh;
+  transform: translate(-50%, 0%);
+  transition: 0.6s opacity;
+}
+.linelabel {
+  transform: translate(-50%);
+  left: 50%;
+  position: absolute;
+  text-align: center;
+  top: 8dvh;
+  color: #c12020;
+  white-space: nowrap;
+}
+.line {
+  width: 1.5dvh;
+  height: 6.5dvh;
+  border-radius: 0.75dvh;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  position: absolute;
+  background-color: #c12020;
+  z-index: 0;
+}
+#timeline {
+  width: calc(100% - 9dvh);
+  border-radius: 0.75dvh;
+  background-color: #c12020;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 1.5dvh;
+  transition: 0.6s opacity;
+}
+#tofmt {
+  width: 100%;
+  height: 8dvh;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 6.5dvh;
+}
+#true {
+  width: 24dvh;
+  height: 24dvh;
+  position: absolute;
+  cursor: pointer;
+  top: 40dvh;
+  right: calc(50% + 2.5dvh);
+  outline: 1.5dvh solid #2dcc70;
+  border: none;
+  border-radius: 8dvh;
+  color: #2dcc70;
+  background-color: rgba(0,0,0,0);
+  transition: 0.6s;
+}
+#false {
+  width: 24dvh;
+  height: 24dvh;
+  position: absolute;
+  cursor: pointer;
+  top: 40dvh;
+  left: calc(50% + 2.5dvh);
+  outline: 1.5dvh solid #ff8500;
+  border: none;
+  border-radius: 8dvh;
+  color: #ff8500;
+  background-color: rgba(0,0,0,0);
+  transition: 0.6s;
+}
+
+#finish:hover {
+  outline: 1.5dvh solid #c12020;
+}
+#redo:hover {
+  outline: 1.5dvh solid #c12020;
+}
+#finish {
+  width: 12dvh;
+  height: 6dvh;
+  border-radius: 2dvh;
+  border: none;
+  outline: 1.5dvh solid #efefef;
+  background-color: white;
+  color: #c12020;
+  left: calc(50% - 15dvh);
+  bottom: 54dvh;
+  position: absolute;
+  z-index: 2;
+  font-family: fredokaone;
+  font-size: 3.5dvh;
+  cursor: pointer;
+  transition: 0.6s opacity;
+}
+#redo {
+  width: 12dvh;
+  height: 6dvh;
+  border-radius: 2dvh;
+  border: none;
+  outline: 1.5dvh solid #efefef;
+  background-color: white;
+  color: #c12020;
+  left: calc(50% + 3dvh);
+  bottom: 54dvh;
+  position: absolute;
+  z-index: 2;
+  font-family: fredokaone;
+  font-size: 3.5dvh;
+  cursor: pointer;
+  transition: 0.6s opacity;
+}
+#torahead2 {
+    z-index: 1001;
+    transform: translate(-50%, -50%);
+    width: 18.41dvh;
+    height: 12.90dvh;
+    position: absolute;
+    bottom: 5.71dvh; /*+1*/
+    left: 50%;
+    background-position: 50% 50%;
+    background-size: cover;
+    background-image: url("toraheadnormal.png");
+    transition: 0.8s transform;
+    
+  }
+  #torabody2 {
+    bottom: 2.9dvh;
+    right: calc(50% - 7.2dvh);
+    position: absolute;
+    width: 17.56dvh;
+    height: 13.42dvh;
+    background-position: 50% 50%;
+    background-size: cover;
+    background-image: url("torabody.png");
+    z-index: 1000;
+  }
+  #lilgrayguy {
+    position: absolute;
+    top: 12dvh;
+    left: 0;
+    width: 100%;
+    height: 3dvh;
+    background-image: linear-gradient(rgba(0,0,0,0), #efefef);
+    z-index: 1;
+    pointer-events: none;
+  }
+  .sqq {
+    width: calc(100% - 7dvh);
+    right: 1dvh;
+    top: 4.5dvh;
+    background-color: white;
+    border-radius: 0.5dvh;
+    position: absolute;
+    padding: 0.5dvh;
+    word-wrap: break-word;
+  }
+  #sq {
+    width: calc(100% - 3dvh);
+    text-align: center;
+    color: black;
+    top: 0.5dvh;
+    left: 3.5dvh;
+    position: absolute;
+    z-index: 0;
+    font-size: 2.5dvh;
+    white-space: nowrap;
+  }
+  #whitebit {
+    z-index: 1;
+    width: 110%;
+    right: -5%;
+    top: -5%;
+    position: absolute;
+    background-color: white;
+    height: 110%;
+    transition: 1.5s;
+  }
+  #fmq {
+    width: calc(100% - 16dvh);
+    height: 15dvh;
+    top: 22.5dvh;
+    background-color: #efefef;
+    position: absolute;
+    right: 3dvh;
+    border-radius: 3dvh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+  }
+  .fmq2 {
+    width: calc(100% - 16dvh);
+    height: 15dvh;
+    top: 22.5dvh;
+    background-color: #efefef;
+    position: absolute;
+    right: 3dvh;
+    border-radius: 3dvh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+  }
+  #textim {
+    color: white;
+    transition: 2s;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    text-align: center;
+    font-size: 10dvh;
+  }
+  #middlecircle {
+    width: 67.5%;
+    height: 67.5%;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border-radius: 50%;
+    z-index: 1; 
+  }
+  #percentage {
+    z-index: 2;
+    width: 45dvh;
+    height: 45dvh;
+    border-radius: 22.5dvh;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    transition: 2s;
+  }
+  #frontcircle {
+    width: 110%;
+    height: 110%;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    position: absolute;
+    background-color: white;
+  }
+  #secondpart {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  #firstpart {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    overflow-y: hidden;
+    top: 0;
+    left: 0;
+  }
+  .hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+  #gatb {
+    width: 100%;
+    height: 10dvh;
+    top: 20dvh;
+    position: fixed;
+    background-image: linear-gradient(rgba(0, 0, 0, 0), #efefef);
+    z-index: 1;
+    pointer-events: none;
+  }
+  #showanswer {
+    overflow-y: scroll;
+    width: 100%;
+    height: 20dvh;
+    left: 0;
+    top: 10dvh;
+    position: absolute;
+  }
+  #torahead {
+    z-index: 2;
+    transform: translate(-50%, -50%);
+    width: 18.41dvh;
+    height: 12.90dvh;
+    position: absolute;
+    top: -8.31dvh;
+    right: -5.2dvh;
+    background-position: 50% 50%;
+    background-size: cover;
+    background-image: url("toraheadnormal.png");
+    transition: 0.8s transform;
+  }
+  #torabody {
+    top: -5.5dvh;
+    right: 6.03dvh;
+    position: absolute;
+    width: 17.56dvh;
+    height: 13.42dvh;
+    background-position: 50% 50%;
+    background-size: cover;
+    background-image: url("torabody.png");
+  }
+  #qtext {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 100%;
+    text-align: center;
+    font-size: 4.5dvh;
+    transform: translateY(-50%);
+  }
+  button {
+  font-family: fredokaone;
+  }
+  @font-face {
+  font-family: fredokaone;
+  src: url("FredokaOne-Regular.otf");
+  }
+  textarea {
+    font-family: fredokaone;
+  }
+  body {
+    font-family: fredokaone;
+    overflow: hidden;
+  }
+  #question {
+    width: calc(100% - 8dvh);
+    left: 4dvh;
+    top: 18dvh;
+    height: 20dvh;
+    position: absolute;
+    overflow-y: scroll;
+    color: #c12020;
+    border-radius: 3dvh;
+    word-wrap: break-word;
+    transition: 0.6s opacity;
+  }
+  #answer {
+    width: calc(100dvw - 8.4dvh);
+    left: 50%;
+    height: 20dvh;
+    position: absolute;
+    top: 40dvh;
+    border-radius: 3dvh;
+    border: none;
+    transform: translateX(-50%);
+    background-color: rgba(200, 200, 200, 0.3);
+    font-size: 2.5dvh;
+    padding: 2dvh 2dvh 4dvh 2dvh;
+    resize: none;
+    transition: 0.6s opacity;
+  }
+  #loadbar {
+    width: calc(100dvw - 20dvh);
+    position: fixed;
+    top: 3.5dvh;
+    left: 3.5dvh;
+    height: 7dvh;
+    border-radius: 5dvh;
+    outline: 2dvh solid rgba(200, 200, 200, 0.3);
+    overflow: hidden;
+  }
+  #x {
+    color: #c12020;
+    font-size: 10dvh;
+    text-align: center;
+    width: 14.5dvh;
+    height: 12.5dvh;
+    position: absolute;
+    right: 0;
+    top: 1dvh;
+  }
+  #insloadbar {
+    height: 100%;
+    transition: 0.6s;
+    left: 0;
+    top: 0;
+    border-radius: 5dvh;
+    position: absolute;
+    background-color: #c12020;
+    width: 0;
+  }
+  #popup {
+    z-index: 10;
+    width: calc(100% - 4.75dvh);
+    height: 100dvh;
+    background-color: #efefef;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0%);
+    top: 90dvh;
+    border-radius: 4.5dvh;
+    transition: 0.6s;
+  }
+  #title {
+    left: 2dvh;
+    top: 2dvh;
+    width: calc(100% - 4dvh);
+    position: absolute;
+    font-size: 6dvh;
+    transition: 0.6s color;
+    color: #efefef;
+  }
+  #desc {
+    left: 2dvh;
+    width: calc(100% - 4dvh);
+    position: absolute;
+    font-size: 6dvh;
+    transition: 2s color;
+    color: #000000;
+    font-size: 3dvh;
+    word-wrap: break-word;
+  }
+  #question::-webkit-scrollbar {
+  display: none;
+}
+#check {
+  width: 12dvh;
+  height: 6dvh;
+  border-radius: 2dvh;
+  border: none;
+  outline: 1.5dvh solid #efefef;
+  background-color: white;
+  color: #c12020;
+  left: 5dvh;
+  bottom: 14dvh;
+  position: absolute;
+  z-index: 2;
+  font-family: fredokaone;
+  font-size: 3.5dvh;
+  cursor: pointer;
+  transition: 0.6s opacity;
+}
+  body {
+    overflow-y: hidden;
+  }
+#next {
+  width: 12dvh;
+  height: 6dvh;
+  border-radius: 2dvh;
+  border: none;
+  outline: 1.5dvh solid #efefef;
+  background-color: white;
+  color: #c12020;
+  right: 2.625dvh;
+  top: 31.5dvh;
+  position: absolute;
+  z-index: 2;
+  font-family: fredokaone;
+  font-size: 3.5dvh;
+  cursor: pointer;
+}
+#check:hover {
+  outline: 1.5dvh solid #c12020;
+}
+#next:hover {
+  outline: 1.5dvh solid #c12020;
+}
+/* Hide scrollbar for IE, Edge and Firefox */
+#question {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+  .sqqdm {
+    width: calc(100% - 7dvh);
+    right: 1dvh;
+    top: 4.5dvh;
+    background-color: black;
+    border-radius: 0.5dvh;
+    position: absolute;
+    padding: 0.5dvh;
+    color: white;
+    word-wrap: break-word;
+  }
+</style>
+<script>
+if (localStorage.getItem("darkmode") == "1") {
+  document.getElementById("title").transition = "none";
+  window.innerHeight;
+  document.getElementById("title").style.color = "#3a3a3a";
+  window.innerHeight;
+  document.getElementById("title").style.transition = "0.3s color";
+  document.body.style.backgroundColor = "black";
+  document.getElementById("check").style.outline = "1.5dvh solid #3a3a3a";
+  document.getElementById("check").style.backgroundColor = "black";
+  document.getElementById("redo").style.outline = "1.5dvh solid #3a3a3a";
+  document.getElementById("redo").style.backgroundColor = "black";
+  document.getElementById("finish").style.outline = "1.5dvh solid #3a3a3a";
+  document.getElementById("finish").style.backgroundColor = "black";
+  document.getElementById("next").style.outline = "1.5dvh solid #3a3a3a";
+  document.getElementById("next").style.backgroundColor = "black";
+  document.getElementById("popup").style.backgroundColor = "#3a3a3a";
+  document.getElementById("question").style.color = "white";
+  document.getElementById("gatb").style.backgroundImage = "linear-gradient(rgba(0,0,0,0), #3a3a3a)";
+  document.getElementById("desc").style.color = "white";
+  document.getElementById("whitebit").style.backgroundColor = "black";
+  document.getElementById("fmq").style.backgroundColor = "#3a3a3a";
+  document.getElementById("lilgrayguy").style.backgroundImage = "linear-gradient(rgba(0,0,0,0), #3a3a3a)";
+  document.getElementById("middlecircle").style.backgroundColor = "black";
+  document.getElementById("frontcircle").style.backgroundColor = "black";
+  document.getElementById("sq").style.color = "white";
+  document.getElementById("textim").style.color = "black";
+  document.getElementById("degradient").style.backgroundImage = "linear-gradient(rgba(0,0,0,0), black)";
+  document.getElementsByClassName("ddpinnercircle")[0].style.backgroundColor = "black";
+  document.getElementById("timeline").style.backgroundColor = "white";
+  document.getElementsByClassName("dateselector")[0].style.border = "0.25dvh dashed #3a3a3a";
+  document.getElementsByClassName("dateselector")[0].style.color = "white";
+}
+if (sessionStorage.getItem("setToUse")) {
+current = sessionStorage.getItem("setToUse");
+sessionStorage.removeItem("setToUse");
+} else {
+window.location.href = "studyurlerror.html";
+}
+whichqstouse = [];
+for (i = 1; i <= parseInt(localStorage.getItem(current.concat("qat"))); i++) {
+  whichqstouse.push(1);
+  newDiv = document.createElement('div');
+  newDiv.classList.add("peanutbutter");
+  newDiv.style.outlineColor = "white";
+  newDiv.style.color = "white";
+  newDiv.setAttribute("onclick", "endis(".concat(i.toString(), ")"));
+  newDiv.innerHTML = "<b>Q: ".concat(localStorage.getItem(current.concat("q", i.toString())), "</b><br>A: ", localStorage.getItem(current.concat("a", i.toString())));
+  document.getElementById("allquestions").appendChild(newDiv);
+}
+currentq = 1;
+congratsmsg = ["Great Job!", "Perfect!", "Nice Work!", "Good Work!", "Good Job!"];
+nopemsg = ["Oops", "Not quite", ":(", "Not exactly", "Erm, actually..."];
+allnumbers = [];
+resettozero = false;
+{ //draggability
+    const box = document.getElementsByClassName("ddp")[0];
+    let isDragging = false;
+    let startX;
+    let offsetX = 0;
+
+    // Common function to start dragging
+    function startDrag(currentX) {
+      isDragging = true;
+      if (resettozero) {
+      startX = 0;
+      resettozero = false;
+      } else {
+      startX = currentX - offsetX;
+      }
+    }
+
+    // Common function to move box
+    function move(currentX) {
+      if (!isDragging) { return }
+      offsetX = currentX - startX;
+      // Keep it within the screen bounds
+      const maxRight = window.innerWidth - window.innerHeight * 0.09;
+      const minLeft = 0;
+      if (offsetX > maxRight) { offsetX = maxRight }
+      if (offsetX < minLeft) { offsetX = minLeft }
+      hoverspot = getpct(box);
+      lastanswergiven = hoverspot;
+      document.getElementsByClassName("dateselector")[0].value = changeinput(hoverspot);  
+      box.style.left = (offsetX / document.getElementById("timeline").offsetWidth) * 100 + "%";
+    }
+
+    // Stop dragging
+    function stopDrag() {
+      isDragging = false;
+    }
+
+    // Mouse events
+    box.addEventListener('mousedown', (e) => startDrag(e.clientX));
+    window.addEventListener('mousemove', (e) => move(e.clientX));
+    window.addEventListener('mouseup', stopDrag);
+
+    // Touch events
+    box.addEventListener('touchstart', (e) => startDrag(e.touches[0].clientX));
+    window.addEventListener('touchmove', (e) => {
+      move(e.touches[0].clientX);
+      e.preventDefault(); // prevent scrolling while dragging
+    }, { passive: false });
+    window.addEventListener('touchend', stopDrag);
+}
+for (i = 1; i <= parseInt(localStorage.getItem(current.concat("qat"))); i++) {
+  allnumbers.push(i.toString());
+}
+clbl = 0;
+booleanVals = [true, false];
+function finish() {
+  window.location.href = "study".concat(current, ".html");
+}
+monthsfullnames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+box = document.getElementsByClassName('ddp')[0];
+function changeinput(arrforinput) {
+  switch (spec[allnumbers[currentdq - 1] - 1]) {
+    case 1:
+    if (arrforinput[4] > 0) {
+    return arrforinput[4].toString();
+    } else {
+    return Math.abs(arrforinput[4] - 1).toString().concat(" BC");
+    }
+    break;
+  case 2:
+    if (arrforinput[4] > 0) {
+      ytuif = arrforinput[4].toString();
+    } else {
+      ytuif = Math.abs(arrforinput[4] - 1).toString() + " BC";
+    }
+    return monthsfullnames[arrforinput[3] - 1] + " " + ytuif;
+    break;
+  case 3:
+    if (arrforinput[4] > 0) {
+      ytuif = arrforinput[4].toString();
+    } else {
+      ytuif = Math.abs(arrforinput[4] - 1).toString() + " BC";
+    }
+    return monthsfullnames[arrforinput[3] - 1] + " " + arrforinput[2].toString() + ", " + ytuif;
+    break;
+  default:
+    if (arrforinput[4] > 0) {
+      ytuif = arrforinput[4].toString();
+    } else {
+      ytuif = Math.abs(arrforinput[4] - 1).toString() + " BC";
+    }
+    minutetouse = arrforinput[0];
+    hourtouse = arrforinput[1];
+    timetouse = "";
+    if (hourtouse == 0) {
+      hourtouse = "12";
+      amorpm = "am";
+    } else if (hourtouse > 0 && hourtouse < 12) {
+      hourtouse = hourtouse.toString();
+      amorpm = "am";
+    } else if (hourtouse == 12) {
+      hourtouse = "12";
+      amorpm = "pm";
+    } else {
+      hourtouse = (hourtouse - 12).toString();
+      amorpm = "pm";
+    }
+    if (minutetouse < 10) {
+      minutetouse = "0" + minutetouse.toString();
+    } else {
+      minutetouse = minutetouse.toString();
+    }
+    timetouse = hourtouse + ":" + minutetouse + amorpm;
+    return timetouse + " " + monthsfullnames[arrforinput[3] - 1] + " " + arrforinput[2].toString() + ", " + ytuif;
+    break;
+  }
+}
+function redo() {
+  sessionStorage.setItem("stu", current);
+  sessionStorage.setItem("wpr", "readandanswer");
+  window.location.href = "justamoment.html";
+}
+function endis(whichoneami) {
+  if (whichqstouse[whichoneami - 1] == 1) {
+  if (localStorage.getItem("darkmode") != "1") {
+  document.getElementsByClassName("peanutbutter")[whichoneami - 1].style.outline = "0.5dvh solid #efefef";
+  document.getElementsByClassName("peanutbutter")[whichoneami - 1].style.color = "#efefef";
+  } else {
+  document.getElementsByClassName("peanutbutter")[whichoneami - 1].style.outline = "0.5dvh solid #3a3a3a";
+  document.getElementsByClassName("peanutbutter")[whichoneami - 1].style.color = "#3a3a3a";
+  }
+  whichqstouse[whichoneami - 1] = 0;
+  } else {
+  if (localStorage.getItem("darkmode") != "1") {
+  document.getElementsByClassName("peanutbutter")[whichoneami - 1].style.outline = "0.5dvh solid #c12020";
+  document.getElementsByClassName("peanutbutter")[whichoneami - 1].style.color = "#c12020";
+  } else {
+  document.getElementsByClassName("peanutbutter")[whichoneami - 1].style.outline = "0.5dvh solid white";
+  document.getElementsByClassName("peanutbutter")[whichoneami - 1].style.color = "white";
+  }
+  whichqstouse[whichoneami - 1] = 1;
+  }
+}
+function setupforediting() {
+  for (i = 0; i < whichqstouse.length; i++) {
+    if (whichqstouse[i] == 1) {
+      newDiv = document.createElement('div');
+      newDiv.classList.add("pb2");
+      newDiv.style.color = "white";
+      newDiv.style.outlineColor = "white";
+      if (localStorage.getItem("darkmode") != "1") {
+      newDiv.innerHTML = "<b>Q: ".concat(localStorage.getItem(current.concat("q", (i + 1).toString())), "</b><br>A: <span class='pb2ins' contenteditable='true'>", localStorage.getItem(current.concat("a", (i + 1).toString())), "</span>");
+      } else {
+      newDiv.innerHTML = "<b>Q: ".concat(localStorage.getItem(current.concat("q", (i + 1).toString())), "</b><br>A: <span class='pb2ins' style='border: 0.25dvh dashed #3a3a3a' contenteditable='true'>", localStorage.getItem(current.concat("a", (i + 1).toString())), "</span>");
+      }
+      document.getElementById("allquestions2").appendChild(newDiv);
+    }
+  }
+}
+// ===== Cubic Bezier Implementation =====
+function cubicBezier(x1, y1, x2, y2) {
+  function A(a1, a2) { return 1 - 3*a2 + 3*a1 }
+  function B(a1, a2) { return 3*a2 - 6*a1 }
+  function C(a1)     { return 3*a1 }
+
+  function bezier(t, a1, a2) {
+    return ((A(a1,a2)*t + B(a1,a2))*t + C(a1))*t
+  }
+  function slope(t, a1, a2) {
+    return 3*A(a1,a2)*t*t + 2*B(a1,a2)*t + C(a1)
+  }
+
+  function getT(x) {
+    let t = x
+    for (let i=0; i<5; i++) {
+      let s = slope(t, x1, x2)
+      if (s === 0) return t
+      let xCalc = bezier(t, x1, x2) - x
+      t -= xCalc / s
+    }
+    return t
+  }
+
+  return function(x) {
+    return bezier(getT(x), y1, y2)
+  }
+}
+
+// ===== Animation Loop =====
+function animate(target, duration, easing, callback) {
+  const start = performance.now()
+
+  function step(now) {
+    let progress = Math.min((now - start) / duration, 1)
+    let eased = easing(progress)
+    let val = eased * target
+    callback(val)
+    if (progress < 1) requestAnimationFrame(step)
+  }
+  requestAnimationFrame(step)
+}
+
+// ===== Example easing: CSS "ease-in-out" =====
+const easeInOut = cubicBezier(0.42, 0, 0.58, 1)
+const frontcircle = document.getElementById("frontcircle")
+
+
+// ===== Your Results Function =====
+function showresults() {
+  howdidido = Math.floor(360 * (allcorrect / allnumbers.length)).toString();
+  ofo = allcorrect / allnumbers.length;
+  if (ofo < 0.4) {
+    cfc = "#ff8500";
+    posescore("sad");
+  } else if (ofo < 0.7) {
+    cfc = "#ffe017";
+    posescore("confused");
+  } else if (ofo < 0.9) {
+    cfc = "#a8c96e";
+    posescore("happy");
+  } else {
+    cfc = "#2dcc70";
+    posescore("amazed");
+  } 
+  if (ofo == 1) {
+    createsq("e");
+  } else {
+    whichqs = [];
+    prevnumfound = 0;
+    for (a = 0; a < parseInt(localStorage.getItem(current.concat("qat"))); a++) {
+      numfound = 0;
+      for (b = 0; b < allnumbers.length; b++) {
+        if (allnumbers[b] == (a + 1).toString()) {
+          numfound++;
+        }
+      }
+      if (numfound > prevnumfound) {
+        whichqs = [];
+        whichqs.push((a + 1).toString());
+        prevnumfound = numfound;
+      } else if (numfound == prevnumfound) {
+        whichqs.push((a + 1).toString());
+      } else {}
+    }
+    for (z = 0; z < whichqs.length; z++) {
+      createsq(whichqs[z]);
+    }
+  }
+  if (howdidido == 360) {
+  document.getElementById("percentage").style.backgroundColor = "#2dcc70";
+  } else if (localStorage.getItem("darkmode") != "1") {
+  document.getElementById("percentage").style.backgroundImage = "conic-gradient(".concat(cfc, " 0deg, ", cfc, " ", howdidido, "deg, #efefef ", howdidido, "deg, #efefef 360deg)");
+  } else {
+  document.getElementById("percentage").style.backgroundImage = "conic-gradient(".concat(cfc, " 0deg, ", cfc, " ", howdidido, "deg, #3a3a3a ", howdidido, "deg, #3a3a3a 360deg)");
+  }
+  document.getElementById("textim").innerHTML = Math.floor(ofo * 100) + "%";
+  document.getElementById("firstpart").classList.add("hidden")
+  document.getElementById("secondpart").classList.remove("hidden")
+  
+  setTimeout(function() {
+    frontcircle.classList.add("hidden");
+  }, 3000);
+  setTimeout(function() {
+      document.getElementById("textim").style.color = cfc;
+  animate(360, 2000, easeInOut, (val) => {
+    // Build a valid conic-gradient
+    frontcircle.style.backgroundColor = "rgba(0,0,0,0)";
+    if (localStorage.getItem("darkmode") == "1") {
+    frontcircle.style.backgroundImage = 
+      `conic-gradient(from 0deg, rgba(0,0,0,0) 0deg ${val}deg, black ${val}deg 360deg)`
+    } else {
+    frontcircle.style.backgroundImage = 
+      `conic-gradient(from 0deg, rgba(0,0,0,0) 0deg ${val}deg, white ${val}deg 360deg)`
+    }
+  })}, 1000);
+  setTimeout(function() {
+    document.getElementById("percentage").style.top = "30dvh";
+    document.getElementById("percentage").style.left = "10.5dvh";
+    document.getElementById("percentage").style.width = "15dvh";
+    document.getElementById("percentage").style.height = "15dvh";
+    document.getElementById("textim").style.fontSize = "3.33dvh";
+  }, 4000)
+  setTimeout(function() {
+    document.getElementById("whitebit").style.width = 0;
+    document.getElementById("finish").classList.remove("hidden");
+    document.getElementById("redo").classList.remove("hidden");
+  }, 6000)
+}
+
+allcorrect = 0;
+function createsq(type) {
+  if (type == "e") {
+    newSQ = document.createElement("div");
+    newSQ.innerHTML = "Nice Work! No struggle questions to show.";
+    if (localStorage.getItem("darkmode") == "1") {
+    newSQ.classList.add("sqqdm");
+    } else {
+    newSQ.classList.add("sqq");
+    }
+    document.getElementById("fmq").appendChild(newSQ);
+  } else {
+    newSQ = document.createElement("div");
+    newSQ.innerHTML = "Q: " + localStorage.getItem(current.concat("q", type)) + "<br><span style='font-weight: bold'>A: " + localStorage.getItem(current.concat("a", type)) + "</span>";
+    if (localStorage.getItem("darkmode") == "1") {
+    newSQ.classList.add("sqqdm");
+    } else {
+    newSQ.classList.add("sqq");
+    }
+    document.getElementById("fmq").appendChild(newSQ);
+    resizeSQs();
+  }
+}
+
+window.addEventListener("resize", resizeSQs);
+function resizeSQs() {
+  totaltop = 0.045 * window.innerHeight;
+  for (i = 0; i < document.getElementsByClassName("sqq").length; i++) {
+    document.getElementsByClassName("sqq")[i].style.top = totaltop + "px";
+    totaltop += document.getElementsByClassName("sqq")[i].offsetHeight + 0.01 * window.innerHeight;
+  }
+}
+function getpct(obj) {
+  eventLeft = (obj.offsetLeft / document.getElementById("timeline").offsetWidth) * 100;
+  for (x = 0; x < allLeftVals.length; x++) {
+    if (allLeftVals[x] > eventLeft) {
+      secondone = pointsinallvals[x];
+      firstone = pointsinallvals[x-1];
+      secondLeft = allLeftVals[x];
+      firstLeft = allLeftVals[x-1];
+      
+      currentPos = [-1,-1,-1,-1,-1];
+      specificityOfTsOne = spec[parseInt(obj.id.substring(6)) - 1] - 1;
+      pctToUse = (eventLeft-firstLeft) / (secondLeft-firstLeft);
+      startingpt = 4;
+      for (i = 4; i > -1; i--) {
+        if (firstone[i] == secondone[i]) {
+          currentPos[i] = firstone[i];
+          startingpt = i - 1;
+        } else {
+          break;
+        }
+      }
+      difference = (secondone[startingpt] - firstone[startingpt]);
+      difLevel = startingpt;
+      mnl = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+      switch (finalA) {
+        case 4:
+          if (modifier >= 1000) {
+            for (i = 0; i < modifier; i++) {
+              if (i / modifier <= pctToUse && (i+1) / modifier > pctToUse) {
+                return [0,0,1,1,firstone[4] + i];
+                break;
+              }
+            }
+          } else if (modifier != 1) {
+            nmYear = [0, 0.08493, 0.16164, 0.24657, 0.32876, 0.41369, 0.49589, 0.58082, 0.66575, 0.74794, 0.83287, 0.91506, 1];
+            lpYear = [0, 0.08469, 0.16392, 0.24861, 0.33058, 0.41527, 0.49724, 0.58193, 0.66662, 0.74859, 0.83328, 0.91525, 1];
+            wyb = 0;
+            wye = 1;
+            for (i = 0; i < modifier; i++) {
+              if ((i / modifier) <= pctToUse && ((i+1) / modifier) > pctToUse) {
+                isl = (i + firstone[4]) % 4 == 0;
+                wyb = i / modifier;
+                wye = (i+1)/modifier;
+                onestpedat = i;
+                break;
+              }
+            }
+            if (isl) {
+              atu = lpYear;
+            } else {
+              atu = nmYear;
+            }
+            stpt = (pctToUse - wyb) / (wye - wyb);
+            for (i = 0; i < atu.length - 1; i++) {
+              if (stpt >= atu[i] && stpt < atu[i+1]) {
+                return [0,0,1,i + 1,firstone[4]+onestpedat];
+                break;
+              }
+            }
+          } else {
+            ytu = firstone[4];
+            if (ytu % 4 == 0) {
+              mnl[1] = 29;
+              nmdays = 366;
+            } else {
+              mnl[1] = 28;
+              nmdays = 365;
+            }
+            for (i = 0; i < nmdays; i++) {
+              if ((i / nmdays) <= pctToUse && ((i+1) / nmdays) > pctToUse) {
+                daytr = i + 1;
+                break;
+              }
+            }
+            cm = 0;
+            while (daytr > mnl[cm]) {
+              daytr-=mnl[cm];
+              cm++;
+            }
+            return [0, 0, daytr, cm + 1, ytu];
+          }
+          break;
+        case 3:
+          if (modifier == 10) {
+            apmlength = [];
+            whichmonths = [];
+            totaldayslength = 0;
+            whichmonthssameyearasfirstone = [0,0,0,0,0,0,0,0,0,0];
+            for (i = 0; i < modifier; i++) {
+              if (firstone[3] + i > 12) {
+                if (firstone[4] + 1 % 4 == 0) {
+                  mnl[1] = 29;
+                } else {
+                  mnl[1] = 28;
+                }
+                totaldayslength += mnl[firstone[3] - 13];
+                apmlength.push(mnl[firstone[3]+i-13]);
+                whichmonthssameyearasfirstone[i] = 1;
+                whichmonths.push(firstone[3]+i-13);
+              } else {
+                if (firstone[4] % 4 == 0) {
+                  mnl[1] = 29;
+                } else {
+                  mnl[1] = 28;
+                }
+                totaldayslength += mnl[firstone[3] - 1];
+                apmlength.push(mnl[firstone[3]+i - 1]);
+                whichmonths.push(firstone[3]+i);
+              }
+            }
+            for (i = 0; i < totaldayslength; i++) {
+              if ((i / totaldayslength) <= pctToUse && ((i+1) / totaldayslength) > pctToUse) {
+                cday = i + 1;
+                break;
+              }
+            }
+            for (a = 0; a < apmlength.length; a++) {
+              if (cday <= apmlength[a]) {
+                mtu = whichmonths[a];
+                if (whichmonthssameyearasfirstone[a] == 1) {
+                return [0,0,cday,mtu,firstone[4]+1];
+                } else {
+                return [0,0,cday,mtu,firstone[4]];
+                }
+                break;
+              } else {
+                cday-=apmlength[a];
+              }
+            }
+          } else {
+            ytu = firstone[4];
+            mtu = firstone[3];
+            if (ytu % 4 == 0) {
+              mnl[1] = 29;
+            } else {
+              mnl[1] = 28;
+            }
+            nmdays = mnl[mtu - 1];
+            for (i = 0; i < nmdays; i++) {
+              if ((i / nmdays) <= pctToUse && ((i+1) / nmdays) > pctToUse) {
+                daytr = i + 1;
+                wyb = i / nmdays;
+                wye = (i+1)/nmdays;
+                break;
+              }
+            }
+            stpt = (pctToUse - wyb) / (wye - wyb);
+            for (i = 0; i < 24; i++) {
+              if (stpt >= i/24 && stpt < (i+1)/24) {
+                return [0,i,daytr,mtu,ytu];
+                break;
+              }
+            }
+          }
+          break;
+        case 2:
+          if (modifier == 10) {
+            dtu = firstone[2];
+            mtu = firstone[3];
+            ytu = firstone[4];
+            for (i = 0; i < 10; i++) {
+              if ((i / 10) <= pctToUse && ((i+1) / 10) > pctToUse) {
+                dtu = firstone[2] + i;
+                if (ytu % 4 == 0) {
+                  mnl[1] = 29;
+                } else {
+                  mnl[1] = 28;
+                }
+                if (dtu > mnl[mtu - 1]) {
+                  dtu -= mnl[mtu - 1];
+                  mtu++;
+                  if (mtu > 12) {
+                    mtu = 1;
+                    ytu++;
+                  }
+                }
+                wyb = i / 10;
+                wye = (i+1)/10;
+              }
+            }
+            stpt = (pctToUse - wyb) / (wye - wyb);
+            for (i = 0; i < 24; i++) {
+              if (stpt >= i/24 && stpt < (i+1)/24) {
+                return [0,i,dtu,mtu,ytu];
+                break;
+              }
+            }
+          } else {
+            dtu = firstone[2];
+            mtu = firstone[3];
+            ytu = firstone[4];
+            for (i = 0; i < 24; i++) {
+              if ((i / 24) <= pctToUse && ((i+1) / 24) > pctToUse) {
+                htu = i;
+                wyb = i / 24;
+                wye = (i+1)/24;
+                break;
+              }
+            }
+            stpt = (pctToUse - wyb) / (wye - wyb);
+            for (i = 0; i < 60; i++) {
+              if (stpt >= i/60 && stpt < (i+1)/60) {
+                return [i,htu,dtu,mtu,ytu];
+                break;
+              }
+            }
+          }
+          break;
+        case 1:
+          if (modifier == 10) {
+            htu = firstone[1];
+            dtu = firstone[2];
+            mtu = firstone[3];
+            ytu = firstone[4];
+            for (i = 0; i < 600; i++) {
+              if ((i / 600) <= pctToUse && ((i+1) / 600) > pctToUse) {
+                mntu = i;
+                if (ytu % 4 == 0) {
+                  mnl[1] = 29;
+                } else {
+                  mnl[1] = 28;
+                }
+                while (mntu>=60) {
+                  mntu-=60;
+                  htu++;
+                  if (htu == 24) {
+                  htu = 0;
+                  dtu++;
+                  if (dtu > mnl[mtu - 1]) {
+                  dtu = 1;
+                  mtu++;
+                  if (mtu==13) {
+                  mtu = 1;
+                  ytu++;
+                  }
+                  }
+                  }
+                }
+                return [mntu, htu, dtu, mtu, ytu];
+              }
+            }
+          } else {
+            htu = firstone[1];
+            dtu = firstone[2];
+            mtu = firstone[3];
+            ytu = firstone[4];
+            for (i = 0; i < 60; i++) {
+              if ((i / 60) <= pctToUse && ((i+1) / 60) > pctToUse) {
+                return [i,htu,dtu,mtu,ytu];
+                break;
+              }
+            }
+          }
+          break;
+        case 0:
+          if (modifier == 10) {
+            mntu = firstone[0];
+            htu = firstone[1];
+            dtu = firstone[2];
+            mtu = firstone[3];
+            ytu = firstone[4];
+            for (i = 0; i < 10; i++) {
+              if ((i / 10) <= pctToUse && ((i+1) / 10) > pctToUse) {
+                mntu = mntu + i;
+                if (ytu % 4 == 0) {
+                  mnl[1] = 29;
+                } else {
+                  mnl[1] = 28;
+                }
+                while (mntu>=60) {
+                  mntu-=60;
+                  htu++;
+                  if (htu == 24) {
+                  htu = 0;
+                  dtu++;
+                  if (dtu > mnl[mtu - 1]) {
+                  dtu = 1;
+                  mtu++;
+                  if (mtu==13) {
+                  mtu = 1;
+                  ytu++;
+                  }
+                  }
+                  }
+                }
+                return [mntu, htu, dtu, mtu, ytu];
+              }
+            }
+          } else {
+            htu = firstone[1];
+            dtu = firstone[2];
+            mtu = firstone[3];
+            ytu = firstone[4];
+            return [firstone[0], htu, dtu, mtu, ytu];
+          }
+          break;
+        default:
+          break;
+      }
+      
+      break;
+    } else if (allLeftVals[x] == eventLeft) {
+      return pointsinallvals[x];
+      break;
+    } else {}
+  }
+}
+function getpercentfromarray() {
+  mnl = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334];
+  arr = wordstoarray(document.getElementsByClassName("dateselector")[0].value.toLowerCase());
+  if (arr[0] % 4 == 0) { mnl = [0, 31, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335]; } else { mnl = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334]; }
+  arrtotal = 24 * 60 * ((Math.abs(Math.floor(arr[4]/4)) * 366) + Math.abs((arr[4] - Math.floor(arr[4]/4))) * 365) + mnl[arr[3] - 1] * 60 * 24 + arr[2] * 60 * 24 + arr[1] * 60 + arr[0];
+  for (x = 0; x < allLeftVals.length; x++) {
+    thisarr = pointsinallvals[x];
+    if (arr[0] % 4 == 0) { mnl = [0, 31, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335]; } else { mnl = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334]; }
+    thisarrtotal = 24 * 60 * ((Math.abs(Math.floor(thisarr[4]/4)) * 366) + Math.abs((thisarr[4] - Math.floor(thisarr[4]/4))) * 365) + mnl[thisarr[3] - 1] * 60 * 24 + thisarr[2] * 60 * 24 + thisarr[1] * 60 + thisarr[0];
+    if (thisarrtotal > arrtotal) {
+      thisarr = pointsinallvals[x];
+      if (arr[0] % 4 == 0) { mnl = [0, 31, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335]; } else { mnl = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334]; }
+      secondarrtotal = 24 * 60 * ((Math.abs(Math.floor(thisarr[4]/4)) * 366) + Math.abs((thisarr[4] - Math.floor(thisarr[4]/4))) * 365) + mnl[thisarr[3] - 1] * 60 * 24 + thisarr[2] * 60 * 24 + thisarr[1] * 60 + thisarr[0];
+      thisarr = pointsinallvals[x - 1];
+      if (arr[0] % 4 == 0) { mnl = [0, 31, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335]; } else { mnl = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334]; }
+      firstarrtotal = 24 * 60 * ((Math.abs(Math.floor(thisarr[4]/4)) * 366) + Math.abs((thisarr[4] - Math.floor(thisarr[4]/4))) * 365) + mnl[thisarr[3] - 1] * 60 * 24 + thisarr[2] * 60 * 24 + thisarr[1] * 60 + thisarr[0];
+      secondLeft = allLeftVals[x];
+      firstLeft = allLeftVals[x - 1];
+      mnl = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+      lastanswergiven = arr;
+      return (((arrtotal - firstarrtotal) / (secondarrtotal - firstarrtotal)) * (secondLeft - firstLeft) + firstLeft).toString();
+      break;
+    } else if (arrtotal == thisarrtotal) {
+      mnl = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+      lastanswergiven = arr;
+      return allLeftVals[x].toString();
+      break;
+    } else {}
+  }
+}
+
+//hi anyone who's using devTools to look at the code! 
+function check() {
+  howmanyareones = 0;
+  for (i = 0; i < whichqstouse.length; i++) {
+    if (whichqstouse[i] == 1) {
+    howmanyareones++;
+    }
+  }
+  if (howmanyareones >= 3) {
+  document.getElementById("check").setAttribute("onclick", "");
+  document.getElementById("allquestions").style.pointerEvents = "none";
+  if (localStorage.getItem("darkmode") == "1") {
+      document.getElementById("title").style.color = "white";
+      document.getElementById("popup").style.boxShadow = "0 0 10dvh black";
+    } else {
+      document.getElementById("title").style.color = "#c12020";
+      document.getElementById("popup").style.boxShadow = "0 0 10dvh rgb(173, 173, 173)";
+    }
+    pose("happy");
+    document.getElementById("insloadbar").style.backgroundColor = "#2dcc70";
+    document.getElementById("popup").style.top = "60dvh";
+    random = Math.floor(Math.random() * congratsmsg.length);
+    document.getElementById("title").innerHTML = "Perfect!"
+    document.getElementById("desc").innerHTML = "You'll plot these dates on a timeline in just a moment.";
+    document.getElementById("insloadbar").style.width = 15 + "%";
+} else {
+  alert("You need to select at least three questions to begin.");
+}
+}
+function pose(exp) {
+  if (exp == "confused") {
+    document.getElementById("torahead").style.backgroundImage = "url('toraheadconfused.png')";
+    document.getElementById("torahead").style.transform = "translate(-50%, -50%) rotate(30deg)";
+  } else if (exp == "happy") {
+    document.getElementById("torahead").style.backgroundImage = "url('toraheadhappy.png')";
+    document.getElementById("torahead").style.transform = "translate(-50%, -50%) rotate(30deg)";
+  } else {
+    document.getElementById("torahead").style.backgroundImage = "url('toraheadnormal.png')";
+    document.getElementById("torahead").style.transform = "translate(-50%, -50%) rotate(0deg)";
+  }
+}
+function posescore(exp) {
+  setTimeout(function() {
+  if (exp == "confused") {
+    document.getElementById("torahead2").style.backgroundImage = "url('toraheadconfused.png')";
+    document.getElementById("torahead2").style.transform = "translate(-50%, -50%) rotate(30deg)";
+  } else if (exp == "happy") {
+    document.getElementById("torahead2").style.backgroundImage = "url('toraheadhappy.png')";
+    document.getElementById("torahead2").style.transform = "translate(-50%, -50%) rotate(30deg)";
+  } else if (exp == "amazed") {
+    document.getElementById("torahead2").style.backgroundImage = "url('toraheadamazed.png')";
+    document.getElementById("torahead2").style.transform = "translate(-50%, -50%) rotate(30deg)";
+  } else {
+    document.getElementById("torahead2").style.backgroundImage = "url('toraheadsad.png')";
+    document.getElementById("torahead2").style.transform = "translate(-50%, -50%) rotate(30deg)";
+    setTimeout(function() {
+      document.getElementById("torahead2").style.transition = "1.2s transform";
+      window.innerHeight;
+      document.getElementById("torahead2").style.transform = "translate(-50%, -50%) rotate(-30deg)";
+    }, 800);
+    setTimeout(function() {
+      document.getElementById("torahead2").style.transition = "0.8s transform";
+      window.innerHeight;
+      document.getElementById("torahead2").style.transform = "translate(-50%, -50%) rotate(0deg)";
+    }, 2200)
+  }
+  }, 1500);
+}
+allLeftVals = [];
+pointsinallvals = [];
+currentdq = 1;
+function next1() {
+  if (currentq != allnumbers.length) {
+  document.getElementById("insloadbar").style.backgroundColor = "#c12020";
+  pose("normal");
+  
+  document.getElementById("popup").style.top = "90dvh";
+    document.getElementById("popup").style.boxShadow = "none";
+    if (localStorage.getItem("darkmode") == "1") {
+    document.getElementById("title").style.color = "#3a3a3a";
+    } else {
+    document.getElementById("title").style.color = "#efefef";
+    }
+    document.getElementById("desc").innerHTML = "";
+    document.getElementById("question").style.opacity = 0;
+    document.getElementById("question").style.pointerEvents = "none";
+    document.getElementById("check").style.opacity = 0;
+    document.getElementById("allquestions2").style.opacity = 0;
+    setTimeout(function() {
+    makeTimeline();
+    document.getElementsByClassName("dateselector")[0].value = changeinput(pointsinallvals[0]);
+    lastanswergiven = pointsinallvals[0];
+    box.style.left = "0%";
+    document.getElementById("check").innerHTML = "Check";
+    document.getElementById("check").style.opacity = 1;
+    document.getElementById("timeline").style.opacity = 1;
+    document.getElementById("question").style.opacity = 1;
+    document.getElementById("alldateselectors").classList.remove("hidden");
+    document.getElementById("degradient").classList.add("hidden");
+    document.getElementById("question").style.pointerEvents = "all";
+    document.getElementById("qtext").innerHTML = "Plot the answer to this question on the timeline: ".concat(localStorage.getItem(current.concat("q", currentdq.toString())));
+    }, 700)
+    setTimeout(function() {
+    document.getElementById("check").setAttribute("onclick", "check2()");
+    document.getElementById("next").setAttribute("onclick", "next2()");
+    }, 1300);
+  } else { showresults(); }
+}
+function passedc1() {
+  document.getElementById("check").setAttribute("onclick", "");
+  document.getElementById("allquestions2").style.pointerEvents = "none";
+  for (i = 0; i < whichqstouse.length; i++) {
+    if (whichqstouse[i] == 2) {
+      localStorage.setItem(current.concat("a", (i + 1).toString()), document.getElementsByClassName("pb2ins")[i].textContent);
+    }
+  }
+  document.getElementById("check").setAttribute("onclick", "");
+  document.getElementById("allquestions").style.pointerEvents = "none";
+  if (localStorage.getItem("darkmode") == "1") {
+      document.getElementById("title").style.color = "white";
+      document.getElementById("popup").style.boxShadow = "0 0 10dvh black";
+    } else {
+      document.getElementById("title").style.color = "#c12020";
+      document.getElementById("popup").style.boxShadow = "0 0 10dvh rgb(173, 173, 173)";
+    }
+    pose("happy");
+    document.getElementById("insloadbar").style.backgroundColor = "#2dcc70";
+    document.getElementById("popup").style.top = "60dvh";
+    random = Math.floor(Math.random() * congratsmsg.length);
+    document.getElementById("title").innerHTML = "Great!"
+    document.getElementById("desc").innerHTML = "It looks like all your questions are formatted correctly!";
+    document.getElementById("insloadbar").style.width = 30 + "%";
+}
+function wordstoarray(texttouse) {
+    
+    toUse = texttouse;
+    alphabet3 = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+    words = [];
+    newword = "";
+    for (a = 0; a < toUse.length; a++) {
+      if (a + 1 == toUse.length) {
+        if (-1 != alphabet3.indexOf(toUse[a])) {
+          newword = newword.concat(toUse[a]);
+          
+          words.push(newword);
+          newword = "";
+        }
+        if (newword != "") {
+          words.push(newword);
+          newword = "";
+        }
+      } else if ((toUse.substring(a, a+2)) == "am") { a++; if (words[0] == "12") { words[0] = (parseInt(words[0]) + 12).toString() }
+      } else if ((toUse.substring(a, a+2)) == "pm") { a++; if (words.length > 0 && words[0] != "12") { words[0] = (parseInt(words[0]) + 12).toString() }
+      } else if (-1 != alphabet3.indexOf(toUse[a])) {
+        newword = newword.concat(toUse[a]);
+      } else if (toUse[a] == ".") {} else {
+        if (newword != "") {
+          words.push(newword);
+          newword = "";
+        } 
+      }
+    }
+    if (words.indexOf("bc") != -1 ) {
+      words.splice(words.indexOf("bc"), 1);
+      words[words.length - 1] = (1 + (parseInt(words[words.length - 1]) * -1)).toString();
+    }
+    if (words.indexOf("ad") != -1 ) {
+      words.splice(words.indexOf("ad"), 1);
+    }
+    if (words.length == 5) {
+      //specificity: time
+      tests = [false, false, false, false, false];
+      if (parseFloat(words[4]).toString() != "NaN") {
+        tests[4] = true;
+      }
+      months = ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"];
+      mnl = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+      shmon = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"];
+      if (months.indexOf(words[2]) != -1) {
+        tests[2] = true;
+        words[2] = (1 + months.indexOf(words[2])).toString();
+        if (words[2] == "2" && parseInt(words[4]) % 4 == 0) {
+          mnl[1] = 29;
+        }
+      }
+      if (shmon.indexOf(words[2]) != -1) {
+        tests[2] = true;
+        words[2] = (1 + shmon.indexOf(words[2])).toString();
+        if (words[2] == "2" && parseInt(words[4]) % 4 == 0) {
+          mnl[1] = 29;
+        }
+      } 
+            window.innerHeight;
+
+      if (parseFloat(words[3]) > 0 && parseFloat(words[3]) <= mnl[parseInt(words[2]) - 1]) {
+        tests[3] = true;
+      }
+      
+      if (parseFloat(words[1]) > -1 && parseFloat(words[1]) < 60) {
+        tests[1] = true;
+      }
+      
+      if (parseFloat(words[0]) > 0 && parseFloat(words[0]) < 25) {
+        tests[0] = true;
+      }
+      
+      if (tests.indexOf(false) == -1) {
+        whichqstouse[i] = 2;
+        if (words[0] == "24") { words[0] = "0" }
+        return [parseInt(words[1]), parseInt(words[0]), parseInt(words[3]), parseInt(words[2]), parseInt(words[4])];
+      } else {
+        whichqstouse[i] = 1;
+      }
+    } else if (words.length == 3) {
+      //specificity: day
+      tests = [false, false, false];
+      if (parseFloat(words[2]).toString() != "NaN") {
+        tests[2] = true;
+      }
+      months = ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"];
+      mnl = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+      shmon = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"];
+      if (months.indexOf(words[0]) != -1) {
+        tests[0] = true;
+        words[0] = (1 + months.indexOf(words[0])).toString();
+        if (words[0] == "2" && parseInt(words[2]) % 4 == 0) {
+          mnl[1] = 29;
+        }
+      }
+      if (shmon.indexOf(words[0]) != -1) {
+        tests[0] = true;
+        words[0] = (1 + shmon.indexOf(words[0])).toString();
+        if (words[0] == "2" && parseInt(words[2]) % 4 == 0) {
+          mnl[1] = 29;
+        }
+      }
+            window.innerHeight;
+
+      if (parseFloat(words[1]) > 0 && parseFloat(words[1]) <= mnl[parseInt(words[0]) - 1]) {
+        tests[1] = true;
+      }
+      if (tests.indexOf(false) == -1) {
+        whichqstouse[i] = 2;
+        return [0,0, parseInt(words[1]), parseInt(words[0]), parseInt(words[2])];
+      } else {
+        whichqstouse[i] = 1;
+      }
+    } else if (words.length == 2) {
+      //specificity: month
+      tests = [false, false];
+      if (parseFloat(words[1]).toString() != "NaN") {
+        tests[1] = true;
+      }
+      months = ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"];
+      shmon = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"];
+      if (months.indexOf(words[0]) != -1) {
+        tests[0] = true;
+        words[0] = (1 + months.indexOf(words[0])).toString();
+      }
+      if (shmon.indexOf(words[0]) != -1) {
+        tests[0] = true;
+        words[0] = (1 + shmon.indexOf(words[0])).toString();
+      }
+if (tests.indexOf(false) == -1) {
+        whichqstouse[i] = 2;
+        return [0,0,1, parseInt(words[0]), parseInt(words[1])];
+      } else {
+        whichqstouse[i] = 1;
+      }
+      
+    } else if (words.length == 1) {
+      //specificity: year
+      tests = [false];
+      if (parseFloat(words[0]).toString() != "NaN") {
+        tests[0] = true;
+      }
+      if (tests.indexOf(false) == -1) {
+        whichqstouse[i] = 2;
+        return [0,0,1,1, parseInt(words[0])]
+      } else {
+        whichqstouse[i] = 1;
+      }
+      
+    } else {
+      whichqstouse[i] = 1;
+    }
+
+}
+
+function check1() {
+  totalwords = [];
+  spec = [];
+  for (i = 0; i < whichqstouse.length; i++) {
+  spec.push(0);
+  }
+  for (i = 0; i < document.getElementsByClassName("pb2ins").length; i++) {
+    
+    
+    toUse = document.getElementsByClassName("pb2ins")[i].textContent.toLowerCase();
+    alphabet3 = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+    words = [];
+    newword = "";
+    for (a = 0; a < toUse.length; a++) {
+      if (a + 1 == toUse.length) {
+        if (-1 != alphabet3.indexOf(toUse[a])) {
+          newword = newword.concat(toUse[a]);
+          
+          words.push(newword);
+          newword = "";
+        }
+        if (newword != "") {
+          words.push(newword);
+          newword = "";
+        }
+      } else if ((toUse.substring(a, a+2)) == "am") { a++; if (words[0] == "12") { words[0] = (parseInt(words[0]) + 12).toString() }
+      } else if ((toUse.substring(a, a+2)) == "pm") { a++; if (words.length > 0 && words[0] != "12") { words[0] = (parseInt(words[0]) + 12).toString() }
+      } else if (-1 != alphabet3.indexOf(toUse[a])) {
+        newword = newword.concat(toUse[a]);
+      } else if (toUse[a] == ".") {} else {
+        if (newword != "") {
+          words.push(newword);
+          newword = "";
+        } 
+      }
+    }
+    if (words.indexOf("bc") != -1 ) {
+      words.splice(words.indexOf("bc"), 1);
+      words[words.length - 1] = (1 + (parseInt(words[words.length - 1]) * -1)).toString();
+    }
+    if (words.indexOf("ad") != -1 ) {
+      words.splice(words.indexOf("ad"), 1);
+    }
+    if (words.length == 5) {
+      //specificity: time
+      tests = [false, false, false, false, false];
+      if (parseFloat(words[4]).toString() != "NaN") {
+        tests[4] = true;
+      }
+      months = ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"];
+      mnl = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+      shmon = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"];
+      if (months.indexOf(words[2]) != -1) {
+        tests[2] = true;
+        words[2] = (1 + months.indexOf(words[2])).toString();
+        if (words[2] == "2" && parseInt(words[4]) % 4 == 0) {
+          mnl[1] = 29;
+        }
+      }
+      if (shmon.indexOf(words[2]) != -1) {
+        tests[2] = true;
+        words[2] = (1 + shmon.indexOf(words[2])).toString();
+        if (words[2] == "2" && parseInt(words[4]) % 4 == 0) {
+          mnl[1] = 29;
+        }
+      } 
+            window.innerHeight;
+
+      if (parseFloat(words[3]) > 0 && parseFloat(words[3]) <= mnl[parseInt(words[2]) - 1]) {
+        tests[3] = true;
+      }
+      
+      if (parseFloat(words[1]) > -1 && parseFloat(words[1]) < 60) {
+        tests[1] = true;
+      }
+      
+      if (parseFloat(words[0]) > 0 && parseFloat(words[0]) < 25) {
+        tests[0] = true;
+      }
+      
+      if (tests.indexOf(false) == -1) {
+        whichqstouse[i] = 2;
+        spec[i] = 5;
+        if (words[0] == "24") { words[0] = "0" }
+        words = [parseInt(words[1]), parseInt(words[0]), parseInt(words[3]), parseInt(words[2]), parseInt(words[4])];
+      } else {
+        whichqstouse[i] = 1;
+      }
+    } else if (words.length == 3) {
+      //specificity: day
+      tests = [false, false, false];
+      if (parseFloat(words[2]).toString() != "NaN") {
+        tests[2] = true;
+      }
+      months = ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"];
+      mnl = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+      shmon = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"];
+      if (months.indexOf(words[0]) != -1) {
+        tests[0] = true;
+        words[0] = (1 + months.indexOf(words[0])).toString();
+        if (words[0] == "2" && parseInt(words[2]) % 4 == 0) {
+          mnl[1] = 29;
+        }
+      }
+      if (shmon.indexOf(words[0]) != -1) {
+        tests[0] = true;
+        words[0] = (1 + shmon.indexOf(words[0])).toString();
+        if (words[0] == "2" && parseInt(words[2]) % 4 == 0) {
+          mnl[1] = 29;
+        }
+      }
+            window.innerHeight;
+
+      if (parseFloat(words[1]) > 0 && parseFloat(words[1]) <= mnl[parseInt(words[0]) - 1]) {
+        tests[1] = true;
+      }
+      if (tests.indexOf(false) == -1) {
+        whichqstouse[i] = 2;
+        spec[i] = 3;
+        words =  [0,0, parseInt(words[1]), parseInt(words[0]), parseInt(words[2])];
+      } else {
+        whichqstouse[i] = 1;
+      }
+    } else if (words.length == 2) {
+      //specificity: month
+      tests = [false, false];
+      if (parseFloat(words[1]).toString() != "NaN") {
+        tests[1] = true;
+      }
+      months = ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"];
+      shmon = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"];
+      if (months.indexOf(words[0]) != -1) {
+        tests[0] = true;
+        words[0] = (1 + months.indexOf(words[0])).toString();
+      }
+      if (shmon.indexOf(words[0]) != -1) {
+        tests[0] = true;
+        words[0] = (1 + shmon.indexOf(words[0])).toString();
+      }
+if (tests.indexOf(false) == -1) {
+        whichqstouse[i] = 2;
+        spec[i] = 2;
+        words =  [0,0,1, parseInt(words[0]), parseInt(words[1])];
+      } else {
+        whichqstouse[i] = 1;
+      }
+      
+    } else if (words.length == 1) {
+      //specificity: year
+      tests = [false];
+      if (parseFloat(words[0]).toString() != "NaN") {
+        tests[0] = true;
+      }
+      if (tests.indexOf(false) == -1) {
+        whichqstouse[i] = 2;
+        spec[i] = 1;
+        words =  [0,0,1,1, parseInt(words[0])]
+      } else {
+        whichqstouse[i] = 1;
+      }
+      
+    } else {
+      whichqstouse[i] = 1;
+    }
+
+    totalwords.push(words);
+  }
+  wrong1s = [];
+  for (i = 0; i < whichqstouse.length; i++) {
+    if (whichqstouse[i] == 1) {
+      wrong1s.push(i + 1);
+    }
+  }
+  if (wrong1s.length == 0) {
+    passedc1();
+  } else if (wrong1s.length == 1) {
+    alert("Question ".concat(wrong1s[0].toString(), " isn't formatted correctly."))
+  } else if (wrong1s.length == 2) {
+    alert("Questions ".concat(wrong1s[0].toString(), " and ", wrong1s[1].toString(), " aren't formatted correctly."));
+  } else {
+    msg = "Questions ";
+    for (i = 0; i < wrong1s.length; i++) {
+      if (!(i+2 >= wrong1s.length)) {
+        msg = msg.concat(wrong1s[i].toString(), ", ")
+      } else if (i+2 == wrong1s.length) {
+        msg = msg.concat(wrong1s[i].toString(), ", and ")
+      } else {
+        msg = msg.concat(wrong1s[i].toString());
+      }
+    }
+    msg = msg.concat(" aren't formatted correctly.");
+    alert(msg);
+  }
+}
+function makeTimeline() {
+  ntgd = false;
+  ntotalwords = JSON.parse(JSON.stringify(totalwords));
+
+  for (a = 4; ntgd == false && a > -1; a--) {
+  lYear = Infinity;
+  for (i = 0; i < whichqstouse.length; i++) {
+    cytu = ntotalwords[i][a];
+    if (cytu == lYear) {
+    ntgd = false;
+    } else if (cytu < lYear) {
+    for (z = 0; z < i; z++) {
+    ntotalwords[z] = [Infinity, Infinity, Infinity, Infinity, Infinity];
+    }
+    womin = i+1;
+    ntgd = true;
+    lYear = cytu;
+    } else {
+    ntotalwords[i] = [Infinity, Infinity, Infinity, Infinity, Infinity];
+    }
+  }
+  }
+  ntgd = false;
+  ntotalwords = JSON.parse(JSON.stringify(totalwords));
+  for (a = 4; ntgd == false && a > -1; a--) {
+  mYear = -Infinity;
+  for (i = 0; i < whichqstouse.length; i++) {
+    cytu = ntotalwords[i][a];
+    if (cytu == mYear) {
+    ntgd = false;
+    } else if (cytu > mYear) {
+    for (z = 0; z < i; z++) {
+    ntotalwords[z] = [-Infinity, -Infinity, -Infinity, -Infinity, -Infinity];
+    }
+    ntgd = true;
+    womax = i+1;
+    mYear = cytu;
+    } else {
+    ntotalwords[i] = [-Infinity, -Infinity, -Infinity, -Infinity, -Infinity];
+    }
+  }
+  }
+  
+  wordsformax = totalwords[womax - 1];
+  wordsformin = totalwords[womin - 1];
+
+  dif = 0;
+  wtd = Math.max(...spec);
+  for (a = 4; a > -1; a--) {
+  finalA = a;
+  cytu = wordsformax[a];
+  if (cytu != wordsformin[a]) {
+    
+  dif = wordsformax[a] - wordsformin[a];
+  wtd = a;
+  break;
+  }
+  }
+  modifier = 1;
+  while (dif >= 10) {
+    dif = (dif / 10);
+    if (dif % 1 != 0) {
+      dif = Math.floor(dif) + 1;
+    }
+    modifier *= 10;
+  }
+  dif += 3;
+  months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  tag = "";
+  for (i = 0; i < dif; i++) {
+    newDiv = document.createElement("div");
+    newDiv.classList.add("line");
+    if (localStorage.getItem("darkmode") == "1") {
+      newDiv.style.backgroundColor = "white";
+    }
+    newDiv.style.left = 100 * (i / (dif - 1)) + "%";
+    document.getElementById("timeline").appendChild(newDiv);
+    newLinethingy = document.createElement("span");
+    newLinethingy.classList.add("linelabel");
+    if (localStorage.getItem("darkmode") == "1") {
+      newLinethingy.style.color = "white";
+    }
+    allLeftVals.push(100 * (i / (dif - 1)));
+    if (finalA == 4) {
+    tagToUse = wordsformin[4];
+    ttu = tagToUse + (i - 1) * modifier;
+    ottu = ttu;
+    if (ttu < 1) {
+      ttu = (Math.abs(ttu) + 1).toString().concat(" BC");
+    } else {
+      ttu = ttu.toString();
+    }
+    pointsinallvals.push([0, 0, 1, 1, ottu])
+    newLinethingy.innerHTML = ttu.toString();
+    } else if (finalA == 3) {
+    fmonth = wordsformin[finalA] + (i - 1) * modifier;
+    tagToUse = wordsformin[4];
+    ttu = tagToUse;
+    while (fmonth < 1) {
+      fmonth += 12;
+      ttu--;
+    }
+    while (fmonth > 12) {
+      fmonth -= 12;
+      ttu++;
+    }
+    ottu = ttu;
+    if (ttu < 1) {
+      ttu = (Math.abs(ttu) + 1).toString().concat(" BC");
+    } else {
+      ttu = ttu.toString();
+    }
+    fmonth--;
+    pointsinallvals.push([0, 0, 1, fmonth+1, ottu])
+    newLinethingy.innerHTML = months[fmonth].concat("<br>", ttu);
+    } else if (finalA == 2) {
+    ttu = "";
+    fmonth = wordsformin[3];
+    fyear = wordsformin[4];
+    fday = (wordsformin[finalA] + (i - 1) * modifier);
+    if (fyear % 4 == 0) {
+      mnl[1] = 29;
+    } else {
+      mnl[1] = 28;
+    }
+    while (fday <= 0 || fday > mnl[fmonth - 1]) {
+      if (fday <= 0) {
+        fmonth--;
+        if (fmonth < 1) {
+          fmonth = 12;
+          fyear--;
+          if (fyear % 4 == 0) {
+            mnl[1] = 29;
+          } else {
+            mnl[1] = 28;
+          }
+        }
+        fday = mnl[fmonth - 1] + fday;
+      } else {
+        fmonth++;
+        if (fmonth == 13) { fmonth = 1; fyear++; if (fyear % 4 == 0) {
+      mnl[1] = 29;
+    } else {
+      mnl[1] = 28;
+    }}
+        fday = fday - mnl[fmonth - 1];
+      }
+    }
+    ottu = fyear;
+    if (fyear < 1) {
+      fyear = (Math.abs(fyear) + 1).toString().concat(" BC");
+    } else {
+      fyear = fyear.toString();
+    }
+    fday = fday.toString();
+    shmon = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    newLinethingy.innerHTML = (shmon[fmonth - 1]).toString().concat(" ", fday, "<br>", fyear);
+    pointsinallvals.push([0, 0, parseInt(fday), fmonth, ottu])
+    } else if (finalA == 1) {
+    ttu = "";
+    fmonth = wordsformin[3];
+    fyear = wordsformin[4];
+    fday = wordsformin[2];
+    fhour = (wordsformin[1] + (i - 1) * modifier);
+    while (fhour < 0 || fhour > 23) {
+      if (fhour < 0) {
+        fhour = fhour+=24;
+        fday--;
+        if (fday == 0) {
+          fmonth--;
+          if (fmonth < 1) {
+            fmonth = 12;
+            fyear--;
+          }
+          fday = mnl[fmonth - 1];
+        }
+      } else {
+        fhour = fhour-=24;
+        fday++;
+        if (fday == mnl[fmonth - 1] + 1) {
+          fmonth++;
+          if (fmonth == 13) { fmonth = 1; fyear++; }
+          fday = 1;
+        }
+      }
+    }
+    ottu = fyear;
+    if (fyear < 1) {
+      fyear = (Math.abs(fyear) + 1).toString().concat(" BC");
+    } else {
+      fyear = fyear.toString();
+    }
+    amorpm = "";
+    pointsinallvals.push([0, fhour, parseInt(fday), fmonth, ottu])
+    if (fhour > 12) {
+      fhour = (fhour - 12).toString();
+      amorpm = "pm";
+    } else if (fhour == 0) {
+      fhour = "12";
+      amorpm = "am";
+    } else if (fhour == 12) {
+      fhour = "12";
+      amorpm = "pm";
+    } else {
+      fhour = (fhour).toString();
+      amorpm = "am";
+    }
+    fday = fday.toString();
+    shmon = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    newLinethingy.innerHTML = fhour.concat(":00", amorpm, "<br>", (shmon[fmonth - 1]).toString(), " ", fday, "<br>", fyear);
+    } else {
+    ttu = "";
+    fmonth = wordsformin[3];
+    fyear = wordsformin[4];
+    fday = wordsformin[2];
+    fhour = wordsformin[1];
+    fminute = (wordsformin[0] + (i - 1) * modifier);
+    if (fyear % 4 == 0) {
+      mnl[1] = 29;
+    } else {
+      mnl[1] = 28;
+    }
+    while (fminute > 59 || fminute < 0) {
+      if (fminute < 0) {
+        fminute = fminute+=60;
+        fhour--;
+        if (fhour == -1) {
+          fhour = 23;
+          fday--;
+          if (fday == 0) {
+            fmonth--;
+            if (fmonth < 1) {
+              fmonth = 12;
+              fyear--;
+              if (fyear % 4 == 0) {
+      mnl[1] = 29;
+    } else {
+      mnl[1] = 28;
+    }
+            }
+          fday = mnl[fmonth - 1];
+          }
+        }
+      } else {
+        fminute = fminute-=60;
+        fhour++;
+        if (fhour == 24) {
+          fhour = 0;
+          fday++;
+          if (fday == mnl[fmonth - 1] + 1) {
+            fmonth++;
+            if (fmonth == 13) { fmonth = 1; fyear++; if (fyear % 4 == 0) {
+      mnl[1] = 29;
+    } else {
+      mnl[1] = 28;
+    }}
+            fday = 1;
+          }
+        }
+      }
+    }
+    amorpm = "";
+    ottu = fyear;
+    if (fyear < 1) {
+      fyear = (Math.abs(fyear) + 1).toString().concat(" BC");
+    } else {
+      fyear = fyear.toString();
+    }
+    pointsinallvals.push([fminute, fhour, parseInt(fday), fmonth, ottu])
+    if (fhour > 12) {
+      fhour = (fhour - 12).toString();
+      amorpm = "pm";
+    } else if (fhour == 0) {
+      fhour = "12";
+      amorpm = "am";
+    } else if (fhour == 12) {
+      fhour = "12";
+      amorpm = "pm";
+    } else {
+      fhour = (fhour).toString();
+      amorpm = "am";
+    }
+    if (fminute < 10) {
+      fminute = "0".concat(fminute.toString()); 
+    } else {
+      fminute = fminute.toString();
+    }
+    fday = fday.toString();
+    shmon = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    newLinethingy.innerHTML = fhour.concat(":", fminute, amorpm, "<br>", (shmon[fmonth - 1]).toString(), " ", fday, "<br>", fyear);
+    }
+    newDiv.appendChild(newLinethingy);
+  }
+}
+function next2() {
+  if (currentdq != allnumbers.length) {
+  document.getElementById("insloadbar").style.backgroundColor = "#c12020";
+  pose("normal");
+  currentdq++;
+  document.getElementById("popup").style.top = "90dvh";
+    document.getElementById("popup").style.boxShadow = "none";
+    if (localStorage.getItem("darkmode") == "1") {
+    document.getElementById("title").style.color = "#3a3a3a";
+    } else {
+    document.getElementById("title").style.color = "#efefef";
+    }
+    document.getElementById("desc").innerHTML = "";
+    document.getElementById("question").style.opacity = 0;
+    document.getElementById("question").style.pointerEvents = "none";
+    document.getElementById("check").style.opacity = 0;
+    document.getElementById("allquestions2").style.opacity = 0;
+    document.getElementById("alldateselectors").style.opacity = 0;
+    document.getElementById("timeline").style.opacity = 0;
+    setTimeout(function() {
+    document.getElementsByClassName("dateselector")[0].value = changeinput(pointsinallvals[0]);
+    lastanswergiven = pointsinallvals[0];
+    box.style.left = "0%";
+    resettozero = true;
+    document.getElementById("check").innerHTML = "Check";
+    document.getElementById("check").style.opacity = 1;
+    document.getElementById("timeline").style.opacity = 1;
+    document.getElementById("question").style.opacity = 1;
+    box.classList.remove("hidden");
+    if (localStorage.getItem("darkmode") != "1") {
+    document.getElementsByClassName("ddpcircle")[document.getElementsByClassName("ddpcircle").length - 1].style.backgroundColor = "#efefef";
+    document.getElementsByClassName("ddptriangle")[document.getElementsByClassName("ddptriangle").length - 1].style.borderTop = "4dvh solid #efefef";
+    } else {
+    document.getElementsByClassName("ddpcircle")[document.getElementsByClassName("ddpcircle").length - 1].style.backgroundColor = "#3a3a3a";
+    document.getElementsByClassName("ddptriangle")[document.getElementsByClassName("ddptriangle").length - 1].style.borderTop = "4dvh solid #3a3a3a";
+    }
+    document.getElementById("alldateselectors").style.opacity = 1;
+    document.getElementById("degradient").classList.add("hidden");
+    document.getElementById("question").style.pointerEvents = "all";
+    document.getElementById("qtext").innerHTML = "Plot the answer to this question on the timeline: ".concat(localStorage.getItem(current.concat("q", allnumbers[currentdq - 1].toString())));
+    }, 700)
+    setTimeout(function() {
+    document.getElementById("check").setAttribute("onclick", "check2()");
+    document.getElementById("next").setAttribute("onclick", "next2()");
+    }, 1300);
+  } else { showresults(); }
+}
+function check2() {
+  itworks = true;
+  for (i = 0; i < spec[allnumbers[currentdq - 1] - 1]; i++) {
+    if (totalwords[allnumbers[currentdq - 1] - 1][4 - i] != lastanswergiven[4 - i]) {
+      itworks = false;
+    }
+  }
+  newDiv = document.createElement("div");
+  newDiv.classList.add("stillddp");
+  newDiv.style.zIndex = -1;
+  newDiv.style.left = document.getElementsByClassName("ddp")[0].offsetLeft + "px";
+  document.getElementById("timeline").appendChild(newDiv);
+  newCircle = document.createElement("div");
+  newCircle.classList.add("ddpcircle");
+  newDiv.appendChild(newCircle);
+  newInnerCircle = document.createElement("div");
+  newInnerCircle.classList.add("ddpinnercircle");
+  if (localStorage.getItem("darkmode") == "1") {
+  newInnerCircle.style.backgroundColor = "black";
+  }
+  newCircle.appendChild(newInnerCircle);
+  newTriangle = document.createElement("div");
+  newTriangle.classList.add("ddptriangle");
+  newDiv.appendChild(newTriangle);
+  document.getElementsByClassName("ddp")[0].classList.add("hidden");
+  if (itworks) {
+    allcorrect++;
+    if (currentq == allnumbers.length) {
+      clbl = 100;
+    }
+    newCircle.style.backgroundColor = "#2dcc70";
+    newTriangle.style.borderTop = "4dvh solid #2dcc70";
+    document.getElementById("check").setAttribute("onclick", "");
+    document.getElementById("allquestions").style.pointerEvents = "none";
+    if (localStorage.getItem("darkmode") == "1") {
+      document.getElementById("title").style.color = "white";
+      document.getElementById("popup").style.boxShadow = "0 0 10dvh black";
+    } else {
+      document.getElementById("title").style.color = "#c12020";
+      document.getElementById("popup").style.boxShadow = "0 0 10dvh rgb(173, 173, 173)";
+    }
+    pose("happy");
+    document.getElementById("insloadbar").style.backgroundColor = "#2dcc70";
+    document.getElementById("popup").style.top = "60dvh";
+    random = Math.floor(Math.random() * congratsmsg.length);
+    document.getElementById("title").innerHTML = congratsmsg[random];
+    document.getElementById("desc").innerHTML = "<b>Correct Answer: </b>".concat(changeinput(totalwords[allnumbers[currentdq - 1] - 1]));
+  } else {
+    allnumbers.push(allnumbers[currentdq - 1]);
+    newCircle.style.backgroundColor = "#ff8500";
+    newTriangle.style.borderTop = "4dvh solid #ff8500";
+    document.getElementById("check").setAttribute("onclick", "");
+    document.getElementById("allquestions").style.pointerEvents = "none";
+    if (localStorage.getItem("darkmode") == "1") {
+      document.getElementById("title").style.color = "white";
+      document.getElementById("popup").style.boxShadow = "0 0 10dvh black";
+    } else {
+      document.getElementById("title").style.color = "#c12020";
+      document.getElementById("popup").style.boxShadow = "0 0 10dvh rgb(173, 173, 173)";
+    }
+    pose("confused");
+    document.getElementById("popup").style.top = "60dvh";
+    random = Math.floor(Math.random() * nopemsg.length);
+    document.getElementById("title").innerHTML = nopemsg[random];
+    document.getElementById("desc").innerHTML = "<b>Your Answer: </b>".concat(changeinput(lastanswergiven), "<br><br><b>Correct Answer: </b>", changeinput(totalwords[allnumbers[currentdq - 1] - 1]));
+  }
+  if (clbl != 100) {
+  clbl += (100 - clbl) / (allnumbers.length + 1 - currentdq);
+  }
+  document.getElementById("insloadbar").style.width = 30 + clbl * 0.7 + "%";
+}
+function next() {
+  document.getElementById("insloadbar").style.backgroundColor = "#c12020";
+  pose("normal");
+  
+  document.getElementById("popup").style.top = "90dvh";
+    document.getElementById("popup").style.boxShadow = "none";
+    if (localStorage.getItem("darkmode") == "1") {
+    document.getElementById("title").style.color = "#3a3a3a";
+    } else {
+    document.getElementById("title").style.color = "#efefef";
+    }
+    document.getElementById("desc").innerHTML = "";
+    document.getElementById("question").style.opacity = 0;
+    document.getElementById("check").style.opacity = 0;
+    document.getElementById("allquestions").style.opacity = 0;
+    currentq++;
+    setTimeout(function() {
+    document.getElementById("qtext").style.fontSize = "3dvh";
+    document.getElementById("qtext").innerHTML = "Make sure that all the questions you've selected follow this format: Time Month Day, Year<br><span style='font-size: 2dvh'>Ex: 2000; January 1, 2000; 12:00am January 1, 2000 ✅<br>Ex: January 1; 8:00am; 2000, January 1 ❌</span><br>If not, you can edit them here.";
+    document.getElementById("question").style.opacity = 1;                                                                                                                                                                                                                                                                                                                                  
+    document.getElementById("check").style.opacity = 1;
+    document.getElementById("allquestions2").style.opacity = 1;
+    document.getElementById("allquestions2").style.pointerEvents = "all";
+    setupforediting();
+    }, 700)
+    setTimeout(function() {
+    document.getElementById("check").setAttribute("onclick", "check1()");
+    document.getElementById("next").setAttribute("onclick", "next1()");
+    }, 1300);
+}
+</script>
+</html>
