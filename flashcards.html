@@ -809,6 +809,8 @@ function correct() {
   document.getElementById("insloadbar").style.width = clbl + "%";
   } else {
   document.getElementById("insloadbar").style.width = clbl + "%";
+  document.getElementById("malcircle").style.pointerEvents = "none";
+  document.getElementById("biencircle").style.pointerEvents = "none";
   setTimeout(showresults, 1500);
   }
 }
