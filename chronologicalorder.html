@@ -739,56 +739,70 @@ congratsmsg = ["Great Job!", "Perfect!", "Nice Work!", "Good Work!", "Good Job!"
 nopemsg = ["Oops", "Not quite", ":(", "Not exactly", "Erm, actually..."];
 allnumbers = [];
 resettozero = false;
-{ //draggability
-    const box = document.getElementsByClassName("ddp")[0];
-    let isDragging = false;
-    let startX;
-    let offsetX = 0;
+{ // draggability
+  const box = document.getElementsByClassName("ddp")[0];
+  let isDragging = false;
+  let startX;
+  let offsetX = 0;
 
-    // Common function to start dragging
-    function startDrag(currentX) {
-      isDragging = true;
-      if (resettozero) {
+  // Start dragging
+  function startDrag(currentX) {
+    isDragging = true;
+    if (resettozero) {
       startX = 0;
       resettozero = false;
-      } else {
+    } else {
       startX = currentX - offsetX;
+    }
+  }
+
+  // Move box
+  function move(currentX) {
+    if (!isDragging) return;
+
+    offsetX = currentX - startX;
+
+    // Keep within bounds
+    const maxRight = window.innerWidth - window.innerHeight * 0.09;
+    const minLeft = 0;
+    if (offsetX > maxRight) offsetX = maxRight;
+    if (offsetX < minLeft) offsetX = minLeft;
+
+    hoverspot = getpct(box);
+    lastanswergiven = hoverspot;
+    document.getElementsByClassName("dateselector")[0].value = changeinput(hoverspot);
+
+    box.style.left =
+      (offsetX / document.getElementById("timeline").offsetWidth) * 100 + "%";
+  }
+
+  // Stop dragging
+  function stopDrag() {
+    isDragging = false;
+  }
+
+  // Mouse events
+  box.addEventListener("mousedown", (e) => startDrag(e.clientX));
+  window.addEventListener("mousemove", (e) => move(e.clientX));
+  window.addEventListener("mouseup", stopDrag);
+
+  // Touch events
+  box.addEventListener("touchstart", (e) => startDrag(e.touches[0].clientX));
+
+  window.addEventListener(
+    "touchmove",
+    (e) => {
+      if (isDragging) {
+        move(e.touches[0].clientX);
+        e.preventDefault(); // only block scroll while dragging
       }
-    }
+    },
+    { passive: false }
+  );
 
-    // Common function to move box
-    function move(currentX) {
-      if (!isDragging) { return }
-      offsetX = currentX - startX;
-      // Keep it within the screen bounds
-      const maxRight = window.innerWidth - window.innerHeight * 0.09;
-      const minLeft = 0;
-      if (offsetX > maxRight) { offsetX = maxRight }
-      if (offsetX < minLeft) { offsetX = minLeft }
-      hoverspot = getpct(box);
-      lastanswergiven = hoverspot;
-      document.getElementsByClassName("dateselector")[0].value = changeinput(hoverspot);  
-      box.style.left = (offsetX / document.getElementById("timeline").offsetWidth) * 100 + "%";
-    }
-
-    // Stop dragging
-    function stopDrag() {
-      isDragging = false;
-    }
-
-    // Mouse events
-    box.addEventListener('mousedown', (e) => startDrag(e.clientX));
-    window.addEventListener('mousemove', (e) => move(e.clientX));
-    window.addEventListener('mouseup', stopDrag);
-
-    // Touch events
-    box.addEventListener('touchstart', (e) => startDrag(e.touches[0].clientX));
-    window.addEventListener('touchmove', (e) => {
-      move(e.touches[0].clientX);
-      e.preventDefault(); // prevent scrolling while dragging
-    }, { passive: false });
-    window.addEventListener('touchend', stopDrag);
+  window.addEventListener("touchend", stopDrag);
 }
+
 for (i = 1; i <= parseInt(localStorage.getItem(current.concat("qat"))); i++) {
   allnumbers.push(i.toString());
 }
