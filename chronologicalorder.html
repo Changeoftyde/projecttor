@@ -1703,13 +1703,14 @@ if (tests.indexOf(false) == -1) {
 
 function check1() {
   totalwords = [];
+  whichqstouse = [];
   spec = [];
   for (i = 0; i < whichqstouse.length; i++) {
   spec.push(0);
   }
   for (i = 0; i < document.getElementsByClassName("pb2ins").length; i++) {
     
-    
+    whichqstouse.push(0);
     toUse = document.getElementsByClassName("pb2ins")[i].textContent.toLowerCase();
     alphabet3 = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
     words = [];
