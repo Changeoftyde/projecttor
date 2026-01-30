@@ -683,6 +683,14 @@
   }
 </style>
 <script>
+{
+sessionStorage.setItem("setToUse", "1");
+localStorage.setItem("1qat", "5");
+for (i = 1; i <= 5; i++) {
+  localStorage.setItem("1q".concat(i.toString()), "Question ".concat(i.toString(), "?"));
+  localStorage.setItem("1a".concat(i.toString()), "180".concat(i.toString()));
+}
+}
 if (localStorage.getItem("darkmode") == "1") {
   document.getElementById("title").transition = "none";
   window.innerHeight;
@@ -896,9 +904,11 @@ function endis(whichoneami) {
   whichqstouse[whichoneami - 1] = 1;
   }
 }
+actuallist = [];
 function setupforediting() {
   for (i = 0; i < whichqstouse.length; i++) {
     if (whichqstouse[i] == 1) {
+      actuallist.push(i + 1);
       newDiv = document.createElement('div');
       newDiv.classList.add("pb2")
       if (localStorage.getItem("darkmode") != "1") {
@@ -911,6 +921,7 @@ function setupforediting() {
       document.getElementById("allquestions2").appendChild(newDiv);
     }
   }
+  allnumbers = actuallist;
 }
 // ===== Cubic Bezier Implementation =====
 function cubicBezier(x1, y1, x2, y2) {
@@ -1512,7 +1523,7 @@ function next1() {
     document.getElementById("alldateselectors").classList.remove("hidden");
     document.getElementById("degradient").classList.add("hidden");
     document.getElementById("question").style.pointerEvents = "all";
-    document.getElementById("qtext").innerHTML = "Plot the answer to this question on the timeline: ".concat(localStorage.getItem(current.concat("q", currentdq.toString())));
+    document.getElementById("qtext").innerHTML = "Plot the answer to this question on the timeline: ".concat(localStorage.getItem(current.concat("q", allnumbers[currentdq - 1].toString())));
     }, 700)
     setTimeout(function() {
     document.getElementById("check").setAttribute("onclick", "check2()");
@@ -1525,7 +1536,7 @@ function passedc1() {
   document.getElementById("allquestions2").style.pointerEvents = "none";
   for (i = 0; i < whichqstouse.length; i++) {
     if (whichqstouse[i] == 2) {
-      localStorage.setItem(current.concat("a", (i + 1).toString()), document.getElementsByClassName("pb2ins")[i].textContent);
+      localStorage.setItem(current.concat("a", allnumbers[i].toString()), document.getElementsByClassName("pb2ins")[i].textContent);
     }
   }
   document.getElementById("check").setAttribute("onclick", "");
@@ -1705,11 +1716,10 @@ function check1() {
   totalwords = [];
   whichqstouse = [];
   spec = [];
-  for (i = 0; i < whichqstouse.length; i++) {
+  for (i = 0; i < parseInt(localStorage.getItem(current.concat("qat"))); i++) {
   spec.push(0);
   }
   for (i = 0; i < document.getElementsByClassName("pb2ins").length; i++) {
-    
     whichqstouse.push(0);
     toUse = document.getElementsByClassName("pb2ins")[i].textContent.toLowerCase();
     alphabet3 = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
@@ -1784,7 +1794,7 @@ function check1() {
       
       if (tests.indexOf(false) == -1) {
         whichqstouse[i] = 2;
-        spec[i] = 5;
+        spec[allnumbers[i] - 1] = 5;
         if (words[0] == "24") { words[0] = "0" }
         words = [parseInt(words[1]), parseInt(words[0]), parseInt(words[3]), parseInt(words[2]), parseInt(words[4])];
       } else {
@@ -1820,7 +1830,7 @@ function check1() {
       }
       if (tests.indexOf(false) == -1) {
         whichqstouse[i] = 2;
-        spec[i] = 3;
+        spec[allnumbers[i] - 1] = 3;
         words =  [0,0, parseInt(words[1]), parseInt(words[0]), parseInt(words[2])];
       } else {
         whichqstouse[i] = 1;
@@ -1843,7 +1853,7 @@ function check1() {
       }
 if (tests.indexOf(false) == -1) {
         whichqstouse[i] = 2;
-        spec[i] = 2;
+        spec[allnumbers[i] - 1] = 2;
         words =  [0,0,1, parseInt(words[0]), parseInt(words[1])];
       } else {
         whichqstouse[i] = 1;
@@ -1857,7 +1867,7 @@ if (tests.indexOf(false) == -1) {
       }
       if (tests.indexOf(false) == -1) {
         whichqstouse[i] = 2;
-        spec[i] = 1;
+        spec[allnumbers[i] - 1] = 1;
         words =  [0,0,1,1, parseInt(words[0])]
       } else {
         whichqstouse[i] = 1;
@@ -2240,7 +2250,7 @@ function next2() {
 function check2() {
   itworks = true;
   for (i = 0; i < spec[allnumbers[currentdq - 1] - 1]; i++) {
-    if (totalwords[allnumbers[currentdq - 1] - 1][4 - i] != lastanswergiven[4 - i]) {
+    if (totalwords[allnumbers.indexOf(allnumbers[currentdq - 1])][4 - i] != lastanswergiven[4 - i]) {
       itworks = false;
     }
   }
@@ -2283,7 +2293,7 @@ function check2() {
     document.getElementById("popup").style.top = "60dvh";
     random = Math.floor(Math.random() * congratsmsg.length);
     document.getElementById("title").innerHTML = congratsmsg[random];
-    document.getElementById("desc").innerHTML = "<b>Correct Answer: </b>".concat(changeinput(totalwords[allnumbers[currentdq - 1] - 1]));
+    document.getElementById("desc").innerHTML = "<b>Correct Answer: </b>".concat(changeinput(totalwords[allnumbers.indexOf(allnumbers[currentdq - 1])]));
   } else {
     allnumbers.push(allnumbers[currentdq - 1]);
     newCircle.style.backgroundColor = "#ff8500";
@@ -2301,7 +2311,7 @@ function check2() {
     document.getElementById("popup").style.top = "60dvh";
     random = Math.floor(Math.random() * nopemsg.length);
     document.getElementById("title").innerHTML = nopemsg[random];
-    document.getElementById("desc").innerHTML = "<b>Your Answer: </b>".concat(changeinput(lastanswergiven), "<br><br><b>Correct Answer: </b>", changeinput(totalwords[allnumbers[currentdq - 1] - 1]));
+    document.getElementById("desc").innerHTML = "<b>Your Answer: </b>".concat(changeinput(lastanswergiven), "<br><br><b>Correct Answer: </b>", changeinput(totalwords[allnumbers.indexOf(allnumbers[currentdq - 1])]));
   }
   if (clbl != 100) {
   clbl += (100 - clbl) / (allnumbers.length + 1 - currentdq);
