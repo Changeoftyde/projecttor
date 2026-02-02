@@ -628,6 +628,7 @@ function next2() {
     document.getElementById("question").style.opacity = 1;
     document.getElementById("malcircle").style.opacity = 1;
     document.getElementById("biencircle").style.opacity = 1;
+    pose("normal");
   }, 800)
   setTimeout(function() {
     document.getElementById("qtext2").innerHTML = "3";
@@ -650,6 +651,10 @@ function next2() {
 }
 numcorrect = 0;
 function bien() {
+  pose("happy");
+  setTimeout(function() {
+    pose("normal");
+  }, 800);
   con.push(1);
   numcorrect++;
   document.body.style.backgroundColor = "#2dcc70";
@@ -676,6 +681,10 @@ function bien() {
   }, 1250)
 }
 function mal() {
+  pose("confused");
+  setTimeout(function() {
+    pose("normal");
+  }, 800);
   con.push(0);
   document.body.style.backgroundColor = "#ff8500";
   document.getElementById("malcircle").style.pointerEvents = "none";
